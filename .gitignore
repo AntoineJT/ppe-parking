@@ -1,0 +1,3 @@
+
+# Ignore looping backup files
+*.bak
