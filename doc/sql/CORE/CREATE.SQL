@@ -28,9 +28,7 @@ CREATE TABLE PLACE_PARKING
 CREATE TABLE STATUT
 (
    type_statut TINYINT AUTO_INCREMENT
-   , a_expire TINYINT(1)
-   , est_en_attente TINYINT(1)
-   , est_refusee TINYINT(1)
+   , nom_statut VARCHAR(10)
    , CONSTRAINT PK_STATUT PRIMARY KEY(type_statut)
 ) ENGINE=InnoDB;
 
