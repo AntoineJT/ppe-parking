@@ -1,0 +1,57 @@
+CREATE TABLE UTILISATEUR
+(
+   id INT
+   , mdp VARCHAR(50)
+   , CONSTRAINT PK_USER PRIMARY KEY(id) AUTO_INCREMENT
+) ENGINE=InnoDB;
+
+CREATE TABLE ADMIN
+(
+   id INT
+   , CONSTRAINT PK_ADMIN PRIMARY KEY(id) AUTO_INCREMENT
+) ENGINE=InnoDB;
+
+CREATE TABLE LIGUE
+(
+   id_ligue INT
+   , nom_ligue VARCHAR(50)
+   , CONSTRAINT PK_LIGUE PRIMARY KEY(id_ligue) AUTO_INCREMENT
+) ENGINE=InnoDB;
+
+CREATE TABLE PLACE_PARKING
+(
+   id_place INT
+   , numero VARCHAR(10) NOT NULL
+   , CONSTRAINT PK_PARKING PRIMARY KEY(id_place) AUTO_INCREMENT
+) ENGINE=InnoDB;
+
+CREATE TABLE STATUT
+(
+   type_statut TINYINT
+   , a_expire TINYINT(1)
+   , est_en_attente TINYINT(1)
+   , est_refusee TINYINT(1)
+   , CONSTRAINT PK_STATUT PRIMARY KEY(type_statut) AUTO_INCREMENT
+) ENGINE=InnoDB;
+
+CREATE TABLE PERSONNEL
+(
+   id INT
+   , identifiant VARCHAR(50)
+   , nom VARCHAR(50)
+   , prenom VARCHAR(50)
+   , id_ligue INT REFERENCES LIGUE(id_ligue)
+   , CONSTRAINT PK_PERSONNEL PRIMARY KEY(id) AUTO_INCREMENT
+) ENGINE=InnoDB;
+
+CREATE TABLE RESERVATION
+(
+   id_res INT
+   , date_demande DATE
+   , date_debut DATE
+   , date_fin DATE
+   , id INT
+   , type_statut TINYINT
+   , id_place INT
+   , CONSTRAINT PK_RESERVATION PRIMARY KEY(id_res) AUTO_INCREMENT
+) ENGINE=InnoDB;
