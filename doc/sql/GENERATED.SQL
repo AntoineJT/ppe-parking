@@ -1,0 +1,45 @@
+CREATE TABLE UTILISATEUR(
+   id INT PRIMARY KEY,
+   mdp VARCHAR(50)
+);
+
+CREATE TABLE ADMIN(
+   id INT REFERENCES UTILISATEUR(id) NOT NULL,
+   PRIMARY KEY(id)
+);
+
+CREATE TABLE LIGUE(
+   id_ligue INT PRIMARY KEY,
+   nom_ligue VARCHAR(50)
+);
+
+CREATE TABLE PLACE_PARKING(
+   id_place INT PRIMARY KEY,
+   numero VARCHAR(10) NOT NULL
+);
+
+CREATE TABLE STATUT(
+   type_statut TINYINT PRIMARY KEY,
+   a_expire TINYINT(1),
+   est_en_attente TINYINT(1),
+   est_refusee TINYINT(1)
+);
+
+CREATE TABLE PERSONNEL(
+   id INT REFERENCES UTILISATEUR(id) NOT NULL,
+   PRIMARY KEY(id),
+   identifiant VARCHAR(50),
+   nom VARCHAR(50),
+   prenom VARCHAR(50),
+   id_ligue INT REFERENCES LIGUE(id_ligue)
+);
+
+CREATE TABLE RESERVATION(
+   id_res INT PRIMARY KEY,
+   date_debut DATE,
+   date_fin DATE,
+   date_demande DATE,
+   type_statut TINYINT REFERENCES STATUT(type_statut) NOT NULL,
+   id_place INT REFERENCES PLACE_PARKING(id_place),
+   id INT REFERENCES PERSONNEL(id) NOT NULL
+);
