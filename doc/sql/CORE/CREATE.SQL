@@ -35,7 +35,7 @@ CREATE TABLE STATUT
 CREATE TABLE PERSONNEL
 (
    id INT NOT NULL AUTO_INCREMENT
-   , identifiant VARCHAR(50)
+   , mail VARCHAR(70)
    , nom VARCHAR(50)
    , prenom VARCHAR(50)
    , id_ligue INT REFERENCES LIGUE(id_ligue)
