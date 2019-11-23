@@ -4,7 +4,7 @@
 - /connexion
 - /deconnexion
 - /inscription
-- /motdepasseoublie
+- /recuperationcompte
 - /consultation
 - /consultation/places
 - /consultation/historique
