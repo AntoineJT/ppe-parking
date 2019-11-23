@@ -20,14 +20,14 @@ CREATE TABLE LIGUE
 
 CREATE TABLE PLACE_PARKING
 (
-   id_place INT AUTO_INCREMENT
-   , numero VARCHAR(10) NOT NULL
-   , CONSTRAINT PK_PARKING PRIMARY KEY(id_place)
+   numero VARCHAR(10) NOT NULL -- this will be replaced with a CHAR
+   , disponible TINYINT(1)
+   , CONSTRAINT PK_PARKING PRIMARY KEY(numero)
 ) ENGINE=InnoDB;
 
 CREATE TABLE STATUT
 (
-   type_statut TINYINT AUTO_INCREMENT
+   type_statut TINYINT(2)
    , nom_statut VARCHAR(10)
    , CONSTRAINT PK_STATUT PRIMARY KEY(type_statut)
 ) ENGINE=InnoDB;
@@ -38,6 +38,7 @@ CREATE TABLE PERSONNEL
    , mail VARCHAR(70)
    , nom VARCHAR(50)
    , prenom VARCHAR(50)
+   , valide TINYINT(1)
    , id_ligue INT REFERENCES LIGUE(id_ligue)
    , CONSTRAINT PK_PERSONNEL PRIMARY KEY(id)
 ) ENGINE=InnoDB;
@@ -50,6 +51,13 @@ CREATE TABLE RESERVATION
    , date_fin DATE
    , id_personnel INT NOT NULL
    , type_statut TINYINT NOT NULL
-   , id_place INT
+   , numero_place VARCHAR(10)
    , CONSTRAINT PK_RESERVATION PRIMARY KEY(id_res)
+) ENGINE=InnoDB;
+
+CREATE TABLE POSITION_FILE
+(
+   id_res INT NOT NULL
+   , rang INT UNIQUE NOT NULL
+   , CONSTRAINT PK_POSF PRIMARY KEY(id_res)
 ) ENGINE=InnoDB;
