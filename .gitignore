@@ -1,3 +1,6 @@
 
-# Ignore looping backup files
+# Looping backup files
 *.bak
+
+# IntelliJ stuff
+.idea/
