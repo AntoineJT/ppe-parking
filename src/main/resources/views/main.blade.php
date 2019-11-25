@@ -16,21 +16,21 @@
 <nav class="m-2 nav nav_pills nav-fill">
     @if (!$admin)
         @if (session('compte') == NULL)
-            <a class="nav-link nav-item" href="#"><i class="fas fa-home"></i>&nbsp&nbspPrésentation</a>
-            <a class="nav-link nav-item" href="#"><i class="fas fa-home"></i>&nbsp&nbspConnexion</a>
+            <a class="nav-link nav-item" href="/presentation"><i class="fas fa-home"></i>&nbsp&nbspPrésentation</a>
+            <a class="nav-link nav-item" href="/connexion"><i class="fas fa-home"></i>&nbsp&nbspConnexion</a>
         @else
-            <a class="nav-link nav-item" href="#"><i class="fas fa-home"></i>&nbsp&nbspAccueil</a>
-            <a class="nav-link nav-item" href="#"><i class="fas fa-home"></i>&nbsp&nbspNouvelle Réservation</a>
-            <a class="nav-link nav-item" href="#"><i class="fas fa-home"></i>&nbsp&nbspHistorique des Réservations</a>
-            <a class="nav-link nav-item" href="#">Déconnexion&nbsp&nbsp<i class="fas fa-sign-out-alt"></i></a>
+            <a class="nav-link nav-item" href="/accueil"><i class="fas fa-home"></i>&nbsp&nbspAccueil</a>
+            <a class="nav-link nav-item" href="/reservation/creer"><i class="fas fa-home"></i>&nbsp&nbspNouvelle Réservation</a>
+            <a class="nav-link nav-item" href="/consultation/historique"><i class="fas fa-home"></i>&nbsp&nbspHistorique des Réservations</a>
+            <a class="nav-link nav-item" href="/deconnexion">Déconnexion&nbsp&nbsp<i class="fas fa-sign-out-alt"></i></a>
         @endif
     @else
         @if (session('compte') != NULL)
-            <a class="nav-link nav-item" href="#"><i class="fas fa-home"></i>&nbsp&nbspAccueil</a>
-            <a class="nav-link nav-item" href="#"><i class="fas fa-home"></i>&nbsp&nbspGestion Utilisateurs</a>
-            <a class="nav-link nav-item" href="#"><i class="fas fa-home"></i>&nbsp&nbspGestion des places</a>
-            <a class="nav-link nav-item" href="#"><i class="fas fa-home"></i>&nbsp&nbspListe d'attente</a>
-            <a class="nav-link nav-item" href="#">Déconnexion&nbsp&nbsp<i class="fas fa-sign-out-alt"></i></a>
+            <a class="nav-link nav-item" href="/admin/accueil"><i class="fas fa-home"></i>&nbsp&nbspAccueil</a>
+            <a class="nav-link nav-item" href="/admin/gestion/utilisateurs"><i class="fas fa-home"></i>&nbsp&nbspGestion Utilisateurs</a>
+            <a class="nav-link nav-item" href="/admin/gestion/places"><i class="fas fa-home"></i>&nbsp&nbspGestion des places</a>
+            <a class="nav-link nav-item" href="/admin/gestion/historique"><i class="fas fa-home"></i>&nbsp&nbspListe d'attente</a>
+            <a class="nav-link nav-item" href="/admin/deconnexion">Déconnexion&nbsp&nbsp<i class="fas fa-sign-out-alt"></i></a>
         @endif
     @endif
 </nav>
