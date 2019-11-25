@@ -14,13 +14,36 @@
     <img src="{{ asset('images/mdl.png') }}" class="rounded float-right" alt="Responsive image">
 </div>
 <nav class="m-2 nav nav_pills nav-fill">
-    <a class="nav-link nav-item" href="/accueil"><i class="fas fa-home"></i>&nbsp&nbspAccueil</a>
-    <a class="nav-link nav-item" href="/listeEtablissements">Gestion des ligues&nbsp&nbsp<i class="fas fa-tasks"></i></a>
-    <a class="nav-link nav-item" href="/consultationAttributions">Attributions chambres&nbsp&nbsp<i class="fas fa-bed"></i></a>
-    <a class="nav-link nav-item" href="/logout">Déconnexion&nbsp&nbsp<i class="fas fa-sign-out-alt"></i></a>
+    @if (!$admin)
+        @if (session('compte') == NULL)
+            <a class="nav-link nav-item" href="/"><i class="fas fa-home"></i>&nbsp&nbspPrésentation</a>
+            <a class="nav-link nav-item" href="/connexion"><i class="fas fa-home"></i>&nbsp&nbspConnexion</a>
+        @else
+            <a class="nav-link nav-item" href="/"><i class="fas fa-home"></i>&nbsp&nbspAccueil</a>
+            <a class="nav-link nav-item" href="/"><i class="fas fa-home"></i>&nbsp&nbspNouvelle Réservation</a>
+            <a class="nav-link nav-item" href="/"><i class="fas fa-home"></i>&nbsp&nbspHistorique des Réservations</a>
+            <a class="nav-link nav-item" href="/logout">Déconnexion&nbsp&nbsp<i class="fas fa-sign-out-alt"></i></a>
+        @endif
+    @else
+        @if (session('compte') != NULL)
+            <a class="nav-link nav-item" href="/"><i class="fas fa-home"></i>&nbsp&nbspAccueil</a>
+            <a class="nav-link nav-item" href="/"><i class="fas fa-home"></i>&nbsp&nbspGestion Utilisateurs</a>
+            <a class="nav-link nav-item" href="/"><i class="fas fa-home"></i>&nbsp&nbspGestion des places</a>
+            <a class="nav-link nav-item" href="/"><i class="fas fa-home"></i>&nbsp&nbspListe d'attente</a>
+            <a class="nav-link nav-item" href="/logout">Déconnexion&nbsp&nbsp<i class="fas fa-sign-out-alt"></i></a>
+        @endif
+    @endif
 </nav>
-@if (session('compte') != NULL)
-    {!! $content !!}
+@if (!$admin)
+    @if ($publicContent || session('compte') != NULL)
+        {!! $content !!}
+    @endif
+@else
+    @if (session('compte') == NULL)
+        <p style="color:white; font-size:3rem;">Vous devez vous connecter pour accéder au panel administrateur</p>
+    @else
+        {!! $content !!}
+    @endif
 @endif
 </body>
 </html>
