@@ -81,3 +81,4 @@ Route::get('deconnexion', function() {
 
 declareSubPage('presentation', true, false);
 declareSubpage('connexion', true, false);
+declareSubpage('inscription', true, false);
