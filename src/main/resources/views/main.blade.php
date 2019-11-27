@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="fr">
 <head>
-    <title>M2L - {{ $title }}</title>
+    <title>🅿️ M2L - {{ $title }}</title>
     <meta charset="utf8">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" type="text/css">
