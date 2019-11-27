@@ -8,3 +8,4 @@
     <input type="password" name="mdp" class="form-control mb-3" placeholder="Mot de Passe" required>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Se Connecter</button>
 </form>
+<a href="/inscription" class="btn-block mb-3 pl-4">S'inscrire</a>
