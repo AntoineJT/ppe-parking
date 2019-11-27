@@ -68,3 +68,4 @@ Route::get('/', function () {
 });
 
 declareSubPage('presentation', true, false);
+declareSubpage('connexion', true, false);
