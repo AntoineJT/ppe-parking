@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -65,6 +67,11 @@ function declareSubpage(string $path, bool $public, bool $admin) {
 Route::get('/', function () {
     //return view('welcome');
     return view('main', ['title' => 'Accueil', 'publicContent' => true, 'content' => '', 'admin' => false]);
+});
+
+Route::get('deconnexion', function() {
+    Request::session()->remove('compte');
+    return Redirect::to('connexion');
 });
 
 declareSubPage('presentation', true, false);
