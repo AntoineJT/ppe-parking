@@ -39,11 +39,9 @@ use Illuminate\Support\Facades\Route;
 
 function embedInMainView(string $content, string $title, bool $public, bool $admin)
 {
-    /*
-    if (session('compte') == NULL) {
+    if ((!$public || $admin) && session('compte') == NULL) {
         return Redirect::to('login');
     }
-    */
     return view('main', [
         'title' => $title,
         'content' => $content,
