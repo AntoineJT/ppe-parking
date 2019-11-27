@@ -8,11 +8,11 @@
     <link href="{{ asset('css/cssGeneral.css') }}" rel="stylesheet" type="text/css">
 </head>
 <body class="ml-5 mr-5 p-3 mb-2 bg-dark text-dark">
-<div class="p-3 mb-2 bg-info text-white">
+<header class="p-3 mb-2 bg-info text-white">
     Maison des Ligues<br>
-    🅿️ Parking
+    <span class="center" style="margin-top:-1.5em">🅿️ Parking 2.0</span>
     <img src="{{ asset('images/mdl.png') }}" class="rounded float-right" alt="Responsive image">
-</div>
+</header>
 <nav class="m-2 nav nav_pills nav-fill">
     @if (!$admin)
         @if (session('compte') == NULL)
