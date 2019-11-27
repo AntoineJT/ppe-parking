@@ -15,9 +15,9 @@
 </header>
 <nav class="m-2 nav nav_pills nav-fill">
     @if (!$admin)
-        @if (session('compte') == NULL)
+        @if (session('id') == NULL)
             <a class="nav-link nav-item" href="/presentation"><i class="fas fa-info"></i>&nbsp&nbspPrésentation</a>
-            <a class="nav-link nav-item" href="/connexion"><i class="fas fa-id-card-alt"></i>&nbsp&nbspConnexion</a>
+            <a class="nav-link nav-item" href="/connexion"><i class="fas fa-id-card-alt"></i>&nbsp&nbspConnexion/Inscription</a>
         @else
             <a class="nav-link nav-item" href="/accueil"><i class="fas fa-home"></i>&nbsp&nbspAccueil</a>
             <a class="nav-link nav-item" href="/reservation/creer"><i class="fas fa-plus"></i>&nbsp&nbspNouvelle Réservation</a>
@@ -25,7 +25,7 @@
             <a class="nav-link nav-item" href="/deconnexion"><i class="fas fa-running"></i>&nbsp&nbspDéconnexion</a>
         @endif
     @else
-        @if (session('compte') != NULL)
+        @if (session('id') != NULL)
             <a class="nav-link nav-item" href="/admin/accueil"><i class="fas fa-home"></i>&nbsp&nbspAccueil</a>
             <a class="nav-link nav-item" href="/admin/gestion/utilisateurs"><i class="fas fa-sitemap"></i>&nbsp&nbspGestion Utilisateurs</a>
             <a class="nav-link nav-item" href="/admin/gestion/places"><i class="fas fa-parking"></i>&nbsp&nbspGestion des places</a>
@@ -35,14 +35,16 @@
     @endif
 </nav>
 @if (!$admin)
-    @if ($publicContent || session('compte') != NULL)
+    @if ($publicContent || session('id') != NULL)
         {!! $content !!}
     @endif
 @else
-    @if (session('compte') == NULL)
+    @if (session('id') == NULL)
         <p style="color:white; font-size:3rem;">Vous devez vous connecter pour accéder au panel administrateur</p>
-    @else
+    @elseif (session('type') == 'ADMIN')
         {!! $content !!}
+    @else
+        <p>Vous n'êtes pas administrateur! Vous n'avez pas l'autorisation d'accéder à cette page!</p>
     @endif
 @endif
 </body>

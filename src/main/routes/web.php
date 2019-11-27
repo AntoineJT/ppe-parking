@@ -66,7 +66,12 @@ function declareSubpage(string $path, bool $public, bool $admin) {
 // TODO Replace with the good one
 Route::get('/', function () {
     //return view('welcome');
-    return view('main', ['title' => 'Accueil', 'publicContent' => true, 'content' => '', 'admin' => false]);
+    return view('main', [
+        'title' => 'Accueil',
+        'publicContent' => true,
+        'content' => '',
+        'admin' => false
+    ]);
 });
 
 Route::get('deconnexion', function() {
