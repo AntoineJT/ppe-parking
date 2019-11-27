@@ -37,7 +37,7 @@ use Illuminate\Support\Facades\Route;
 
  */
 
-function embedInMainView(string $content, bool $public, bool $admin)
+function embedInMainView(string $content, string $title, bool $public, bool $admin)
 {
     /*
     if (session('compte') == NULL) {
@@ -45,33 +45,29 @@ function embedInMainView(string $content, bool $public, bool $admin)
     }
     */
     return view('main', [
-        'title' => 'Accueil',
+        'title' => $title,
         'content' => $content,
         'publicContent' => $public,
         'admin' => $admin
     ]);
 }
 
-function embedPageInMainView(string $path, bool $public, bool $admin) {
+function embedPageInMainView(string $path, string $title, bool $public, bool $admin) {
     $content = view('pages/' . $path);
-    return embedInMainView($content, $public, $admin);
+    return embedInMainView($content, $title, $public, $admin);
 }
 
-function declareSubpage(string $path, bool $public, bool $admin) {
-    Route::get($path, function() use ($admin, $public, $path) {
-        return embedPageInMainView($path, $public, $admin);
+function declareSubpage(string $path, string $title, bool $public, bool $admin) {
+    Route::get($path, function() use ($admin, $title, $public, $path) {
+        return embedPageInMainView($path, $title, $public, $admin);
     });
 }
 
 // TODO Replace with the good one
+// TODO Do the thing : redirect to route following conditions
 Route::get('/', function () {
     //return view('welcome');
-    return view('main', [
-        'title' => 'Accueil',
-        'publicContent' => true,
-        'content' => '',
-        'admin' => false
-    ]);
+    return embedPageInMainView('presentation', 'Accueil', true, false);
 });
 
 Route::get('deconnexion', function() {
@@ -79,6 +75,6 @@ Route::get('deconnexion', function() {
     return Redirect::to('connexion');
 });
 
-declareSubPage('presentation', true, false);
-declareSubpage('connexion', true, false);
-declareSubpage('inscription', true, false);
+declareSubPage('presentation', 'Présentation',true, false);
+declareSubpage('connexion', 'Connexion', true, false);
+declareSubpage('inscription', 'Inscription', true, false);
