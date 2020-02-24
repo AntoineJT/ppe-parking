@@ -18,7 +18,7 @@ class CreateLigueTable extends Migration
             // $table->charset = 'utf8';
             $table->collation = 'utf8mb4_unicode_ci';
 
-            $table->bigInteger('id_ligue')->primary();
+            $table->integerIncrements('id_ligue')->primary();
             // $table->timestamps();
             $table->string('nom_ligue', 50)->unique();
         });
