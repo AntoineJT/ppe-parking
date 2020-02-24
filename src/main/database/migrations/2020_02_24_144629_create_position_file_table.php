@@ -20,7 +20,8 @@ class CreatePositionFileTable extends Migration
 
             $table->integer('id_res')->primary();
             // $table->timestamps();
-            $table->integer('rang')->unique();
+            $table->integer('rang');
+            $table->unique(['id_res', 'rang']);
         });
     }
 
