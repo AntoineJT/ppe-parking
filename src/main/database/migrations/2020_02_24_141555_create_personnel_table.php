@@ -18,7 +18,7 @@ class CreatePersonnelTable extends Migration
             // $table->charset = 'utf8';
             $table->collation = 'utf8mb4_unicode_ci';
 
-            $table->integerIncrements('id')->primary();
+            $table->integerIncrements('id');
             $table->string('mail', 70)->unique();
             $table->string('nom', 50);
             $table->string('prenom', 50);
