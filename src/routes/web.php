@@ -42,6 +42,7 @@ function declareSubpage(string $name, string $path, string $title, int $access_l
 
 Route::redirect('/', '/connexion');
 declareSubpageByPath('/connexion', 'Connexion', ACCESS_PUBLIC);
+Route::post('/connexion', 'LoginController@doLogin');
 
 declareSubpageByPath('/inscription', "S'enregistrer", ACCESS_PUBLIC);
 

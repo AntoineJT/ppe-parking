@@ -31,7 +31,7 @@ class SessionManager
 
     public static function isPersonnel(): bool
     {
-        return self::sessionEquals('type', AuthEnum::AUTH_ANIM);
+        return self::sessionEquals('type', AuthEnum::AUTH_PERSONNEL);
     }
 
     public static function getFullTypeName(): string

@@ -1,10 +1,10 @@
 CREATE TABLE UTILISATEUR
 (
    id INT AUTO_INCREMENT
-   , mdp VARCHAR(50)
-   , mail VARCHAR(70)
    , nom VARCHAR(50)
    , prenom VARCHAR(50)
+   , mail VARCHAR(70)
+   , mdp VARCHAR(61)
    , CONSTRAINT PK_USER PRIMARY KEY(id)
 ) ENGINE=InnoDB;
 
