@@ -7,8 +7,9 @@
             <input name="password" placeholder="Mot de passe" type="password" class="form-control rounded-0" required>
         </div>
         <a href="/reset" class="white-relief">Mot de passe oublié?</a>
-        <div class="d-flex justify-content-center mt-3">
+        <div class="d-flex justify-content-center mt-3 mb-2">
             <button class="pl-3 pr-3 pb-1 btn btn-primary" type="submit">Se connecter</button>
         </div>
+        <a href="/inscription">S'enregistrer plutôt</a>
     </form>
 </div>

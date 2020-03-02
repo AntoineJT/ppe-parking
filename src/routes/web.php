@@ -43,7 +43,7 @@ function declareSubpage(string $name, string $path, string $title, int $access_l
 Route::redirect('/', '/connexion');
 declareSubpageByPath('/connexion', 'Connexion', ACCESS_PUBLIC);
 
-declareSubpageByPath('/inscrire', "S'enregistrer", ACCESS_PUBLIC);
+declareSubpageByPath('/inscription', "S'enregistrer", ACCESS_PUBLIC);
 
 Route::get('/deconnexion', function() {
     Request::session()->flush();
