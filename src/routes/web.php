@@ -40,12 +40,6 @@ function declareSubpage(string $name, string $path, string $title, int $access_l
     });
 }
 
-/*
-Route::get('/', function () {
-    return view('welcome');
-});
-*/
-
 Route::redirect('/', '/connexion');
 declareSubpageByPath('/connexion', 'Connexion', ACCESS_PUBLIC);
 
