@@ -10,8 +10,10 @@
 *.sql	linguist-language=TSQL
 
 # Generated files
-*.min.css   linguist-generated
-*.map   	linguist-generated
+*.min.css   			linguist-generated
+*.map   				linguist-generated
+src/public/css/app.css	linguist-generated
+src/public/js/app.js	linguist-generated
 
 # Vendors
 src/artisan				linguist-vendored linguist-language=PHP
