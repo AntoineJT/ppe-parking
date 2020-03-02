@@ -49,6 +49,8 @@ Route::get('/', function () {
 Route::redirect('/', '/connexion');
 declareSubpageByPath('/connexion', 'Connexion', ACCESS_PUBLIC);
 
+declareSubpageByPath('/inscrire', "S'enregistrer", ACCESS_PUBLIC);
+
 Route::get('/deconnexion', function() {
     Request::session()->flush();
     return FlashMessage::redirectWithInfoMessage(Redirect::to('/'), 'Vous vous êtes déconnecté!');
