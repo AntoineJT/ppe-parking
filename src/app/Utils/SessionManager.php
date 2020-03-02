@@ -37,7 +37,7 @@ class SessionManager
     public static function getFullTypeName(): string
     {
         if (!self::isLogged()) return '';
-        if (self::isPersonnel()) return 'animateur';
+        if (self::isPersonnel()) return 'personnel';
         if (self::isSuperAdmin()) return 'super-administrateur';
         if (self::isAdmin()) return 'administrateur';
         return '';

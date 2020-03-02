@@ -45,6 +45,7 @@ declareSubpageByPath('/connexion', 'Connexion', ACCESS_PUBLIC);
 Route::post('/connexion', 'LoginController@doLogin');
 
 declareSubpageByPath('/inscription', "S'enregistrer", ACCESS_PUBLIC);
+Route::post('/inscription', 'RegisterController@register');
 
 Route::get('/deconnexion', function() {
     Request::session()->flush();

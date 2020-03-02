@@ -1,0 +1,12 @@
+-- things not at the conceptual level
+CREATE TABLE LIEN_RESET(
+   lien VARCHAR(50) NOT NULL
+   , id INT NOT NULL
+   , PRIMARY KEY(lien)
+) ENGINE=InnoDB;
+
+ALTER TABLE LIEN_RESET ADD
+    CONSTRAINT FK_LNK_COM
+    FOREIGN KEY(id)
+    REFERENCES UTILISATEUR(id)
+;
