@@ -23,6 +23,9 @@ class AddForeignKeys extends Migration
             $table->foreign('id')
                 ->references('id')
                 ->on('utilisateur');
+            $table->foreign('id_ligue')
+                ->references('id_ligue')
+                ->on('ligue');
         });
         Schema::table('position_file', function (Blueprint $table) {
             $table->foreign('id_res')
