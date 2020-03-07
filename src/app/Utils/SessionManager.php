@@ -19,11 +19,6 @@ class SessionManager
         return Session::exists('type');
     }
 
-    public static function isSuperAdmin(): bool
-    {
-        return self::sessionEquals('superAdmin', true);
-    }
-
     public static function isAdmin(): bool
     {
         return self::sessionEquals('type', AuthEnum::AUTH_ADMIN);
@@ -38,7 +33,6 @@ class SessionManager
     {
         if (!self::isLogged()) return '';
         if (self::isPersonnel()) return 'personnel';
-        if (self::isSuperAdmin()) return 'super-administrateur';
         if (self::isAdmin()) return 'administrateur';
         return '';
     }
