@@ -2,21 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\UserStateEnum;
 use App\Mail\ResetLink;
 use App\Models\LienResetModel;
 use App\Models\PersonnelModel;
 use App\Models\UtilisateurModel;
 use App\Utils\Database\AccountManager;
 use App\Utils\FlashMessage;
-use App\Utils\SessionManager;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Enums\AuthEnum;
 use App\Utils\Generator;
 
 // TODO Vérifier si nom et prénom déjà dans DB!!

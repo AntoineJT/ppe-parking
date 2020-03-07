@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\UserStateEnum;
 use App\Utils\Database\AccountManager;
 use App\Utils\Generator;
 use Illuminate\Database\Eloquent\Model;
@@ -62,8 +63,38 @@ class UtilisateurModel extends Model
         return $utilisateur;
     }
 
+    // TODO check if useful
     public function isPersonnel(): bool
     {
-        return PersonnelModel::find(self::getAttribute('id')) !== null;
+        return self::toPersonnel() !== null;
+    }
+
+    public function toPersonnel(): ?PersonnelModel
+    {
+        return PersonnelModel::find(self::getAttribute('id'));
+    }
+
+    public function toAdmin(): ?AdminModel
+    {
+        return AdminModel::find(self::getAttribute('id'));
+    }
+
+    // TODO check if useful
+    public function isAdmin(): bool
+    {
+        return self::toAdmin() !== null;
+    }
+
+    public function getState(): int
+    {
+        $personnel = self::toPersonnel();
+        if ($personnel !== null)
+            return $personnel->getState();
+
+        $admin = self::toAdmin();
+        if ($admin !== null)
+            return $admin->getState();
+
+        return -1;
     }
 }

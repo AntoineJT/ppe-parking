@@ -42,6 +42,7 @@ class PersonnelModel extends Model
      */
     public $timestamps = false;
 
+    // cache variable
     private $user = null;
 
     // TODO Make use of that
@@ -65,5 +66,10 @@ class PersonnelModel extends Model
             $user = UtilisateurModel::find(self::getAttribute('id'));
         }
         return $user;
+    }
+
+    public function getState(): int
+    {
+        return PersonnelModel::firstWhere('id', self::getAttribute('id'))->statut;
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\UserStateEnum;
 use App\Models\LienResetModel;
+use App\Models\UtilisateurModel;
 use App\Utils\Database\AccountManager;
 use App\Utils\FlashMessage;
 use App\Utils\SessionManager;
@@ -41,7 +42,8 @@ class ChangePasswordController extends Controller
         if (!AccountManager::changePassword($user_id, $data['mdp'])) {
             return FlashMessage::redirectBackWithErrorMessage("Le nouveau mot de passe n'a pas été enregistré!");
         }
-        if (AccountManager::getUserState($user_id) === UserStateEnum::STATE_NEWLY_CREATED)
+        $user = UtilisateurModel::find($user_id);
+        if ($user->getState() === UserStateEnum::STATE_NEWLY_CREATED)
             AccountManager::setPersonnelState($user_id, UserStateEnum::STATE_DISABLED);
 
         if (Session::exists('link')) {

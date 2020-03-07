@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\UserStateEnum;
 use Illuminate\Database\Eloquent\Model;
 
 class AdminModel extends Model
@@ -40,4 +41,9 @@ class AdminModel extends Model
      * @var bool
      */
     public $timestamps = false;
+
+    public function getState(): int
+    {
+        return UserStateEnum::STATE_ENABLED;
+    }
 }
