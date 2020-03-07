@@ -19,10 +19,7 @@ class CreatePersonnelTable extends Migration
             $table->collation = 'utf8mb4_unicode_ci';
 
             $table->integerIncrements('id');
-            $table->string('mail', 70)->unique();
-            $table->string('nom', 50);
-            $table->string('prenom', 50);
-            $table->tinyInteger('valide');
+            $table->tinyInteger('statut');
             $table->integer('id_ligue');
         });
     }

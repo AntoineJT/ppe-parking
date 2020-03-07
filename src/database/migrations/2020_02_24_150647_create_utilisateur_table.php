@@ -19,6 +19,9 @@ class CreateUtilisateurTable extends Migration
             $table->collation = 'utf8mb4_unicode_ci';
 
             $table->integerIncrements('id');
+            $table->string('nom', 50);
+            $table->string('prenom', 50);
+            $table->string('mail', 70)->unique();
             // $table->timestamps();
             $table->string('mdp', 50);
         });
