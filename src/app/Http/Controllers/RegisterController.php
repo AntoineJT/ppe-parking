@@ -37,7 +37,7 @@ class RegisterController extends Controller
             'prenom' => Request::input('prenom'),
             'courriel' => Request::input('courriel'),
         ];
-        $user_id = self::registerUser($data);
+        $user_id = self::registerPersonnel($data);
         if (!AccountManager::isUserIdValid($user_id)) {
             return FlashMessage::redirectBackWithErrorMessage("L'enregistrement a échoué!");
         }
@@ -56,36 +56,6 @@ class RegisterController extends Controller
         $user_id = self::createUser($data);
         $is_valid = AccountManager::isUserIdValid($user_id) && AccountManager::addUserToPersonnel($user_id);
         return $is_valid ? $user_id : 0;
-    }
-
-    /*
-    private static function registerAdmin(array $data): int
-    {
-        $user_id = self::createUser($data);
-        $is_valid = AccountManager::isUserIdValid($user_id) && AccountManager::addUserToAdmin($user_id);
-        return $is_valid ? $user_id : 0;
-    }
-    */
-
-    private static function registerUser(array $data): int
-    {
-        /*
-        if (!SessionManager::isAdmin())
-            return false;
-        */
-
-//        if ($data['type'] === AuthEnum::AUTH_PERSONNEL) {
-            return self::registerPersonnel($data);
-
-        /* } else
-            if ($data['type'] === AuthEnum::AUTH_ADMIN) {
-                if (!SessionManager::isSuperAdmin())
-                    return false;
-
-                return self::registerAdmin($data);
-            }
-        return false;
-        */
     }
 
     private static function createUser(array $data): int
