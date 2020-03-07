@@ -5,6 +5,7 @@ namespace App\Utils\Database;
 
 use App\Enums\UserStateEnum;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AccountManager
 {
@@ -14,10 +15,10 @@ class AccountManager
         if (!self::isPersonnel($user_id))
             return UserStateEnum::STATE_ENABLED;
         return DB::table('Personnel')
-            ->select('valide')
+            ->select('statut')
             ->where('id', '=', $user_id)
             ->first()
-            ->valide;
+            ->statut;
         // return UserStateEnum::getByValue($value);
     }
 
@@ -48,7 +49,7 @@ class AccountManager
     {
         return DB::table('Personnel')->insert([
             'id' => $user_id,
-            'valide' => UserStateEnum::STATE_NEWLY_CREATED
+            'statut' => UserStateEnum::STATE_NEWLY_CREATED
         ]);
     }
 
@@ -61,5 +62,54 @@ class AccountManager
     {
         $value = DB::table('Utilisateur')->max('id');
         return $value !== null ? $value : 0;
+    }
+
+    public static function changePassword(int $id_compte, string $password): bool
+    {
+        if (!self::isUserIdValid($id_compte))
+            return false;
+
+        $hashed_password = Hash::make($password);
+
+        return DB::table('Utilisateur')
+                ->where('id', '=', $id_compte)
+                ->update([
+                    'mdp' => $hashed_password
+                ]) === 1;
+    }
+
+    public static function getUserIdFromResetLink(string $reset_link): int
+    {
+        $result = DB::table('Lien_reset')
+            ->select('id')
+            ->where('lien', '=', $reset_link)
+            ->get();
+        return ($result === null) ? -1 : $result->first()->id;
+    }
+
+    private static function getUserInfosFromEmail(string $email) {
+        return DB::table('Utilisateur')
+            ->select('id')
+            ->where('mail', '=', $email);
+    }
+
+    public static function getUserIdFromEmail(string $email): int
+    {
+        $result = self::getUserInfosFromEmail($email);
+        return $result->exists() ? intval($result->get()->first()->id) : -1;
+    }
+
+    public static function isMailLinkedWithAccount(string $email): bool
+    {
+        return self::getUserInfosFromEmail($email)->exists();
+    }
+
+    public static function setPersonnelState(int $user_id, int $user_state): bool
+    {
+        return DB::table('Personnel')
+                ->where('id', '=', $user_id)
+                ->update([
+                    'statut' => $user_state
+                ]) === 1;
     }
 }
