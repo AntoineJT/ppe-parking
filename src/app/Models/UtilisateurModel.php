@@ -2,7 +2,11 @@
 
 namespace App\Models;
 
+use App\Utils\Database\AccountManager;
+use App\Utils\Generator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UtilisateurModel extends Model
 {
@@ -25,7 +29,7 @@ class UtilisateurModel extends Model
      *
      * @var bool
      */
-//    public $incrementing = false;
+    public $incrementing = false;
 
     /**
      * The "type" of the auto-incrementing ID.
@@ -40,4 +44,22 @@ class UtilisateurModel extends Model
      * @var bool
      */
     public $timestamps = false;
+
+    public static function create(string $last_name, string $first_name, string $mail): ?UtilisateurModel
+    {
+        // TODO Migrate that
+        $user_id = AccountManager::getNextUserId();
+
+        $utilisateur = new UtilisateurModel;
+
+        $utilisateur->id = $user_id;
+        $utilisateur->nom = $last_name;
+        $utilisateur->prenom = $first_name;
+        $utilisateur->mail = $mail;
+        $utilisateur->mdp = Hash::make(Generator::generateGarbagePassword());
+
+        if (!$utilisateur->save())
+            return null;
+        return $utilisateur;
+    }
 }

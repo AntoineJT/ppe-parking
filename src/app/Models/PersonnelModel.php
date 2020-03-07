@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\UserStateEnum;
 use Illuminate\Database\Eloquent\Model;
 
 class PersonnelModel extends Model
@@ -25,7 +26,7 @@ class PersonnelModel extends Model
      *
      * @var bool
      */
-//    public $incrementing = false;
+    public $incrementing = false;
 
     /**
      * The "type" of the auto-incrementing ID.
@@ -41,18 +42,16 @@ class PersonnelModel extends Model
      */
     public $timestamps = false;
 
-    // TODO check if it's really useful (I don't think so)
-
-/*    public static function exists(int $user_id): bool
+    // TODO Make use of that
+    public static function addUser(UtilisateurModel $utilisateur): ?PersonnelModel
     {
+        $personnel = new PersonnelModel;
 
-//        return DB::table('Personnel')
-//            ->join('Utilisateur', 'Personnel.id', '=', 'Utilisateur.id')
-//            ->where('Utilisateur.id', '=', $user_id)
-//            ->exists();
-//
-        return PersonnelModel::query()
-            ->where('id', '=', $user_id)
-            ->exists();
-    }*/
+        $personnel->id = $utilisateur->id;
+        $personnel->statut = UserStateEnum::STATE_NEWLY_CREATED;
+
+        if (!$personnel->save())
+            return null;
+        return $personnel;
+    }
 }

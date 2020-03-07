@@ -20,38 +20,18 @@ class AccountManager
             ->where('id', '=', $user_id)
             ->first()
             ->statut;
-        // return UserStateEnum::getByValue($value);
     }
 
+    // TODO Remove or move it!
     public static function isPersonnel(int $user_id): bool
     {
-        return DB::table('Personnel')
-            ->join('Utilisateur', 'Personnel.id', '=', 'Utilisateur.id')
-            ->where('Utilisateur.id', '=', $user_id)
-            ->exists();
+        return PersonnelModel::find($user_id) !== null;
     }
 
     public static function isUserIdValid(int $user_id): bool
     {
         $int_max_value = (2 ^ 31 - 1);
         return $user_id > 0 && $user_id <= $int_max_value;
-    }
-
-    /*
-    public static function addUserToAdmin(int $user_id): bool
-    {
-        return DB::table('Admin')->insert([
-            'id' => $user_id
-        ]);
-    }
-    */
-
-    public static function addUserToPersonnel(int $user_id): bool
-    {
-        return DB::table('Personnel')->insert([
-            'id' => $user_id,
-            'statut' => UserStateEnum::STATE_NEWLY_CREATED
-        ]);
     }
 
     public static function getNextUserId(): int

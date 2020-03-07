@@ -25,7 +25,7 @@ class AdminModel extends Model
      *
      * @var bool
      */
-//    public $incrementing = false;
+    public $incrementing = false;
 
     /**
      * The "type" of the auto-incrementing ID.
