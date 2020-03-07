@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\StateEnum;
+use App\Enums\UserStateEnum;
 use App\Utils\Database\AccountManager;
 use App\Utils\FlashMessage;
 use Illuminate\Http\RedirectResponse;
@@ -42,8 +42,10 @@ class LoginController extends Controller
     {
         $user_id = $results->id;
 
-        if (AccountManager::getUserState($user_id) == StateEnum::STATE_DISABLED)
+        if (AccountManager::getUserState($user_id) === UserStateEnum::STATE_DISABLED)
             return FlashMessage::redirectBackWithInfoMessage("Votre compte est désactivé! Vous ne pouvez pas vous connecter! Contactez l'administrateur s'il s'agit d'une erreur!");
+        if (AccountManager::getUserState($user_id) === UserStateEnum::STATE_NEWLY_CREATED)
+            return FlashMessage::redirectBackWithInfoMessage("Vous devez valider votre adresse de courriel avant de pouvoir vous connecter!");
 
         if ($results == NULL)
             return self::sendErrorMessageOnAuthenticationFailure(); // Adresse e-mail invalide!

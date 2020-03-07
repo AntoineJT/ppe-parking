@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\StateEnum;
+use App\Enums\UserStateEnum;
 use App\Mail\ResetLink;
 use App\Models\ResetLinkModel;
 use App\Utils\Database\AccountManager;

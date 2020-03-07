@@ -3,7 +3,7 @@
 
 namespace App\Utils\Database;
 
-use App\Enums\StateEnum;
+use App\Enums\UserStateEnum;
 use Illuminate\Support\Facades\DB;
 
 class AccountManager
@@ -12,13 +12,13 @@ class AccountManager
     {
         // if not personnel, must be admin
         if (!self::isPersonnel($user_id))
-            return StateEnum::STATE_ENABLED;
-        $value = DB::table('Personnel')
+            return UserStateEnum::STATE_ENABLED;
+        return DB::table('Personnel')
             ->select('valide')
             ->where('id', '=', $user_id)
             ->first()
             ->valide;
-        return [StateEnum::STATE_DISABLED, StateEnum::STATE_ENABLED][$value];
+        // return UserStateEnum::getByValue($value);
     }
 
     public static function isPersonnel(int $user_id): bool
@@ -48,7 +48,7 @@ class AccountManager
     {
         return DB::table('Personnel')->insert([
             'id' => $user_id,
-            'valide' => StateEnum::STATE_DISABLED
+            'valide' => UserStateEnum::STATE_NEWLY_CREATED
         ]);
     }
 
