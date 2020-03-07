@@ -18,7 +18,7 @@ class CreateAdminTable extends Migration
             // $table->charset = 'utf8';
             $table->collation = 'utf8mb4_unicode_ci';
 
-            $table->integerIncrements('id');
+            $table->integer('id')->unsigned()->primary();
             // $table->timestamps();
         });
     }

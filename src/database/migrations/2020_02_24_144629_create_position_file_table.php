@@ -18,7 +18,7 @@ class CreatePositionFileTable extends Migration
             // $table->charset = 'utf8';
             $table->collation = 'utf8mb4_unicode_ci';
 
-            $table->integer('id_res')->primary();
+            $table->integer('id_res')->unsigned()->primary();
             // $table->timestamps();
             $table->integer('rang');
             $table->unique(['id_res', 'rang']);

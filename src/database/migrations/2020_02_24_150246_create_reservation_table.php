@@ -23,7 +23,7 @@ class CreateReservationTable extends Migration
             $table->date('date_demande');
             $table->date('date_debut');
             $table->date('date_fin');
-            $table->integer('id_personnel');
+            $table->integer('id_personnel')->unsigned();
             $table->tinyInteger('type_statut');
             $table->string('numero_place', 10);
         });

@@ -18,9 +18,9 @@ class CreatePersonnelTable extends Migration
             // $table->charset = 'utf8';
             $table->collation = 'utf8mb4_unicode_ci';
 
-            $table->integerIncrements('id');
-            $table->tinyInteger('statut');
-            $table->integer('id_ligue');
+            $table->integer('id')->unsigned()->primary();
+            $table->tinyInteger('statut')->unsigned();
+            $table->integer('id_ligue')->unsigned();
         });
     }
 
