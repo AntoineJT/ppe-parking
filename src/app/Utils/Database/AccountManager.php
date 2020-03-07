@@ -49,13 +49,4 @@ class AccountManager
     {
         return self::getUserInfosFromEmail($email)->exists();
     }
-
-    public static function setPersonnelState(int $user_id, int $user_state): bool
-    {
-        return DB::table('Personnel')
-                ->where('id', '=', $user_id)
-                ->update([
-                    'statut' => $user_state
-                ]) === 1;
-    }
 }

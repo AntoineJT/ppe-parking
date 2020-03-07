@@ -43,8 +43,11 @@ class ChangePasswordController extends Controller
         if (!$user->changePassword($data['mdp'])) {
             return FlashMessage::redirectBackWithErrorMessage("Le nouveau mot de passe n'a pas été enregistré!");
         }
-        if ($user->getState() === UserStateEnum::STATE_NEWLY_CREATED)
-            AccountManager::setPersonnelState($user_id, UserStateEnum::STATE_DISABLED);
+        if ($user->getState() === UserStateEnum::STATE_NEWLY_CREATED && $user->isPersonnel()) {
+            $valid = $user->toPersonnel()->setState(UserStateEnum::STATE_DISABLED);
+            if (!$valid)
+                return FlashMessage::redirectBackWithErrorMessage("Votre compte n'a pas été validé! Veuillez en informer l'administrateur!");
+        }
 
         if (Session::exists('link')) {
             Session::remove('link');
