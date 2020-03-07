@@ -42,6 +42,8 @@ class PersonnelModel extends Model
      */
     public $timestamps = false;
 
+    private $user = null;
+
     // TODO Make use of that
     public static function addUser(UtilisateurModel $utilisateur): ?PersonnelModel
     {
@@ -53,5 +55,15 @@ class PersonnelModel extends Model
         if (!$personnel->save())
             return null;
         return $personnel;
+    }
+
+    public function getUser(): UtilisateurModel
+    {
+        global $user;
+        // cache avoiding to make some useless database requests
+        if ($user === null) {
+            $user = UtilisateurModel::find(self::getAttribute('id'));
+        }
+        return $user;
     }
 }

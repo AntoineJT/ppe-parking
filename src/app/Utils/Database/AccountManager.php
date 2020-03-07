@@ -4,7 +4,7 @@
 namespace App\Utils\Database;
 
 use App\Enums\UserStateEnum;
-use App\Models\PersonnelModel;
+use App\Models\UtilisateurModel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -13,19 +13,14 @@ class AccountManager
     public static function getUserState(int $user_id): int
     {
         // if not personnel, must be admin
-        if (!self::isPersonnel($user_id))
+        if (!UtilisateurModel::find($user_id)->isPersonnel())
             return UserStateEnum::STATE_ENABLED;
+
         return DB::table('Personnel')
             ->select('statut')
             ->where('id', '=', $user_id)
             ->first()
             ->statut;
-    }
-
-    // TODO Remove or move it!
-    public static function isPersonnel(int $user_id): bool
-    {
-        return PersonnelModel::find($user_id) !== null;
     }
 
     public static function isUserIdValid(int $user_id): bool

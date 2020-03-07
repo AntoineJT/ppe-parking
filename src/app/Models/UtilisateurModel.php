@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Utils\Database\AccountManager;
 use App\Utils\Generator;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UtilisateurModel extends Model
@@ -61,5 +60,10 @@ class UtilisateurModel extends Model
         if (!$utilisateur->save())
             return null;
         return $utilisateur;
+    }
+
+    public function isPersonnel(): bool
+    {
+        return PersonnelModel::find(self::getAttribute('id')) !== null;
     }
 }
