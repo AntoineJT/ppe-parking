@@ -60,12 +60,11 @@ class PersonnelModel extends Model
 
     public function getUser(): UtilisateurModel
     {
-        global $user;
         // cache avoiding to make some useless database requests
-        if ($user === null) {
-            $user = UtilisateurModel::find(self::getAttribute('id'));
+        if ($this->user === null) {
+            $this->user = UtilisateurModel::find(self::getAttribute('id'));
         }
-        return $user;
+        return $this->user;
     }
 
     public function getState(): int
