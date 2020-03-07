@@ -23,7 +23,7 @@ class CreateUtilisateurTable extends Migration
             $table->string('prenom', 50);
             $table->string('mail', 70)->unique();
             // $table->timestamps();
-            $table->string('mdp', 50);
+            $table->string('mdp', 60);
         });
     }
 
