@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Utils\Database\AccountManager;
 use App\Utils\Generator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
@@ -17,13 +16,6 @@ class UtilisateurModel extends Model
     protected $table = 'utilisateur';
 
     /**
-     * Indicates if the IDs are auto-incrementing.
-     *
-     * @var bool
-     */
-    public $incrementing = false;
-
-    /**
      * Indicates if the model should be timestamped.
      *
      * @var bool
@@ -32,12 +24,8 @@ class UtilisateurModel extends Model
 
     public static function create(string $last_name, string $first_name, string $mail): ?UtilisateurModel
     {
-        // TODO Migrate that
-        $user_id = AccountManager::getNextUserId();
-
         $utilisateur = new UtilisateurModel;
 
-        $utilisateur->id = $user_id;
         $utilisateur->nom = $last_name;
         $utilisateur->prenom = $first_name;
         $utilisateur->mail = $mail;
