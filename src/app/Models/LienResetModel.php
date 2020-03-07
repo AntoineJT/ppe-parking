@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+use App\Utils\Generator;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 
-class ResetLinkModel extends Model
+class LienResetModel extends Model
 {
     /**
      * The table associated with the model.
@@ -43,20 +44,22 @@ class ResetLinkModel extends Model
      */
     public $timestamps = false;
 
-    public static function saveResetLink(int $id_compte, string $reset_link): bool
+    public static function create(UtilisateurModel $user): ?LienResetModel
     {
-        $lien_reset = new ResetLinkModel();
+        $lien_reset = new LienResetModel();
 
-        $lien_reset->id = $id_compte;
-        $lien_reset->lien = $reset_link;
+        $lien_reset->id = $user->id;
+        $lien_reset->lien = Generator::generateResetLink();
 
-        return $lien_reset->save();
+        if (!$lien_reset->save())
+            return null;
+        return $lien_reset;
     }
 
     public static function deleteResetLink(string $reset_link): bool
     {
         try {
-            return ResetLinkModel::query()->find($reset_link)->delete();
+            return LienResetModel::find($reset_link)->delete();
         } catch (Exception $e) {
             return false;
         }
