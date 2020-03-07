@@ -28,13 +28,6 @@ class LigueModel extends Model
     public $incrementing = false;
 
     /**
-     * The "type" of the auto-incrementing ID.
-     *
-     * @var string
-     */
-//    protected $keyType = 'string';
-
-    /**
      * Indicates if the model should be timestamped.
      *
      * @var bool

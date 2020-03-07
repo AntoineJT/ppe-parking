@@ -2,11 +2,9 @@
 
 namespace App\Models;
 
-use App\Enums\UserStateEnum;
 use App\Utils\Database\AccountManager;
 use App\Utils\Generator;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UtilisateurModel extends Model
@@ -19,25 +17,11 @@ class UtilisateurModel extends Model
     protected $table = 'utilisateur';
 
     /**
-     * The primary key associated with the table.
-     *
-     * @var string
-     */
-//    protected $primaryKey = 'id';
-
-    /**
      * Indicates if the IDs are auto-incrementing.
      *
      * @var bool
      */
     public $incrementing = false;
-
-    /**
-     * The "type" of the auto-incrementing ID.
-     *
-     * @var string
-     */
-//    protected $keyType = 'string';
 
     /**
      * Indicates if the model should be timestamped.
