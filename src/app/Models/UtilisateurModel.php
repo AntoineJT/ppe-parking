@@ -51,32 +51,32 @@ class UtilisateurModel extends Model
     // TODO check if useful
     public function isPersonnel(): bool
     {
-        return self::toPersonnel() !== null;
+        return $this->toPersonnel() !== null;
     }
 
     public function toPersonnel(): ?PersonnelModel
     {
-        return PersonnelModel::find(self::getAttribute('id'));
+        return PersonnelModel::find($this->id);
     }
 
     public function toAdmin(): ?AdminModel
     {
-        return AdminModel::find(self::getAttribute('id'));
+        return AdminModel::find($this->id);
     }
 
     // TODO check if useful
     public function isAdmin(): bool
     {
-        return self::toAdmin() !== null;
+        return $this->toAdmin() !== null;
     }
 
     public function getState(): int
     {
-        $personnel = self::toPersonnel();
+        $personnel = $this->toPersonnel();
         if ($personnel !== null)
             return $personnel->getState();
 
-        $admin = self::toAdmin();
+        $admin = $this->toAdmin();
         if ($admin !== null)
             return $admin->getState();
 
@@ -85,6 +85,7 @@ class UtilisateurModel extends Model
 
     public function changePassword(string $password): bool
     {
-        return self::setAttribute('mdp', Hash::make($password))::save();
+        $this->mdp = Hash::make($password);
+        return $this->save();
     }
 }

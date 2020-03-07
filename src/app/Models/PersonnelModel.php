@@ -28,8 +28,8 @@ class PersonnelModel extends Model
      */
     public $timestamps = false;
 
-    // cache variable
-    private $user = null;
+    // cache member variable
+    private $m_user = null;
 
     // TODO Make use of that
     public static function addUser(UtilisateurModel $utilisateur): ?PersonnelModel
@@ -47,14 +47,14 @@ class PersonnelModel extends Model
     public function getUser(): UtilisateurModel
     {
         // cache avoiding to make some useless database requests
-        if ($this->user === null) {
-            $this->user = UtilisateurModel::find(self::getAttribute('id'));
+        if ($this->m_user === null) {
+            $this->m_user = UtilisateurModel::find($this->id);
         }
-        return $this->user;
+        return $this->m_user;
     }
 
     public function getState(): int
     {
-        return PersonnelModel::firstWhere('id', self::getAttribute('id'))->statut;
+        return PersonnelModel::firstWhere('id', $this->id)->statut;
     }
 }
