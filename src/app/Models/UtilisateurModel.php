@@ -6,6 +6,7 @@ use App\Enums\UserStateEnum;
 use App\Utils\Database\AccountManager;
 use App\Utils\Generator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UtilisateurModel extends Model
@@ -96,5 +97,10 @@ class UtilisateurModel extends Model
             return $admin->getState();
 
         return -1;
+    }
+
+    public function changePassword(string $password): bool
+    {
+        return self::setAttribute('mdp', Hash::make($password))::save();
     }
 }

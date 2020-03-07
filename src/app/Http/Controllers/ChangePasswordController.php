@@ -39,10 +39,10 @@ class ChangePasswordController extends Controller
             return FlashMessage::redirectBackWithWarningMessage('Les mots de passe ne correspondent pas!');
         }
         $user_id = ($link === NULL) ? Session::get('id') : AccountManager::getUserIdFromResetLink($link);
-        if (!AccountManager::changePassword($user_id, $data['mdp'])) {
+        $user = UtilisateurModel::find($user_id);
+        if (!$user->changePassword($data['mdp'])) {
             return FlashMessage::redirectBackWithErrorMessage("Le nouveau mot de passe n'a pas été enregistré!");
         }
-        $user = UtilisateurModel::find($user_id);
         if ($user->getState() === UserStateEnum::STATE_NEWLY_CREATED)
             AccountManager::setPersonnelState($user_id, UserStateEnum::STATE_DISABLED);
 

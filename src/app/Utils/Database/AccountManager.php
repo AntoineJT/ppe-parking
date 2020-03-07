@@ -4,7 +4,6 @@
 namespace App\Utils\Database;
 
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class AccountManager
 {
@@ -23,20 +22,6 @@ class AccountManager
     {
         $value = DB::table('Utilisateur')->max('id');
         return $value !== null ? $value : 0;
-    }
-
-    public static function changePassword(int $id_compte, string $password): bool
-    {
-        if (!self::isUserIdValid($id_compte))
-            return false;
-
-        $hashed_password = Hash::make($password);
-
-        return DB::table('Utilisateur')
-                ->where('id', '=', $id_compte)
-                ->update([
-                    'mdp' => $hashed_password
-                ]) === 1;
     }
 
     public static function getUserIdFromResetLink(string $reset_link): int
