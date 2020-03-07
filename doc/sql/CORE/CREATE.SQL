@@ -1,54 +1,55 @@
 CREATE TABLE UTILISATEUR
 (
-   id INT AUTO_INCREMENT
-   , mdp VARCHAR(50)
+   id INT NOT NULL
+   , nom VARCHAR(50) NOT NULL
+   , prenom VARCHAR(50) NOT NULL
+   , mail VARCHAR(70) NOT NULL
+   , mdp VARCHAR(61) NOT NULL
    , CONSTRAINT PK_USER PRIMARY KEY(id)
 ) ENGINE=InnoDB;
 
 CREATE TABLE ADMIN
 (
-   id INT NOT NULL AUTO_INCREMENT
+   id INT NOT NULL
    , CONSTRAINT PK_ADMIN PRIMARY KEY(id)
 ) ENGINE=InnoDB;
 
 CREATE TABLE LIGUE
 (
-   id_ligue INT AUTO_INCREMENT
-   , nom_ligue VARCHAR(50)
+   id_ligue INT NOT NULL
+   , nom_ligue VARCHAR(50) NOT NULL
    , CONSTRAINT PK_LIGUE PRIMARY KEY(id_ligue)
 ) ENGINE=InnoDB;
 
 CREATE TABLE PLACE_PARKING
 (
    numero VARCHAR(10) NOT NULL -- this will be replaced with a CHAR
-   , disponible TINYINT(1)
+   , disponible TINYINT NOT NULL
    , CONSTRAINT PK_PARKING PRIMARY KEY(numero)
 ) ENGINE=InnoDB;
 
 CREATE TABLE STATUT
 (
-   type_statut TINYINT(2)
-   , nom_statut VARCHAR(10)
+   type_statut TINYINT NOT NULL
+   , nom_statut VARCHAR(10) NOT NULL
    , CONSTRAINT PK_STATUT PRIMARY KEY(type_statut)
 ) ENGINE=InnoDB;
 
 CREATE TABLE PERSONNEL
 (
    id INT NOT NULL AUTO_INCREMENT
-   , mail VARCHAR(70)
-   , nom VARCHAR(50)
-   , prenom VARCHAR(50)
-   , valide TINYINT(1)
-   , id_ligue INT REFERENCES LIGUE(id_ligue)
+   , statut SMALLINT
+        CHECK (statut BETWEEN 0 AND 2)
+   , id_ligue INT
    , CONSTRAINT PK_PERSONNEL PRIMARY KEY(id)
 ) ENGINE=InnoDB;
 
 CREATE TABLE RESERVATION
 (
    id_res INT AUTO_INCREMENT
-   , date_demande DATE
-   , date_debut DATE
-   , date_fin DATE
+   , date_demande DATE NOT NULL
+   , date_debut DATE NOT NULL
+   , date_fin DATE NOT NULL
    , id_personnel INT NOT NULL
    , type_statut TINYINT NOT NULL
    , numero_place VARCHAR(10)
