@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\UserStateEnum;
-use App\Models\ResetLinkModel;
+use App\Models\LienResetModel;
 use App\Utils\Database\AccountManager;
 use App\Utils\FlashMessage;
 use App\Utils\SessionManager;
@@ -47,7 +47,7 @@ class ChangePasswordController extends Controller
         if (Session::exists('link')) {
             Session::remove('link');
 
-            if (!ResetLinkModel::deleteResetLink($link))
+            if (!LienResetModel::deleteResetLink($link))
                 return FlashMessage::redirectWithWarningMessage(Redirect::to('/connexion'), "Mot de passe changé! Cependant, le lien n'a pas été supprimé de la base de données! Veuillez en informer un administrateur!");
         }
         return FlashMessage::redirectWithSuccessMessage(Redirect::to('/connexion'), 'Mot de passe changé!');

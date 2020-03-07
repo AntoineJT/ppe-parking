@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\UserStateEnum;
 use App\Mail\ResetLink;
-use App\Models\ResetLinkModel;
+use App\Models\LienResetModel;
 use App\Utils\Database\AccountManager;
 use App\Utils\FlashMessage;
 use App\Utils\SessionManager;
@@ -42,7 +42,7 @@ class RegisterController extends Controller
             return FlashMessage::redirectBackWithErrorMessage("L'enregistrement a échoué!");
         }
         $reset_link = Generator::generateResetLink();
-        if (!ResetLinkModel::saveResetLink($user_id, $reset_link)) {
+        if (!LienResetModel::saveResetLink($user_id, $reset_link)) {
             return FlashMessage::redirectBackWithErrorMessage("L'enregistrement a échoué!");
         }
         Mail::to($data['courriel'])->send(new ResetLink($reset_link));

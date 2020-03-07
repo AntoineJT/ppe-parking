@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\StateEnum;
 use App\Enums\UserStateEnum;
 use App\Mail\ResetLink;
-use App\Models\ResetLinkModel;
+use App\Models\LienResetModel;
 use App\Utils\Database\AccountManager;
 use App\Utils\FlashMessage;
 use App\Utils\Generator;
@@ -39,7 +39,7 @@ class ResetLinkController extends Controller
 
         if (!self::isResetLinkValid($reset_link))
             return self::redirectToHomeWithFlashMessage();
-        if (!ResetLinkModel::saveResetLink($user_id, $reset_link))
+        if (!LienResetModel::saveResetLink($user_id, $reset_link))
             return self::redirectToHomeWithFlashMessage();
 
         self::sendResetLinkByMail($email, $reset_link);

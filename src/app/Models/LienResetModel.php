@@ -5,7 +5,7 @@ namespace App\Models;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 
-class ResetLinkModel extends Model
+class LienResetModel extends Model
 {
     /**
      * The table associated with the model.
@@ -45,7 +45,7 @@ class ResetLinkModel extends Model
 
     public static function saveResetLink(int $id_compte, string $reset_link): bool
     {
-        $lien_reset = new ResetLinkModel();
+        $lien_reset = new LienResetModel();
 
         $lien_reset->id = $id_compte;
         $lien_reset->lien = $reset_link;
@@ -56,7 +56,7 @@ class ResetLinkModel extends Model
     public static function deleteResetLink(string $reset_link): bool
     {
         try {
-            return ResetLinkModel::query()->find($reset_link)->delete();
+            return LienResetModel::query()->find($reset_link)->delete();
         } catch (Exception $e) {
             return false;
         }
