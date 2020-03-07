@@ -39,7 +39,7 @@ class RegisterController extends Controller
             || !AccountManager::isUserIdValid($user->id))
             return FlashMessage::redirectBackWithErrorMessage("L'enregistrement a échoué!");
 
-        $reset_link = LienResetModel::create($user->id);
+        $reset_link = LienResetModel::create($user);
         if ($reset_link === null) {
             return FlashMessage::redirectBackWithErrorMessage("L'enregistrement a échoué!");
         }

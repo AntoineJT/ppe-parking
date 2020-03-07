@@ -44,11 +44,11 @@ class LienResetModel extends Model
      */
     public $timestamps = false;
 
-    public static function create(int $user_id): LienResetModel
+    public static function create(UtilisateurModel $user): ?LienResetModel
     {
         $lien_reset = new LienResetModel();
 
-        $lien_reset->id = $user_id;
+        $lien_reset->id = $user->id;
         $lien_reset->lien = Generator::generateResetLink();
 
         if (!$lien_reset->save())

@@ -47,7 +47,7 @@ class UtilisateurModel extends Model
             return null;
         return $utilisateur;
     }
-    
+
     public function isPersonnel(): bool
     {
         return $this->toPersonnel() !== null;
@@ -86,5 +86,10 @@ class UtilisateurModel extends Model
     {
         $this->mdp = Hash::make($password);
         return $this->save();
+    }
+
+    public static function getUserFromEmail(string $email): ?UtilisateurModel
+    {
+        return UtilisateurModel::firstWhere('mail', $email);
     }
 }

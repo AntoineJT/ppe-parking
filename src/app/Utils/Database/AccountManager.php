@@ -23,12 +23,4 @@ class AccountManager
         $value = DB::table('Utilisateur')->max('id');
         return $value !== null ? $value : 0;
     }
-
-    public static function getUserIdFromEmail(string $email): int
-    {
-        $result = DB::table('Utilisateur')
-            ->select('id')
-            ->where('mail', '=', $email);
-        return $result->exists() ? intval($result->get()->first()->id) : -1;
-    }
 }
