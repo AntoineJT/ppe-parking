@@ -4,6 +4,7 @@
 namespace App\Utils\Database;
 
 use App\Enums\UserStateEnum;
+use App\Models\PersonnelModel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 

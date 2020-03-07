@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -40,4 +40,19 @@ class PersonnelModel extends Model
      * @var bool
      */
     public $timestamps = false;
+
+    // TODO check if it's really useful (I don't think so)
+
+/*    public static function exists(int $user_id): bool
+    {
+
+//        return DB::table('Personnel')
+//            ->join('Utilisateur', 'Personnel.id', '=', 'Utilisateur.id')
+//            ->where('Utilisateur.id', '=', $user_id)
+//            ->exists();
+//
+        return PersonnelModel::query()
+            ->where('id', '=', $user_id)
+            ->exists();
+    }*/
 }
