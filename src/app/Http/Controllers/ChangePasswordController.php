@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Enums\UserStateEnum;
 use App\Models\LienResetModel;
 use App\Models\UtilisateurModel;
-use App\Utils\Database\AccountManager;
 use App\Utils\FlashMessage;
 use App\Utils\SessionManager;
 use Illuminate\Http\RedirectResponse;
@@ -38,7 +37,7 @@ class ChangePasswordController extends Controller
         if (!self::checkPasswords($data)) {
             return FlashMessage::redirectBackWithWarningMessage('Les mots de passe ne correspondent pas!');
         }
-        $user_id = ($link === NULL) ? Session::get('id') : AccountManager::getUserIdFromResetLink($link);
+        $user_id = ($link === NULL) ? Session::get('id') : LienResetModel::find($link)->id;
         $user = UtilisateurModel::find($user_id);
         if (!$user->changePassword($data['mdp'])) {
             return FlashMessage::redirectBackWithErrorMessage("Le nouveau mot de passe n'a pas été enregistré!");

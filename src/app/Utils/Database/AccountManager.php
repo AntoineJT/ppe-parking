@@ -24,15 +24,6 @@ class AccountManager
         return $value !== null ? $value : 0;
     }
 
-    public static function getUserIdFromResetLink(string $reset_link): int
-    {
-        $result = DB::table('Lien_reset')
-            ->select('id')
-            ->where('lien', '=', $reset_link)
-            ->get();
-        return ($result === null) ? -1 : $result->first()->id;
-    }
-
     public static function getUserIdFromEmail(string $email): int
     {
         $result = DB::table('Utilisateur')

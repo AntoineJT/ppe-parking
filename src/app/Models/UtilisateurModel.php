@@ -47,8 +47,7 @@ class UtilisateurModel extends Model
             return null;
         return $utilisateur;
     }
-
-    // TODO check if useful
+    
     public function isPersonnel(): bool
     {
         return $this->toPersonnel() !== null;
