@@ -46,7 +46,9 @@ class RegisterController extends Controller
             return FlashMessage::redirectBackWithErrorMessage("L'enregistrement a échoué!");
         }
         Mail::to($data['courriel'])->send(new ResetLink($reset_link));
-        return FlashMessage::redirectBackWithSuccessMessage('Vous avez bien inscrit cet utilisateur!');
+        return FlashMessage::redirectBackWithSuccessMessage('Vous avez bien été inscrit!')
+            ->with('info', "Un lien vous a été envoyé par courriel! Il permet de choisir un mot de passe et de pré-valider votre compte!")
+            ->with('warning', "Votre compte ne sera pas utilisable tant qu'un administrateur ne l'aura pas validé!");
     }
 
     private static function registerPersonnel(array $data): int
@@ -67,8 +69,10 @@ class RegisterController extends Controller
 
     private static function registerUser(array $data): int
     {
+        /*
         if (!SessionManager::isAdmin())
             return false;
+        */
 
 //        if ($data['type'] === AuthEnum::AUTH_PERSONNEL) {
             return self::registerPersonnel($data);
