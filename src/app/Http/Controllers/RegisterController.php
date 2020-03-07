@@ -34,12 +34,12 @@ class RegisterController extends Controller
             'prenom' => Request::input('prenom'),
             'courriel' => Request::input('courriel'),
         ];
-        $user = self::registerPersonnel($data);
-        if ($user === null
-            || !AccountManager::isUserIdValid($user->id))
+        $personnel = self::registerPersonnel($data);
+        if ($personnel === null
+            || !AccountManager::isUserIdValid($personnel->id))
             return FlashMessage::redirectBackWithErrorMessage("L'enregistrement a échoué!");
 
-        $reset_link = LienResetModel::create($user);
+        $reset_link = LienResetModel::create($personnel->getUser());
         if ($reset_link === null) {
             return FlashMessage::redirectBackWithErrorMessage("L'enregistrement a échoué!");
         }
