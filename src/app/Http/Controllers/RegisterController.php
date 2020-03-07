@@ -38,11 +38,14 @@ class RegisterController extends Controller
         if ($user === null
             || !AccountManager::isUserIdValid($user->id))
             return FlashMessage::redirectBackWithErrorMessage("L'enregistrement a échoué!");
-        $reset_link = Generator::generateResetLink();
-        if (!LienResetModel::saveResetLink($user->id, $reset_link)) {
+
+        $reset_link = LienResetModel::create($user->id);
+        if ($reset_link === null) {
             return FlashMessage::redirectBackWithErrorMessage("L'enregistrement a échoué!");
         }
-        Mail::to($data['courriel'])->send(new ResetLink($reset_link));
+
+        Mail::to($data['courriel'])->send(new ResetLink($reset_link->lien));
+
         return FlashMessage::redirectBackWithSuccessMessage('Vous avez bien été inscrit!')
             ->with('info', "Un lien vous a été envoyé par courriel! Il permet de choisir un mot de passe et de pré-valider votre compte!")
             ->with('warning', "Votre compte ne sera pas utilisable tant qu'un administrateur ne l'aura pas validé!");

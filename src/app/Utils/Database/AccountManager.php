@@ -33,20 +33,11 @@ class AccountManager
         return ($result === null) ? -1 : $result->first()->id;
     }
 
-    private static function getUserInfosFromEmail(string $email) {
-        return DB::table('Utilisateur')
-            ->select('id')
-            ->where('mail', '=', $email);
-    }
-
     public static function getUserIdFromEmail(string $email): int
     {
-        $result = self::getUserInfosFromEmail($email);
+        $result = DB::table('Utilisateur')
+            ->select('id')
+            ->where('mail', '=', $email);
         return $result->exists() ? intval($result->get()->first()->id) : -1;
-    }
-
-    public static function isMailLinkedWithAccount(string $email): bool
-    {
-        return self::getUserInfosFromEmail($email)->exists();
     }
 }
