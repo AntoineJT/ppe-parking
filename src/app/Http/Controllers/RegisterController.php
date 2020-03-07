@@ -35,8 +35,7 @@ class RegisterController extends Controller
             'courriel' => Request::input('courriel'),
         ];
         $personnel = self::registerPersonnel($data);
-        if ($personnel === null
-            || !AccountManager::isUserIdValid($personnel->id))
+        if ($personnel === null)
             return FlashMessage::redirectBackWithErrorMessage("L'enregistrement a échoué!");
 
         $reset_link = LienResetModel::create($personnel->getUser());
@@ -54,7 +53,7 @@ class RegisterController extends Controller
     private static function registerPersonnel(array $data): ?PersonnelModel
     {
         $user = UtilisateurModel::create($data['nom'], $data['prenom'], $data['courriel']);
-        if (!AccountManager::isUserIdValid($user->id))
+        if ($user === null)
             return null;
         return PersonnelModel::addUser($user);
     }
