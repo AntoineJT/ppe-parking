@@ -56,7 +56,7 @@ class LienResetModel extends Model
     public static function deleteResetLink(string $reset_link): bool
     {
         try {
-            return LienResetModel::query()->find($reset_link)->delete();
+            return LienResetModel::find($reset_link)->delete();
         } catch (Exception $e) {
             return false;
         }
