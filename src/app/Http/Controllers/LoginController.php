@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\UserStateEnum;
+use App\Models\PersonnelModel;
 use App\Models\UtilisateurModel;
 use App\Utils\FlashMessage;
 use Illuminate\Http\RedirectResponse;
@@ -63,21 +64,12 @@ class LoginController extends Controller
 
     private static function log(array $data): RedirectResponse
     {
-        $results_personnel = DB::table('Personnel')
-            ->join('Utilisateur', 'Utilisateur.id', '=', 'Personnel.id')
-            ->select('Personnel.id', 'mail', 'mdp')
-            ->where('mail', '=', $data['courriel']);
-        if ($results_personnel->count() !== 0) {
-            return self::login($results_personnel->first(), $data, AuthEnum::AUTH_PERSONNEL);
-        }
+        $user = UtilisateurModel::firstWhere('mail', $data['courriel']);
 
-        $results_admin = DB::table('Admin')
-            ->join('Utilisateur', 'Utilisateur.id', '=', 'Admin.id')
-            ->select('Admin.id', 'mail', 'mdp')
-            ->where('mail', '=', $data['courriel']);
-        if ($results_admin->count() !== 0)
-            return self::login($results_admin->first(), $data, AuthEnum::AUTH_ADMIN);
+        if ($user === null)
+            return self::sendErrorMessageOnAuthenticationFailure();
 
-        return self::sendErrorMessageOnAuthenticationFailure();
+        $auth_type = $user->isAdmin() ? AuthEnum::AUTH_ADMIN : AuthEnum::AUTH_PERSONNEL;
+        return self::login($user, $data, $auth_type);
     }
 }

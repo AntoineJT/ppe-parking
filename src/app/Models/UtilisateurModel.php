@@ -51,7 +51,6 @@ class UtilisateurModel extends Model
         return AdminModel::find($this->id);
     }
 
-    // TODO check if useful
     public function isAdmin(): bool
     {
         return $this->toAdmin() !== null;
