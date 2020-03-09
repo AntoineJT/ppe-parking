@@ -12,36 +12,34 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Utils\Generator;
 
 // TODO Vérifier si nom et prénom déjà dans DB!!
 class RegisterController extends Controller
 {
     public function register(): RedirectResponse
     {
-        $rules = [
+        $validator = Validator::make(Request::all(), [
             'nom' => 'required',
             'prenom' => 'required',
             'courriel' => 'required',
-        ];
-        $validator = Validator::make(Request::all(), $rules);
-        if ($validator->fails()) {
+        ]);
+        if ($validator->fails())
             return FlashMessage::redirectBackWithWarningMessage("Le formulaire n'est pas bien renseigné!")
                 ->withInput(Request::except('mdp'));
-        }
+
         $data = [
             'nom' => Request::input('nom'),
             'prenom' => Request::input('prenom'),
             'courriel' => Request::input('courriel'),
         ];
+
         $personnel = self::registerPersonnel($data);
         if ($personnel === null)
             return FlashMessage::redirectBackWithErrorMessage("L'enregistrement a échoué!");
 
         $reset_link = LienResetModel::create($personnel->getUser());
-        if ($reset_link === null) {
+        if ($reset_link === null)
             return FlashMessage::redirectBackWithErrorMessage("L'enregistrement a échoué!");
-        }
 
         Mail::to($data['courriel'])->send(new ResetLink($reset_link->lien));
 

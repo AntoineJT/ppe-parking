@@ -17,22 +17,19 @@ class ResetLinkController extends Controller
 {
     public function createResetLink()
     {
-        $rules = [
+        $validator = Validator::make(Request::all(), [
             'courriel' => 'required'
-        ];
-        $validator = Validator::make(Request::all(), $rules);
-        if ($validator->fails()) {
+        ]);
+        if ($validator->fails())
             return FlashMessage::redirectWithWarningMessage(Redirect::to('/connexion'), "Vous devez saisir l'adresse de courriel associée à votre compte pour générer un lien de réinitialisation de mot de passe");
-        }
 
         $email = Request::input('courriel');
-        $user = UtilisateurModel::getUserFromEmail($email);
 
+        $user = UtilisateurModel::getUserFromEmail($email);
         if ($user->getState() === UserStateEnum::STATE_DISABLED)
             return FlashMessage::redirectWithInfoMessage(Redirect::to('/connexion'), 'Votre compte est désactivé! Vous ne pouvez, par conséquent, créer un lien de réinitialisation de mot de passe!');
 
         $reset_link = LienResetModel::create($user);
-
         if ($reset_link === null)
             return self::redirectToHomeWithFlashMessage();
 
