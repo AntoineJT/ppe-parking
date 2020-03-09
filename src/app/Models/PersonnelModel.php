@@ -41,7 +41,7 @@ class PersonnelModel extends Model
 
     public function getState(): int
     {
-        return PersonnelModel::firstWhere('id', $this->id)->statut;
+        return $this->statut;
     }
 
     public function setState(int $user_state): bool

@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Enums\UserStateEnum;
-use App\Models\PersonnelModel;
 use App\Models\UtilisateurModel;
 use App\Utils\FlashMessage;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
@@ -64,7 +62,7 @@ class LoginController extends Controller
 
     private static function log(array $data): RedirectResponse
     {
-        $user = UtilisateurModel::firstWhere('mail', $data['courriel']);
+        $user = UtilisateurModel::getUserFromEmail($data['courriel']);
 
         if ($user === null)
             return self::sendErrorMessageOnAuthenticationFailure();
