@@ -50,14 +50,12 @@ class LoginController extends Controller
 
         if ($results == NULL)
             return self::sendErrorMessageOnAuthenticationFailure(); // Adresse e-mail invalide!
-        else
-            if (!Hash::check($data['password'], $results->mdp))
-                return self::sendErrorMessageOnAuthenticationFailure(); // Mot de passe invalide!
-            else {
-                Request::session()->put('id', $user_id);
-                Request::session()->put('type', $type);
-                return FlashMessage::redirectWithSuccessMessage(Redirect::to('/'), 'Vous êtes connecté!');
-            }
+        if (!Hash::check($data['password'], $results->mdp))
+            return self::sendErrorMessageOnAuthenticationFailure(); // Mot de passe invalide!
+        
+        Request::session()->put('id', $user_id);
+        Request::session()->put('type', $type);
+        return FlashMessage::redirectWithSuccessMessage(Redirect::to('/'), 'Vous êtes connecté!');
     }
 
     private static function log(array $data): RedirectResponse
