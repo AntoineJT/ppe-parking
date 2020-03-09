@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Utils\Generator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Hash;
 
 class UtilisateurModel extends Model
@@ -36,19 +37,24 @@ class UtilisateurModel extends Model
         return $utilisateur;
     }
 
+    private function getIfHasOne($model): ?HasOne {
+        $hasOne = $this->hasOne($model);
+        return $hasOne->getRelated()->exists ? $hasOne : null;
+    }
+
     public function isPersonnel(): bool
     {
         return $this->toPersonnel() !== null;
     }
 
-    public function toPersonnel(): ?PersonnelModel
+    public function toPersonnel(): ?HasOne
     {
-        return PersonnelModel::find($this->id);
+        return $this->getIfHasOne(PersonnelModel::class);
     }
 
-    public function toAdmin(): ?AdminModel
+    public function toAdmin(): ?HasOne
     {
-        return AdminModel::find($this->id);
+        return $this->getIfHasOne(AdminModel::class);
     }
 
     public function isAdmin(): bool
