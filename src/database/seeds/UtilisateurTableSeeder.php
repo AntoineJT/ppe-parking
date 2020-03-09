@@ -1,7 +1,8 @@
 <?php
 
+use App\Models\AdminModel;
+use App\Models\UtilisateurModel;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class UtilisateurTableSeeder extends Seeder
 {
@@ -12,13 +13,13 @@ class UtilisateurTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('utilisateur')->insert([
-            'id' => 0,
-            'nom' => 'Test',
-            'prenom' => 'Mdp=Moka123',
-            'mail' => 'test@test.org',
-            'mdp' => '$2y$10$sEf9WBDag76gFcl6LV723eBrCf/n8mNbWvHCqDIEsdeGSDUbBSoji' // Moka123
-        ]);
-        DB::table('admin')->insert(['id' => 1]);
+        $user = UtilisateurModel::create('Test', 'Mdp=Moka123', 'test@test.org');
+        assert($user !== null);
+        $user->mdp = '$2y$10$sEf9WBDag76gFcl6LV723eBrCf/n8mNbWvHCqDIEsdeGSDUbBSoji'; // Moka123
+        assert($user->save());
+
+        $admin = new AdminModel;
+        $admin->id = $user->id;
+        assert($admin->save());
     }
 }

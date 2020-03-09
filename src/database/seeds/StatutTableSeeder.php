@@ -1,7 +1,7 @@
 <?php
 
+use App\Models\StatutModel;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class StatutTableSeeder extends Seeder
 {
@@ -12,22 +12,19 @@ class StatutTableSeeder extends Seeder
      */
     public function run()
     {
-        $table = DB::table('statut');
-        $table->insert([
-            'type_statut' => 0,
-            'nom_statut' => 'Inconnu'
-        ]);
-        $table->insert([
-            'type_statut' => 1,
-            'nom_statut' => 'Expiré'
-        ]);
-        $table->insert([
-            'type_statut' => 2,
-            'nom_statut' => 'En attente'
-        ]);
-        $table->insert([
-            'type_statut' => 3,
-            'nom_statut' => 'Refusé'
-        ]);
+        self::createStatut(0, 'Inconnu');
+        self::createStatut(1, 'Expiré');
+        self::createStatut(2, 'En attente');
+        self::createStatut(3, 'Refusé');
+    }
+
+    private static function createStatut(int $type, string $nom): void
+    {
+        $statut = new StatutModel;
+
+        $statut->type_statut = $type;
+        $statut->nom_statut = $nom;
+
+        assert($statut->save(), "Echec de l'insertion de : '$type, $nom'");
     }
 }
