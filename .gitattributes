@@ -29,16 +29,13 @@ src/app/User.php                        linguist-vendored
 src/app/Console/Kernel.php              linguist-vendored
 src/app/Exceptions/Handler.php          linguist-vendored
 src/app/Http/Kernel.php                 linguist-vendored
-src/app/Http/Controllers/Auth           linguist-vendored
 src/app/Http/Controllers/Controller.php linguist-vendored
 src/app/Http/Middleware                 linguist-vendored
 src/app/Providers                       linguist-vendored
 src/app/config                          linguist-vendored
-src/database                            linguist-vendored
 src/resources/js                        linguist-vendored
 src/resources/lang                      linguist-vendored
 src/resources/sass                      linguist-vendored
-src/resources/views/welcome.blade.php   linguist-vendored
 src/routes/api.php                      linguist-vendored
 src/routes/channels.php                 linguist-vendored
 src/routes/console.php                  linguist-vendored
