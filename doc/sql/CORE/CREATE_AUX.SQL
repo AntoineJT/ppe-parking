@@ -1,6 +1,6 @@
 -- things not at the conceptual level
 CREATE TABLE LIEN_RESET(
-   lien VARCHAR(50) NOT NULL
+   lien CHAR(20) NOT NULL
    , id INT NOT NULL
    , PRIMARY KEY(lien)
 ) ENGINE=InnoDB;

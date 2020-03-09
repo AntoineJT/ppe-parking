@@ -43,6 +43,11 @@ class AddForeignKeys extends Migration
                 ->references('type_statut')
                 ->on('statut');
         });
+        Schema::table('lien_reset', function (Blueprint $table) {
+            $table->foreign('id')
+                ->references('id')
+                ->on('utilisateur');
+        });
 
         Schema::enableForeignKeyConstraints();
     }
@@ -67,6 +72,9 @@ class AddForeignKeys extends Migration
             $table->dropForeign(['id_personnel']);
             $table->dropForeign(['numero_place']);
             $table->dropForeign(['type_statut']);
+        });
+        Schema::table('lien_reset', function (Blueprint $table) {
+            $table->dropForeign(['id']);
         });
 
         Schema::disableForeignKeyConstraints();
