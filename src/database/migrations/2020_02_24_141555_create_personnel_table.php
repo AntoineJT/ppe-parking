@@ -20,7 +20,8 @@ class CreatePersonnelTable extends Migration
 
             $table->integer('id')->unsigned()->primary();
             $table->tinyInteger('statut')->unsigned();
-            $table->integer('id_ligue')->unsigned();
+            $table->integer('id_ligue')->unsigned()->nullable();
+            $table->bigInteger('rang')->unsigned()->nullable();
         });
     }
 

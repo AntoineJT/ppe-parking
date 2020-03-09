@@ -41,6 +41,7 @@ CREATE TABLE PERSONNEL
    , statut SMALLINT
         CHECK (statut BETWEEN 0 AND 2)
    , id_ligue INT
+   , rang BIGINT
    , CONSTRAINT PK_PERSONNEL PRIMARY KEY(id)
 ) ENGINE=InnoDB;
 
