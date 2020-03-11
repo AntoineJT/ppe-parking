@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStatutTable extends Migration
+class CreatePersonnelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateStatutTable extends Migration
      */
     public function up()
     {
-        Schema::create('statut', function (Blueprint $table) {
+        Schema::create('personnels', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             // $table->charset = 'utf8';
             $table->collation = 'utf8mb4_unicode_ci';
 
-            $table->tinyInteger('type_statut')->unsigned()->primary();
-            // $table->timestamps();
-            $table->string('nom_statut', 10)->unique();
+            $table->integer('id')->unsigned()->primary();
+            $table->tinyInteger('statut')->unsigned();
+            $table->integer('id_ligue')->unsigned()->nullable();
         });
     }
 
@@ -31,6 +31,6 @@ class CreateStatutTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('statut');
+        Schema::dropIfExists('personnels');
     }
 }

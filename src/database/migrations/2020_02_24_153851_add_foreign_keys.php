@@ -14,34 +14,34 @@ class AddForeignKeys extends Migration
      */
     public function up()
     {
-        Schema::table('admin', function (Blueprint $table) {
+        Schema::table('admins', function (Blueprint $table) {
             $table->foreign('id')
                 ->references('id')
-                ->on('utilisateur');
+                ->on('utilisateurs');
         });
-        Schema::table('personnel', function (Blueprint $table) {
+        Schema::table('personnels', function (Blueprint $table) {
             $table->foreign('id')
                 ->references('id')
-                ->on('utilisateur');
+                ->on('utilisateurs');
             $table->foreign('id_ligue')
                 ->references('id_ligue')
-                ->on('ligue');
+                ->on('ligues');
         });
-        Schema::table('reservation', function (Blueprint $table) {
+        Schema::table('reservations', function (Blueprint $table) {
             $table->foreign('id_personnel')
                 ->references('id')
-                ->on('personnel');
+                ->on('personnels');
             $table->foreign('numero_place')
                 ->references('numero')
-                ->on('place_parking');
+                ->on('places');
             $table->foreign('type_statut')
                 ->references('type_statut')
-                ->on('statut');
+                ->on('statuts');
         });
         Schema::table('lien_reset', function (Blueprint $table) {
             $table->foreign('id')
                 ->references('id')
-                ->on('utilisateur');
+                ->on('utilisateurs');
         });
 
         Schema::enableForeignKeyConstraints();
@@ -54,13 +54,13 @@ class AddForeignKeys extends Migration
      */
     public function down()
     {
-        Schema::table('admin', function (Blueprint $table) {
+        Schema::table('admins', function (Blueprint $table) {
             $table->dropForeign(['id']);
         });
-        Schema::table('personnel', function (Blueprint $table) {
+        Schema::table('personnels', function (Blueprint $table) {
             $table->dropForeign(['id']);
         });
-        Schema::table('reservation', function (Blueprint $table) {
+        Schema::table('reservations', function (Blueprint $table) {
             $table->dropForeign(['id_personnel']);
             $table->dropForeign(['numero_place']);
             $table->dropForeign(['type_statut']);

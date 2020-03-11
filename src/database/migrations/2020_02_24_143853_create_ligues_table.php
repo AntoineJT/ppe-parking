@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePlaceParkingTable extends Migration
+class CreateLiguesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreatePlaceParkingTable extends Migration
      */
     public function up()
     {
-        Schema::create('place_parking', function (Blueprint $table) {
+        Schema::create('ligues', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             // $table->charset = 'utf8';
             $table->collation = 'utf8mb4_unicode_ci';
 
-            $table->char('numero', 10)->primary();
-            $table->boolean('disponible');
+            $table->integerIncrements('id_ligue');
             // $table->timestamps();
+            $table->string('nom_ligue', 50)->unique();
         });
     }
 
@@ -31,6 +31,6 @@ class CreatePlaceParkingTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('place_parking');
+        Schema::dropIfExists('ligues');
     }
 }

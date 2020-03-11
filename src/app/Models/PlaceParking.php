@@ -11,7 +11,7 @@ class PlaceParking extends Model
      *
      * @var string
      */
-    protected $table = 'place_parking';
+    protected $table = 'places';
 
     /**
      * The primary key associated with the table.

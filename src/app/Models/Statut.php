@@ -11,7 +11,7 @@ class Statut extends Model
      *
      * @var string
      */
-    protected $table = 'statut';
+    protected $table = 'statuts';
 
     /**
      * The primary key associated with the table.

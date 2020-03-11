@@ -13,7 +13,7 @@ class Utilisateur extends Model
      *
      * @var string
      */
-    protected $table = 'utilisateur';
+    protected $table = 'utilisateurs';
 
     /**
      * Indicates if the model should be timestamped.

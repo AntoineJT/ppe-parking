@@ -12,7 +12,7 @@ class Personnel extends Model
      *
      * @var string
      */
-    protected $table = 'personnel';
+    protected $table = 'personnels';
 
     /**
      * Indicates if the model should be timestamped.

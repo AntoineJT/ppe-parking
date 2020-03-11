@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLigueTable extends Migration
+class CreateStatutsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateLigueTable extends Migration
      */
     public function up()
     {
-        Schema::create('ligue', function (Blueprint $table) {
+        Schema::create('statuts', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             // $table->charset = 'utf8';
             $table->collation = 'utf8mb4_unicode_ci';
 
-            $table->integerIncrements('id_ligue');
+            $table->tinyInteger('type_statut')->unsigned()->primary();
             // $table->timestamps();
-            $table->string('nom_ligue', 50)->unique();
+            $table->string('nom_statut', 10)->unique();
         });
     }
 
@@ -31,6 +31,6 @@ class CreateLigueTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ligue');
+        Schema::dropIfExists('statuts');
     }
 }

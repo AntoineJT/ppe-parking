@@ -12,7 +12,7 @@ class Admin extends Model
      *
      * @var string
      */
-    protected $table = 'admin';
+    protected $table = 'admins';
 
     /**
      * Indicates if the model should be timestamped.
