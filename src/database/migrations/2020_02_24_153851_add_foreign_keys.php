@@ -27,11 +27,6 @@ class AddForeignKeys extends Migration
                 ->references('id_ligue')
                 ->on('ligue');
         });
-        Schema::table('position_file', function (Blueprint $table) {
-            $table->foreign('id_res')
-                ->references('id_res')
-                ->on('reservation');
-        });
         Schema::table('reservation', function (Blueprint $table) {
             $table->foreign('id_personnel')
                 ->references('id')
@@ -64,9 +59,6 @@ class AddForeignKeys extends Migration
         });
         Schema::table('personnel', function (Blueprint $table) {
             $table->dropForeign(['id']);
-        });
-        Schema::table('position_file', function (Blueprint $table) {
-            $table->dropForeign(['id_res']);
         });
         Schema::table('reservation', function (Blueprint $table) {
             $table->dropForeign(['id_personnel']);

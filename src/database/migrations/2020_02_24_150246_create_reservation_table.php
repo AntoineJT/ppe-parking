@@ -26,6 +26,7 @@ class CreateReservationTable extends Migration
             $table->integer('id_personnel')->unsigned();
             $table->tinyInteger('type_statut')->unsigned();
             $table->string('numero_place', 10);
+            $table->bigInteger('rang')->unsigned()->nullable()->unique();
         });
     }
 
