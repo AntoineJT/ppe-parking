@@ -48,12 +48,12 @@ Route::get('/changer-mot-de-passe', function() {
     ]);
     return embedInMainView($content, 'Changer votre mot de passe', ACCESS_PUBLIC);
 });
-Route::post('/changer-mot-de-passe', 'ChangePasswordController@changePassword');
+Route::post('/changer-mot-de-passe', 'ChangePasswordController');
 
 // Connexion
 Route::redirect('/', '/connexion');
 declareSubpageByPath('/connexion', 'Connexion', ACCESS_PUBLIC);
-Route::post('/connexion', 'LoginController@doLogin');
+Route::post('/connexion', 'LoginController');
 
 // Déconnexion
 Route::get('/deconnexion', function() {
@@ -63,7 +63,7 @@ Route::get('/deconnexion', function() {
 
 // Inscription
 declareSubpageByPath('/inscription', "S'enregistrer", ACCESS_PUBLIC);
-Route::post('/inscription', 'RegisterController@register');
+Route::post('/inscription', 'RegisterController');
 
 // Mot de passe oublié
 Route::get('/reinitialiser-mot-de-passe', function() {
@@ -72,7 +72,7 @@ Route::get('/reinitialiser-mot-de-passe', function() {
     ]);
     return embedInMainView($content, 'Réinitialisation du mot de passe', ACCESS_PUBLIC);
 });
-Route::post('/reinitialiser-mot-de-passe', 'ResetLinkController@createResetLink');
+Route::post('/reinitialiser-mot-de-passe', 'ResetLinkController');
 Route::redirect('/reset', '/reinitialiser-mot-de-passe');
 
 // Changer mdp avec lien

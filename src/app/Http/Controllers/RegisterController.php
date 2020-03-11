@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Validator;
 // TODO Vérifier si nom et prénom déjà dans DB!!
 class RegisterController extends Controller
 {
-    public function register(): RedirectResponse
+    public function __invoke(): RedirectResponse
     {
         $validator = Validator::make(Request::all(), [
             'nom' => 'required',

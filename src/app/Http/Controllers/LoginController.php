@@ -14,7 +14,7 @@ use App\Enums\AuthEnum;
 
 class LoginController extends Controller
 {
-    public function doLogin(): RedirectResponse
+    public function __invoke(): RedirectResponse
     {
         $rules = [
             'courriel' => 'required',
