@@ -7,13 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Statut extends Model
 {
     /**
-     * The primary key associated with the table.
-     *
-     * @var string
-     */
-    protected $primaryKey = 'id';
-
-    /**
      * Indicates if the IDs are auto-incrementing.
      *
      * @var bool
