@@ -7,13 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Statut extends Model
 {
     /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'statuts';
-
-    /**
      * The primary key associated with the table.
      *
      * @var string

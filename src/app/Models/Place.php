@@ -4,15 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PlaceParking extends Model
+class Place extends Model
 {
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'places';
-
     /**
      * The primary key associated with the table.
      *

@@ -9,13 +9,6 @@ use Illuminate\Support\Facades\Hash;
 class Utilisateur extends Model
 {
     /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'utilisateurs';
-
-    /**
      * Indicates if the model should be timestamped.
      *
      * @var bool

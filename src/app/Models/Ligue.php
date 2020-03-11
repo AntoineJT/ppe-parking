@@ -7,13 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Ligue extends Model
 {
     /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'ligues';
-
-    /**
      * The primary key associated with the table.
      *
      * @var string

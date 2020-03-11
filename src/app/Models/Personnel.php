@@ -8,13 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Personnel extends Model
 {
     /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'personnels';
-
-    /**
      * Indicates if the model should be timestamped.
      *
      * @var bool
