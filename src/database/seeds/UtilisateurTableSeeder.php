@@ -19,7 +19,7 @@ class UtilisateurTableSeeder extends Seeder
         assert($user->save());
 
         $admin = new Admin;
-        $admin->id = $user->id;
+        $admin->id_utilisateur = $user->id;
         assert($admin->save());
     }
 }

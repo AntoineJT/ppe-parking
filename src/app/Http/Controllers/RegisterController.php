@@ -6,7 +6,6 @@ use App\Mail\ResetLink;
 use App\Models\LienReset;
 use App\Models\Personnel;
 use App\Models\Utilisateur;
-use App\Utils\Database\AccountManager;
 use App\Utils\FlashMessage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;

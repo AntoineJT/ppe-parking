@@ -19,17 +19,14 @@ class Personnel extends Model
     {
         $personnel = new Personnel;
 
-        $personnel->id = $utilisateur->id;
+        $personnel->id_utilisateur = $utilisateur->id;
         $personnel->statut = UserStateEnum::STATE_NEWLY_CREATED;
         //$personnel->id_ligue = null;
         //$personnel->rang = null;
 
-        // TODO Found why workaround is needed here!
-        $personnel_copy = clone $personnel; // stupid workaround
-
         if (!$personnel->save())
             return null;
-        return $personnel_copy;
+        return $personnel;
     }
 
     public function getUser(): Utilisateur

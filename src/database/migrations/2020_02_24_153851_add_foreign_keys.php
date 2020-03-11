@@ -15,12 +15,12 @@ class AddForeignKeys extends Migration
     public function up()
     {
         Schema::table('admins', function (Blueprint $table) {
-            $table->foreign('id')
+            $table->foreign('id_utilisateur')
                 ->references('id')
                 ->on('utilisateurs');
         });
         Schema::table('personnels', function (Blueprint $table) {
-            $table->foreign('id')
+            $table->foreign('id_utilisateur')
                 ->references('id')
                 ->on('utilisateurs');
             $table->foreign('id_ligue')
@@ -55,10 +55,10 @@ class AddForeignKeys extends Migration
     public function down()
     {
         Schema::table('admins', function (Blueprint $table) {
-            $table->dropForeign(['id']);
+            $table->dropForeign(['id_utilisateur']);
         });
         Schema::table('personnels', function (Blueprint $table) {
-            $table->dropForeign(['id']);
+            $table->dropForeign(['id_utilisateur']);
         });
         Schema::table('reservations', function (Blueprint $table) {
             $table->dropForeign(['id_personnel']);
