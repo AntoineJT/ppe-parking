@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\UserStateEnum;
-use App\Models\UtilisateurModel;
+use App\Models\Utilisateur;
 use App\Utils\FlashMessage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
@@ -40,7 +40,7 @@ class LoginController extends Controller
     private static function login($results, array $data, string $type): RedirectResponse
     {
         $user_id = $results->id;
-        $user = UtilisateurModel::find($user_id);
+        $user = Utilisateur::find($user_id);
         $state = $user->getState();
 
         if ($results == NULL)
@@ -60,7 +60,7 @@ class LoginController extends Controller
 
     private static function log(array $data): RedirectResponse
     {
-        $user = UtilisateurModel::getUserFromEmail($data['courriel']);
+        $user = Utilisateur::getUserFromEmail($data['courriel']);
 
         if ($user === null)
             return self::sendErrorMessageOnAuthenticationFailure();

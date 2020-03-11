@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePersonnelTable extends Migration
+class CreateLiguesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CreatePersonnelTable extends Migration
      */
     public function up()
     {
-        Schema::create('personnel', function (Blueprint $table) {
+        Schema::create('ligues', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             // $table->charset = 'utf8';
             $table->collation = 'utf8mb4_unicode_ci';
 
-            $table->integer('id')->unsigned()->primary();
-            $table->tinyInteger('statut')->unsigned();
-            $table->integer('id_ligue')->unsigned()->nullable();
-            $table->bigInteger('rang')->unsigned()->nullable();
+            $table->integerIncrements('id');
+            // $table->timestamps();
+            $table->string('nom', 50)->unique();
         });
     }
 
@@ -32,6 +31,6 @@ class CreatePersonnelTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('personnel');
+        Schema::dropIfExists('ligues');
     }
 }

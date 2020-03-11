@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Enums\UserStateEnum;
-use App\Models\LienResetModel;
-use App\Models\UtilisateurModel;
+use App\Models\LienReset;
+use App\Models\Utilisateur;
 use App\Utils\FlashMessage;
 use App\Utils\SessionManager;
 use Illuminate\Http\RedirectResponse;
@@ -33,8 +33,8 @@ class ChangePasswordController extends Controller
         if ($mdp !== Request::input('verifmotdepasse'))
             return FlashMessage::redirectBackWithWarningMessage('Les mots de passe ne correspondent pas!');
 
-        $user_id = ($link === NULL) ? Session::get('id') : LienResetModel::find($link)->id;
-        $user = UtilisateurModel::find($user_id);
+        $user_id = ($link === NULL) ? Session::get('id') : LienReset::find($link)->id_utilisateur;
+        $user = Utilisateur::find($user_id);
 
         if (!$user->changePassword($mdp))
             return FlashMessage::redirectBackWithErrorMessage("Le nouveau mot de passe n'a pas été enregistré!");
@@ -48,7 +48,7 @@ class ChangePasswordController extends Controller
         if (Session::exists('link')) {
             Session::remove('link');
 
-            if (!LienResetModel::deleteResetLink($link))
+            if (!LienReset::deleteResetLink($link))
                 return FlashMessage::redirectWithWarningMessage(Redirect::to('/connexion'), "Mot de passe changé! Cependant, le lien n'a pas été supprimé de la base de données! Veuillez en informer un administrateur!");
         }
 

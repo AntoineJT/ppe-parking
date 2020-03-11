@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Enums\UserStateEnum;
 use App\Mail\ResetLink;
-use App\Models\LienResetModel;
-use App\Models\UtilisateurModel;
+use App\Models\LienReset;
+use App\Models\Utilisateur;
 use App\Utils\FlashMessage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
@@ -25,11 +25,11 @@ class ResetLinkController extends Controller
 
         $email = Request::input('courriel');
 
-        $user = UtilisateurModel::getUserFromEmail($email);
+        $user = Utilisateur::getUserFromEmail($email);
         if ($user->getState() === UserStateEnum::STATE_DISABLED)
             return FlashMessage::redirectWithInfoMessage(Redirect::to('/connexion'), 'Votre compte est désactivé! Vous ne pouvez, par conséquent, créer un lien de réinitialisation de mot de passe!');
 
-        $reset_link = LienResetModel::create($user);
+        $reset_link = LienReset::create($user);
         if ($reset_link === null)
             return self::redirectToHomeWithFlashMessage();
 

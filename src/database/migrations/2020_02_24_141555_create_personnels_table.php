@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePositionFileTable extends Migration
+class CreatePersonnelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreatePositionFileTable extends Migration
      */
     public function up()
     {
-        Schema::create('position_file', function (Blueprint $table) {
+        Schema::create('personnels', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             // $table->charset = 'utf8';
             $table->collation = 'utf8mb4_unicode_ci';
 
-            $table->integer('id_res')->unsigned()->primary();
-            // $table->timestamps();
-            $table->integer('rang');
-            $table->unique(['id_res', 'rang']);
+            $table->integerIncrements('id');
+            $table->integer('id_utilisateur')->unsigned();
+            $table->tinyInteger('statut')->unsigned();
+            $table->integer('id_ligue')->unsigned()->nullable();
         });
     }
 
@@ -32,6 +32,6 @@ class CreatePositionFileTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('position_file');
+        Schema::dropIfExists('personnels');
     }
 }

@@ -19,7 +19,7 @@ class CreateLienResetTable extends Migration
             $table->collation = 'utf8mb4_unicode_ci';
 
             $table->char('lien', 20);
-            $table->integer('id')->unsigned();
+            $table->integer('id_utilisateur')->unsigned();
         });
     }
 

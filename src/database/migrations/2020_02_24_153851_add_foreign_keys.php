@@ -14,39 +14,34 @@ class AddForeignKeys extends Migration
      */
     public function up()
     {
-        Schema::table('admin', function (Blueprint $table) {
-            $table->foreign('id')
+        Schema::table('admins', function (Blueprint $table) {
+            $table->foreign('id_utilisateur')
                 ->references('id')
-                ->on('utilisateur');
+                ->on('utilisateurs');
         });
-        Schema::table('personnel', function (Blueprint $table) {
-            $table->foreign('id')
+        Schema::table('personnels', function (Blueprint $table) {
+            $table->foreign('id_utilisateur')
                 ->references('id')
-                ->on('utilisateur');
+                ->on('utilisateurs');
             $table->foreign('id_ligue')
-                ->references('id_ligue')
-                ->on('ligue');
+                ->references('id')
+                ->on('ligues');
         });
-        Schema::table('position_file', function (Blueprint $table) {
-            $table->foreign('id_res')
-                ->references('id_res')
-                ->on('reservation');
-        });
-        Schema::table('reservation', function (Blueprint $table) {
+        Schema::table('reservations', function (Blueprint $table) {
             $table->foreign('id_personnel')
                 ->references('id')
-                ->on('personnel');
+                ->on('personnels');
             $table->foreign('numero_place')
                 ->references('numero')
-                ->on('place_parking');
+                ->on('places');
             $table->foreign('type_statut')
-                ->references('type_statut')
-                ->on('statut');
+                ->references('id')
+                ->on('statuts');
         });
         Schema::table('lien_reset', function (Blueprint $table) {
-            $table->foreign('id')
+            $table->foreign('id_utilisateur')
                 ->references('id')
-                ->on('utilisateur');
+                ->on('utilisateurs');
         });
 
         Schema::enableForeignKeyConstraints();
@@ -59,22 +54,19 @@ class AddForeignKeys extends Migration
      */
     public function down()
     {
-        Schema::table('admin', function (Blueprint $table) {
-            $table->dropForeign(['id']);
+        Schema::table('admins', function (Blueprint $table) {
+            $table->dropForeign(['id_utilisateur']);
         });
-        Schema::table('personnel', function (Blueprint $table) {
-            $table->dropForeign(['id']);
+        Schema::table('personnels', function (Blueprint $table) {
+            $table->dropForeign(['id_utilisateur']);
         });
-        Schema::table('position_file', function (Blueprint $table) {
-            $table->dropForeign(['id_res']);
-        });
-        Schema::table('reservation', function (Blueprint $table) {
+        Schema::table('reservations', function (Blueprint $table) {
             $table->dropForeign(['id_personnel']);
             $table->dropForeign(['numero_place']);
             $table->dropForeign(['type_statut']);
         });
         Schema::table('lien_reset', function (Blueprint $table) {
-            $table->dropForeign(['id']);
+            $table->dropForeign(['id_utilisateur']);
         });
 
         Schema::disableForeignKeyConstraints();
