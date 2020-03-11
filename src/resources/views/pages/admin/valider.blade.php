@@ -1,5 +1,5 @@
 <ul>
-    @foreach(\App\Models\PersonnelModel::where('statut', \App\Enums\UserStateEnum::STATE_DISABLED)->get() as $personnel)
+    @foreach(\App\Models\Personnel::where('statut', \App\Enums\UserStateEnum::STATE_DISABLED)->get() as $personnel)
         @php($user = $personnel->getUser())
         <li>
             <form>
