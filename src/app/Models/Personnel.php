@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Enums\UserStateEnum;
 use Illuminate\Database\Eloquent\Model;
 
-class PersonnelModel extends Model
+class Personnel extends Model
 {
     /**
      * The table associated with the model.
@@ -22,9 +22,9 @@ class PersonnelModel extends Model
     public $timestamps = false;
 
     // TODO Make use of that
-    public static function addUser(UtilisateurModel $utilisateur): ?PersonnelModel
+    public static function addUser(Utilisateur $utilisateur): ?Personnel
     {
-        $personnel = new PersonnelModel;
+        $personnel = new Personnel;
 
         $personnel->id = $utilisateur->id;
         $personnel->statut = UserStateEnum::STATE_NEWLY_CREATED;
@@ -39,9 +39,9 @@ class PersonnelModel extends Model
         return $personnel_copy;
     }
 
-    public function getUser(): UtilisateurModel
+    public function getUser(): Utilisateur
     {
-        return UtilisateurModel::find($this->id);
+        return Utilisateur::find($this->id);
         // return $this->belongsTo(UtilisateurModel::class, 'id')->getRelated();
     }
 

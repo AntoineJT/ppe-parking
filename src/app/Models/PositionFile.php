@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PositionFileModel extends Model
+class PositionFile extends Model
 {
     /**
      * The table associated with the model.

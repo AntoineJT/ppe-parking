@@ -4,21 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class StatutModel extends Model
+class Ligue extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'statut';
+    protected $table = 'ligue';
 
     /**
      * The primary key associated with the table.
      *
      * @var string
      */
-    protected $primaryKey = 'type_statut';
+    protected $primaryKey = 'id_ligue';
 
     /**
      * Indicates if the IDs are auto-incrementing.

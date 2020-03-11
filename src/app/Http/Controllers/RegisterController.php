@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Mail\ResetLink;
-use App\Models\LienResetModel;
-use App\Models\PersonnelModel;
-use App\Models\UtilisateurModel;
+use App\Models\LienReset;
+use App\Models\Personnel;
+use App\Models\Utilisateur;
 use App\Utils\Database\AccountManager;
 use App\Utils\FlashMessage;
 use Illuminate\Http\RedirectResponse;
@@ -37,7 +37,7 @@ class RegisterController extends Controller
         if ($personnel === null)
             return FlashMessage::redirectBackWithErrorMessage("L'enregistrement a échoué!");
 
-        $reset_link = LienResetModel::create($personnel->getUser());
+        $reset_link = LienReset::create($personnel->getUser());
         if ($reset_link === null)
             return FlashMessage::redirectBackWithErrorMessage("L'enregistrement a échoué!");
 
@@ -48,11 +48,11 @@ class RegisterController extends Controller
             ->with('warning', "Votre compte ne sera pas utilisable tant qu'un administrateur ne l'aura pas validé!");
     }
 
-    private static function registerPersonnel(array $data): ?PersonnelModel
+    private static function registerPersonnel(array $data): ?Personnel
     {
-        $user = UtilisateurModel::create($data['nom'], $data['prenom'], $data['courriel']);
+        $user = Utilisateur::create($data['nom'], $data['prenom'], $data['courriel']);
         if ($user === null)
             return null;
-        return PersonnelModel::addUser($user);
+        return Personnel::addUser($user);
     }
 }

@@ -4,21 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PlaceParkingModel extends Model
+class Reservation extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'place_parking';
+    protected $table = 'reservation';
 
     /**
      * The primary key associated with the table.
      *
      * @var string
      */
-    protected $primaryKey = 'numero';
+    protected $primaryKey = 'id_res';
 
     /**
      * Indicates if the IDs are auto-incrementing.
@@ -26,13 +26,6 @@ class PlaceParkingModel extends Model
      * @var bool
      */
     public $incrementing = false;
-
-    /**
-     * The "type" of the auto-incrementing ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'string';
 
     /**
      * Indicates if the model should be timestamped.

@@ -6,7 +6,7 @@ use App\Utils\Generator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 
-class UtilisateurModel extends Model
+class Utilisateur extends Model
 {
     /**
      * The table associated with the model.
@@ -22,9 +22,9 @@ class UtilisateurModel extends Model
      */
     public $timestamps = false;
 
-    public static function create(string $last_name, string $first_name, string $mail): ?UtilisateurModel
+    public static function create(string $last_name, string $first_name, string $mail): ?Utilisateur
     {
-        $utilisateur = new UtilisateurModel;
+        $utilisateur = new Utilisateur;
 
         $utilisateur->nom = $last_name;
         $utilisateur->prenom = $first_name;
@@ -41,14 +41,14 @@ class UtilisateurModel extends Model
         return $this->toPersonnel() !== null;
     }
 
-    public function toPersonnel(): ?PersonnelModel
+    public function toPersonnel(): ?Personnel
     {
-        return PersonnelModel::find($this->id);
+        return Personnel::find($this->id);
     }
 
-    public function toAdmin(): ?AdminModel
+    public function toAdmin(): ?Admin
     {
-        return AdminModel::find($this->id);
+        return Admin::find($this->id);
     }
 
     public function isAdmin(): bool
@@ -75,8 +75,8 @@ class UtilisateurModel extends Model
         return $this->save();
     }
 
-    public static function getUserFromEmail(string $email): ?UtilisateurModel
+    public static function getUserFromEmail(string $email): ?Utilisateur
     {
-        return UtilisateurModel::firstWhere('mail', $email);
+        return Utilisateur::firstWhere('mail', $email);
     }
 }

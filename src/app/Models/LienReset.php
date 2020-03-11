@@ -6,7 +6,7 @@ use App\Utils\Generator;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 
-class LienResetModel extends Model
+class LienReset extends Model
 {
     /**
      * The table associated with the model.
@@ -44,9 +44,9 @@ class LienResetModel extends Model
      */
     public $timestamps = false;
 
-    public static function create(UtilisateurModel $user): ?LienResetModel
+    public static function create(Utilisateur $user): ?LienReset
     {
-        $lien_reset = new LienResetModel();
+        $lien_reset = new LienReset();
 
         $lien_reset->id = $user->id;
         $lien_reset->lien = Generator::generateResetLink();
@@ -59,7 +59,7 @@ class LienResetModel extends Model
     public static function deleteResetLink(string $reset_link): bool
     {
         try {
-            return LienResetModel::find($reset_link)->delete();
+            return LienReset::find($reset_link)->delete();
         } catch (Exception $e) {
             return false;
         }

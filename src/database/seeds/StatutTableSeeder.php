@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\StatutModel;
+use App\Models\Statut;
 use Illuminate\Database\Seeder;
 
 class StatutTableSeeder extends Seeder
@@ -20,7 +20,7 @@ class StatutTableSeeder extends Seeder
 
     private static function createStatut(int $type, string $nom): void
     {
-        $statut = new StatutModel;
+        $statut = new Statut;
 
         $statut->type_statut = $type;
         $statut->nom_statut = $nom;
