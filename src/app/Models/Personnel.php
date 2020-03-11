@@ -31,7 +31,7 @@ class Personnel extends Model
 
     public function getUser(): Utilisateur
     {
-        return Utilisateur::find($this->id);
+        return Utilisateur::find($this->id_utilisateur);
         // return $this->belongsTo(UtilisateurModel::class, 'id')->getRelated();
     }
 

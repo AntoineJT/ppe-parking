@@ -36,12 +36,12 @@ class Utilisateur extends Model
 
     public function toPersonnel(): ?Personnel
     {
-        return Personnel::find($this->id);
+        return Personnel::firstWhere('id_utilisateur', $this->id);
     }
 
     public function toAdmin(): ?Admin
     {
-        return Admin::find($this->id);
+        return Admin::firstWhere('id_utilisateur', $this->id);
     }
 
     public function isAdmin(): bool
