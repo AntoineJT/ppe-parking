@@ -43,16 +43,16 @@ class LoginController extends Controller
         $user = UtilisateurModel::find($user_id);
         $state = $user->getState();
 
+        if ($results == NULL)
+            return self::sendErrorMessageOnAuthenticationFailure(); // Adresse e-mail invalide!
+        if (!Hash::check($data['password'], $results->mdp))
+            return self::sendErrorMessageOnAuthenticationFailure(); // Mot de passe invalide!
+
         if ($state === UserStateEnum::STATE_DISABLED)
             return FlashMessage::redirectBackWithInfoMessage("Votre compte est désactivé! Vous ne pouvez pas vous connecter! Contactez l'administrateur s'il s'agit d'une erreur!");
         if ($state === UserStateEnum::STATE_NEWLY_CREATED)
             return FlashMessage::redirectBackWithInfoMessage("Vous devez valider votre adresse de courriel avant de pouvoir vous connecter!");
 
-        if ($results == NULL)
-            return self::sendErrorMessageOnAuthenticationFailure(); // Adresse e-mail invalide!
-        if (!Hash::check($data['password'], $results->mdp))
-            return self::sendErrorMessageOnAuthenticationFailure(); // Mot de passe invalide!
-        
         Request::session()->put('id', $user_id);
         Request::session()->put('type', $type);
         return FlashMessage::redirectWithSuccessMessage(Redirect::to('/'), 'Vous êtes connecté!');
