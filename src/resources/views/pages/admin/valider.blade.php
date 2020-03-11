@@ -2,7 +2,7 @@
     @foreach(\App\Models\Personnel::where('statut', \App\Enums\UserStateEnum::STATE_DISABLED)->get() as $personnel)
         @php($user = $personnel->getUser())
         <li>
-            <form>
+            <form method="POST">
                 @csrf
                 {{ $user->nom }} {{ $user->prenom }}
                 <input type="hidden" name="id" value="{{ $user->id }}">
