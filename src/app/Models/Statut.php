@@ -11,7 +11,7 @@ class Statut extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'type_statut';
+    protected $primaryKey = 'id';
 
     /**
      * Indicates if the IDs are auto-incrementing.

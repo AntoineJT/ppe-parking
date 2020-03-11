@@ -18,7 +18,7 @@ class CreateReservationsTable extends Migration
             // $table->charset = 'utf8';
             $table->collation = 'utf8mb4_unicode_ci';
 
-            $table->integerIncrements('id_res');
+            $table->integerIncrements('id');
             // $table->timestamps();
             $table->date('date_demande');
             $table->date('date_debut');

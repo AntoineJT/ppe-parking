@@ -48,7 +48,7 @@ class LienReset extends Model
     {
         $lien_reset = new LienReset();
 
-        $lien_reset->id = $user->id;
+        $lien_reset->id_utilisateur = $user->id;
         $lien_reset->lien = Generator::generateResetLink();
 
         if (!$lien_reset->save())

@@ -33,7 +33,7 @@ class ChangePasswordController extends Controller
         if ($mdp !== Request::input('verifmotdepasse'))
             return FlashMessage::redirectBackWithWarningMessage('Les mots de passe ne correspondent pas!');
 
-        $user_id = ($link === NULL) ? Session::get('id') : LienReset::find($link)->id;
+        $user_id = ($link === NULL) ? Session::get('id') : LienReset::find($link)->id_utilisateur;
         $user = Utilisateur::find($user_id);
 
         if (!$user->changePassword($mdp))

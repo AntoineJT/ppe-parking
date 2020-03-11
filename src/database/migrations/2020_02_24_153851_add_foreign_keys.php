@@ -24,7 +24,7 @@ class AddForeignKeys extends Migration
                 ->references('id')
                 ->on('utilisateurs');
             $table->foreign('id_ligue')
-                ->references('id_ligue')
+                ->references('id')
                 ->on('ligues');
         });
         Schema::table('reservations', function (Blueprint $table) {
@@ -35,11 +35,11 @@ class AddForeignKeys extends Migration
                 ->references('numero')
                 ->on('places');
             $table->foreign('type_statut')
-                ->references('type_statut')
+                ->references('id')
                 ->on('statuts');
         });
         Schema::table('lien_reset', function (Blueprint $table) {
-            $table->foreign('id')
+            $table->foreign('id_utilisateur')
                 ->references('id')
                 ->on('utilisateurs');
         });
@@ -66,7 +66,7 @@ class AddForeignKeys extends Migration
             $table->dropForeign(['type_statut']);
         });
         Schema::table('lien_reset', function (Blueprint $table) {
-            $table->dropForeign(['id']);
+            $table->dropForeign(['id_utilisateur']);
         });
 
         Schema::disableForeignKeyConstraints();

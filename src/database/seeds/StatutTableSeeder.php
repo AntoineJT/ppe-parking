@@ -22,8 +22,8 @@ class StatutTableSeeder extends Seeder
     {
         $statut = new Statut;
 
-        $statut->type_statut = $type;
-        $statut->nom_statut = $nom;
+        $statut->id = $type;
+        $statut->nom = $nom;
 
         assert($statut->save(), "Echec de l'insertion de : '$type, $nom'");
     }

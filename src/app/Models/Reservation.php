@@ -11,7 +11,7 @@ class Reservation extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'id_res';
+    protected $primaryKey = 'id';
 
     /**
      * Indicates if the IDs are auto-incrementing.

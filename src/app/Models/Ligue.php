@@ -11,7 +11,7 @@ class Ligue extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'id_ligue';
+    protected $primaryKey = 'id';
 
     /**
      * Indicates if the IDs are auto-incrementing.

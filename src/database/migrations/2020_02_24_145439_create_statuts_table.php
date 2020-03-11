@@ -18,9 +18,9 @@ class CreateStatutsTable extends Migration
             // $table->charset = 'utf8';
             $table->collation = 'utf8mb4_unicode_ci';
 
-            $table->tinyInteger('type_statut')->unsigned()->primary();
+            $table->tinyInteger('id')->unsigned()->primary();
             // $table->timestamps();
-            $table->string('nom_statut', 10)->unique();
+            $table->string('nom', 10)->unique();
         });
     }
 
