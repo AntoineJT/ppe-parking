@@ -80,3 +80,7 @@ Route::get('/reinitialiser-mot-de-passe/{link}', function($link) {
     Session::put('link', $link);
     return Redirect::to('/changer-mot-de-passe');
 });
+
+// Page validation
+declareSubpageByPath('/admin/valider', 'Valider les comptes', ACCESS_ADMIN);
+Route::post('/admin/valider', 'ValidationController');

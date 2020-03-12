@@ -33,6 +33,7 @@
             <a class="nav-link nav-item" href="/deconnexion"><i class="fas fa-running mr-2"></i>Déconnexion</a>
         @elseif (SessionManager::isAdmin())
             <a class="nav-link nav-item" href="/"><i class="fas fa-home mr-2"></i>Accueil</a>
+            <a class="nav-link nav-item" href="/admin/valider"><i class="fas fa-check-circle mr-2"></i>Valider</a>
             <a class="nav-link nav-item" href="/deconnexion"><i class="fas fa-running mr-2"></i>Déconnexion</a>
         @endif
 

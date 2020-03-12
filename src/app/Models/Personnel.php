@@ -45,4 +45,9 @@ class Personnel extends Model
         $this->statut = $user_state;
         return $this->save();
     }
+
+    public static function find_(int $user_id): ?Personnel
+    {
+        return Personnel::firstWhere('id_utilisateur', $user_id);
+    }
 }
