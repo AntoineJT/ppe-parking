@@ -21,7 +21,7 @@ class ValidationController extends Controller
         if ($validator->fails())
             return FlashMessage::redirectWithErrorMessage(Redirect::to('/admin/valider'), "L'identifiant de l'utilisateur n'a pas été fourni!");
 
-        if (SessionManager::isPersonnel())
+        if (!SessionManager::isAdmin())
             return FlashMessage::redirectBackWithErrorMessage("Vous n'êtes pas administrateur! Action impossible!");
 
         $user_id = Request::input('id');
