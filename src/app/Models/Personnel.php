@@ -46,6 +46,12 @@ class Personnel extends Model
         return $this->save();
     }
 
+    public function setLigue(int $ligue_id): bool
+    {
+        $this->id_ligue = $ligue_id;
+        return $this->save();
+    }
+
     public static function find_(int $user_id): ?Personnel
     {
         return Personnel::firstWhere('id_utilisateur', $user_id);

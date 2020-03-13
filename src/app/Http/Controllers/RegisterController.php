@@ -21,6 +21,7 @@ class RegisterController extends Controller
             'nom' => 'required',
             'prenom' => 'required',
             'courriel' => 'required',
+            'ligue' => 'required',
         ]);
         if ($validator->fails())
             return FlashMessage::redirectBackWithWarningMessage("Le formulaire n'est pas bien renseigné!")
@@ -30,6 +31,7 @@ class RegisterController extends Controller
             'nom' => Request::input('nom'),
             'prenom' => Request::input('prenom'),
             'courriel' => Request::input('courriel'),
+            'ligue' => Request::input('ligue'),
         ];
 
         $personnel = self::registerPersonnel($data);
@@ -52,6 +54,14 @@ class RegisterController extends Controller
         $user = Utilisateur::create($data['nom'], $data['prenom'], $data['courriel']);
         if ($user === null)
             return null;
-        return Personnel::addUser($user);
+
+        $personnel = Personnel::addUser($user);
+        if ($personnel === null)
+            return null;
+
+        $succeed = $personnel->setLigue($data['ligue']);
+        if (!$succeed)
+            return null;
+        return $personnel;
     }
 }
