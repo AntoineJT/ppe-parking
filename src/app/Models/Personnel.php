@@ -14,13 +14,13 @@ class Personnel extends Model
      */
     public $timestamps = false;
 
-    public static function addUser(Utilisateur $utilisateur): ?Personnel
+    public static function addUser(Utilisateur $utilisateur, int $ligue_id): ?Personnel
     {
         $personnel = new Personnel;
 
         $personnel->id_utilisateur = $utilisateur->id;
         $personnel->statut = UserStateEnum::STATE_NEWLY_CREATED;
-        //$personnel->id_ligue = null;
+        $personnel->id_ligue = $ligue_id;
         //$personnel->rang = null;
 
         if (!$personnel->save())

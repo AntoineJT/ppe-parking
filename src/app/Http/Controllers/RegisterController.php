@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\ResetLink;
 use App\Models\LienReset;
+use App\Models\Ligue;
 use App\Models\Personnel;
 use App\Models\Utilisateur;
 use App\Utils\FlashMessage;
@@ -55,7 +56,7 @@ class RegisterController extends Controller
         if ($user === null)
             return null;
 
-        $personnel = Personnel::addUser($user);
+        $personnel = Personnel::addUser($user, $data['ligue']);
         if ($personnel === null)
             return null;
 
