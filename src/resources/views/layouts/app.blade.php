@@ -49,7 +49,8 @@
             <div class="text-center mb-2">
                 <span>Vous êtes connecté en tant que {{ SessionManager::getFullTypeName() }}</span>
             </div>
-    @endif
+        @endif
+    </div>
 </header>
 <div class="ml-5 mr-5 mb-2">
     <main>
