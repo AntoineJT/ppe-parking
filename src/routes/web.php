@@ -71,3 +71,6 @@ declareViewThenPost('/admin/valider', 'admin.valider', ACCESS_ADMIN, 'Validation
 
 declareViewThenPost('/admin/gestion-ligues', 'admin.ligues', ACCESS_ADMIN, 'LeagueController')
     ->name('manage-leagues');
+
+declareViewThenPost('/admin/gestion-places', 'admin.places', ACCESS_ADMIN, 'ParkingSpaceController')
+    ->name('manage-parking-spaces');
