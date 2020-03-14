@@ -10,8 +10,8 @@
           </div></br>
             <button class="btn-block btn btn-primary btn-b" type="submit">Se connecter</button></br>
         <div>
-          <a class="col-1" href="/inscription"><i>Pas encore inscrit ?</i></a>
-          <a class="col-1" href="/reset" class="white-relief"><i>Mot de passe oublié ?</i></a>
+          <a class="col-1" href="{{ route('register') }}"><i>Pas encore inscrit ?</i></a>
+          <a class="col-1" href="{{ route('reset-password') }}" class="white-relief"><i>Mot de passe oublié ?</i></a>
         </div>
     </form>
 </div>

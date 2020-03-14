@@ -26,15 +26,15 @@
         </div>
         <div class="col-2"></div>
         @if (!SessionManager::isLogged())
-            <a class="nav-link nav-item" href="/"><i class="fas fa-home mr-2"></i>Accueil</a>
-            <a class="nav-link nav-item" href="/connexion"><i class="fas fa-sign-in-alt mr-2"></i>Connexion</a>
+            <a class="nav-link nav-item" href="{{ route('home') }}"><i class="fas fa-home mr-2"></i>Accueil</a>
+            <a class="nav-link nav-item" href="{{ route('login') }}"><i class="fas fa-sign-in-alt mr-2"></i>Connexion</a>
         @elseif (SessionManager::isPersonnel())
-            <a class="nav-link nav-item" href="/"><i class="fas fa-home mr-2"></i>Accueil</a>
-            <a class="nav-link nav-item" href="/deconnexion"><i class="fas fa-running mr-2"></i>Déconnexion</a>
+            <a class="nav-link nav-item" href="{{ route('home') }}"><i class="fas fa-home mr-2"></i>Accueil</a>
+            <a class="nav-link nav-item" href="{{ route('logout') }}"><i class="fas fa-running mr-2"></i>Déconnexion</a>
         @elseif (SessionManager::isAdmin())
-            <a class="nav-link nav-item" href="/"><i class="fas fa-home mr-2"></i>Accueil</a>
-            <a class="nav-link nav-item" href="/admin/valider"><i class="fas fa-check-circle mr-2"></i>Valider</a>
-            <a class="nav-link nav-item" href="/deconnexion"><i class="fas fa-running mr-2"></i>Déconnexion</a>
+            <a class="nav-link nav-item" href="{{ route('home') }}"><i class="fas fa-home mr-2"></i>Accueil</a>
+            <a class="nav-link nav-item" href="{{ route('validate') }}"><i class="fas fa-check-circle mr-2"></i>Valider</a>
+            <a class="nav-link nav-item" href="{{ route('logout') }}"><i class="fas fa-running mr-2"></i>Déconnexion</a>
         @endif
 
       </nav>

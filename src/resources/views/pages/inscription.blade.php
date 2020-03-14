@@ -25,6 +25,6 @@
             @endforeach
         </select>
         <button class="btn-block btn btn-primary btn-b mt-4" type="submit">S'enregistrer</button>
-        <div class="mt-2 font-italic text-center"><a href="/connexion">Se connecter</a></div>
+        <div class="mt-2 font-italic text-center"><a href="{{ route('login') }}">Se connecter</a></div>
     </form>
 </div>

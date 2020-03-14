@@ -21,6 +21,5 @@
         </div>
     </div>
 @else
-    <p style="color:red; font-size:3rem;">Vous devez vous <a style="color:green" href="/connexion">connecter</a>
-        pour accéder à ce contenu!</p>
+    @include('includes.access.semi-public')
 @endif
