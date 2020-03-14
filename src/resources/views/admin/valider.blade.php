@@ -1,0 +1,18 @@
+@extends('layouts.app')
+@section('title', 'Valider les comptes')
+
+@section('content')
+    <ul>
+        @foreach(\App\Models\Personnel::where('statut', \App\Enums\UserStateEnum::STATE_DISABLED)->get() as $personnel)
+            @php($user = $personnel->getUser())
+            <li>
+                <form method="POST">
+                    @csrf
+                    {{ $user->nom }} {{ $user->prenom }}
+                    <input type="hidden" name="id" value="{{ $user->id }}">
+                    <button class="ml-2 btn btn-success"><i class="fas fa-check mr-2"></i>Valider!</button>
+                </form>
+            </li>
+        @endforeach
+    </ul>
+@endsection

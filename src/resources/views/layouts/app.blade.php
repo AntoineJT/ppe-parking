@@ -1,19 +1,27 @@
 <!DOCTYPE HTML>
 <html lang="fr">
 <head>
-    <title>PPE Parking - {{ $title }}</title>
+    <title>PPE Parking - @yield('title')</title>
     <meta charset="utf8">
+
+    <!-- Favicon -->
     <link rel="icon" href="{{ asset('images/favicon.ico')}}"/>
 
+    <!-- Style -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
           integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link href="{{ asset('/css/vendor/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('/css/main.css') }}" rel="stylesheet" type="text/css">
+    @stack('styles')
+
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Sigmar+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 
+    <!-- Scripts -->
     <script src="{{ asset('/js/flash-message.js') }}" type="text/javascript"></script>
+    @stack('scripts')
 </head>
 @php
     use \App\Utils\SessionManager;
@@ -48,11 +56,12 @@
         <div>
             @include('includes.flash-message')
         </div>
+        {{-- TODO Rework le système d'accès? Passer par un middleware? --}}
         @if ($access === ACCESS_PUBLIC)
-            {!! $content !!}
+            @yield('content')
         @elseif ($access === ACCESS_SEMIPUBLIC)
             @if (SessionManager::isLogged())
-                {!! $content !!}
+                @yield('content')
             @else
                 @include('includes.access.semi-public')
             @endif
@@ -60,7 +69,7 @@
             @if (!SessionManager::isLogged())
                 @include('includes.access.admin')
             @elseif (session('type') === 'admin')
-                {!! $content !!}
+                @yield('content')
             @else
                 @include('includes.access.forbidden')
             @endif
