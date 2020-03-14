@@ -3,16 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Exception;
 
 class Place extends Model
 {
-    /**
-     * The primary key associated with the table.
-     *
-     * @var string
-     */
-    protected $primaryKey = 'numero';
-
     /**
      * Indicates if the IDs are auto-incrementing.
      *
@@ -35,13 +29,12 @@ class Place extends Model
     public $timestamps = false;
 
 
-    public static function deleteSpace(int $league_id): bool
+    public static function deleteSpace(int $space_id): bool
     {
-        try {
-            return Place::find($league_id)->delete();
-        } catch (Exception $e) {
+        $space = Place::find($space_id);
+        if ($space === null)
             return false;
-        }
+        return $space->delete();
     }
 
     public static function createSpace(string $label): ?Place
