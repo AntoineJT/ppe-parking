@@ -28,17 +28,23 @@ function declareView(string $url, string $path, int $access_level)
     ]);
 }
 
+function declareViewThenPost(string $url, string $path, int $access_level, string $action)
+{
+    $route = declareView($url, $path, $access_level);
+    Route::post($route->uri(), $action);
+    return $route;
+}
+
+// $r states for $current_route
+
 // Changer mot de passe
-declareView('/changer-mot-de-passe', 'changer-mdp', ACCESS_PUBLIC)
+declareViewThenPost('/changer-mot-de-passe', 'changer-mdp', ACCESS_PUBLIC, 'ChangePasswordController')
     ->name('change-password');
-Route::post('/changer-mot-de-passe', 'ChangePasswordController');
 
 // Connexion
-Route::redirect('/', '/connexion')->name('home');
-declareView('/connexion', 'connexion', ACCESS_PUBLIC)
+declareViewThenPost('/connexion', 'connexion', ACCESS_PUBLIC, 'LoginController')
     ->name('login');
-Route::post('/connexion', 'LoginController');
-
+Route::redirect('/', '/connexion')->name('home');
 
 // Déconnexion
 Route::get('/deconnexion', function () {
@@ -47,23 +53,20 @@ Route::get('/deconnexion', function () {
 })->name('logout');
 
 // Inscription
-declareView('/inscription', 'inscription', ACCESS_PUBLIC)
+declareViewThenPost('/inscription', 'inscription', ACCESS_PUBLIC, 'RegisterController')
     ->name('register');
-Route::post('/inscription', 'RegisterController');
 
 // Mot de passe oublié
-declareView('/reinitialiser-mot-de-passe', 'reset', ACCESS_PUBLIC)
+declareViewThenPost('/reinitialiser-mot-de-passe', 'reset', ACCESS_PUBLIC, 'ResetLinkController')
     ->name('reset-password');
-Route::post('/reinitialiser-mot-de-passe', 'ResetLinkController');
 Route::redirect('/reset', '/reinitialiser-mot-de-passe');
 
 // Changer mdp avec lien
-Route::get('/reinitialiser-mot-de-passe/{link}', function($link) {
+Route::get('/reinitialiser-mot-de-passe/{link}', function ($link) {
     Session::put('link', $link);
     return Redirect::to('/changer-mot-de-passe');
 });
 
 // Page validation
-declareView('/admin/valider', 'admin.valider', ACCESS_ADMIN)
+declareViewThenPost('/admin/valider', 'admin.valider', ACCESS_ADMIN, 'ValidationController')
     ->name('validate');
-Route::post('/admin/valider', 'ValidationController');
