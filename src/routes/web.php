@@ -21,6 +21,7 @@ const ACCESS_PUBLIC = 0;
 const ACCESS_SEMIPUBLIC = 1;
 const ACCESS_ADMIN = 2;
 
+/*
 function embedInMainView(string $content, string $title, int $access_level) : string
 {
     return view('main', [
@@ -40,8 +41,10 @@ function declareSubpage(string $name, string $path, string $title, int $access_l
         return embedInMainView($content, $title, $access_level);
     });
 }
+*/
 
 // Changer mot de passe
+/*
 Route::get('/changer-mot-de-passe', function() {
     $content = view('pages/changer-mdp', [
         'link' => ''
@@ -49,13 +52,17 @@ Route::get('/changer-mot-de-passe', function() {
     return embedInMainView($content, 'Changer votre mot de passe', ACCESS_PUBLIC);
 })->name('change-password');
 Route::post('/changer-mot-de-passe', 'ChangePasswordController');
+*/
 
 // Connexion
 Route::redirect('/', '/connexion')->name('home');
-Route::view('/connexion', 'pages.connexion', [
+
+Route::view('/connexion', 'connexion', [
     'access' => ACCESS_PUBLIC
 ])->name('login');
+
 Route::post('/connexion', 'LoginController');
+
 
 // Déconnexion
 Route::get('/deconnexion', function() {
@@ -64,10 +71,13 @@ Route::get('/deconnexion', function() {
 })->name('logout');
 
 // Inscription
+/*
 declareSubpageByPath('/inscription', "S'enregistrer", ACCESS_PUBLIC)->name('register');
 Route::post('/inscription', 'RegisterController');
+*/
 
 // Mot de passe oublié
+/*
 Route::get('/reinitialiser-mot-de-passe', function() {
     $content = view('pages/reset', [
         'link' => ''
@@ -76,13 +86,18 @@ Route::get('/reinitialiser-mot-de-passe', function() {
 })->name('reset-password');
 Route::post('/reinitialiser-mot-de-passe', 'ResetLinkController');
 Route::redirect('/reset', '/reinitialiser-mot-de-passe');
+*/
 
 // Changer mdp avec lien
+/*
 Route::get('/reinitialiser-mot-de-passe/{link}', function($link) {
     Session::put('link', $link);
     return Redirect::to('/changer-mot-de-passe');
 });
+*/
 
 // Page validation
+/*
 declareSubpageByPath('/admin/valider', 'Valider les comptes', ACCESS_ADMIN)->name('validate');
 Route::post('/admin/valider', 'ValidationController');
+*/
