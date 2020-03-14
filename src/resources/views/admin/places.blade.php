@@ -8,11 +8,11 @@
             @csrf
             <input type="hidden" name="action" value="add">
             <input type="text" minlength="10" maxlength="10" name="nom" class="form-control mr-2"
-                   placeholder="Nom ligue">
+                   placeholder="Numéro place">
             <button class="btn btn-primary">Ajouter</button>
         </form>
 
-        <h2>Supprimer une ligue existante</h2>
+        <h2>Supprimer une place existante</h2>
         @foreach(App\Models\Place::all() as $place)
             <form class="mb-2" method="POST">
                 @csrf
