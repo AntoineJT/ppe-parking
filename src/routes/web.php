@@ -50,13 +50,8 @@ function declareView(string $url, string $path, int $access_level)
 }
 
 // Changer mot de passe
-// TODO fix
-Route::get('/changer-mot-de-passe', function() {
-    $content = view('pages/changer-mdp', [
-        'link' => ''
-    ]);
-    return embedInMainView($content, 'Changer votre mot de passe', ACCESS_PUBLIC);
-})->name('change-password');
+declareView('/changer-mot-de-passe', 'changer-mdp', ACCESS_PUBLIC)
+    ->name('change-password');
 Route::post('/changer-mot-de-passe', 'ChangePasswordController');
 
 // Connexion
