@@ -41,6 +41,7 @@
             @elseif (SessionManager::isAdmin())
                 <a class="nav-link nav-item" href="{{ route('home') }}"><i class="fas fa-home mr-2"></i>Accueil</a>
                 <a class="nav-link nav-item" href="{{ route('validate') }}"><i class="fas fa-check-circle mr-2"></i>Valider</a>
+                <a class="nav-link nav-item" href="{{ route('manage-leagues') }}"><i class="fas fa-list mr-2"></i>Gestion des ligues</a>
                 @include('includes.nav.shared-end')
             @endif
 

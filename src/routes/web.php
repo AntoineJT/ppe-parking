@@ -35,8 +35,6 @@ function declareViewThenPost(string $url, string $path, int $access_level, strin
     return $route;
 }
 
-// $r states for $current_route
-
 // Changer mot de passe
 declareViewThenPost('/changer-mot-de-passe', 'changer-mdp', ACCESS_PUBLIC, 'ChangePasswordController')
     ->name('change-password');
@@ -70,3 +68,6 @@ Route::get('/reinitialiser-mot-de-passe/{link}', function ($link) {
 // Page validation
 declareViewThenPost('/admin/valider', 'admin.valider', ACCESS_ADMIN, 'ValidationController')
     ->name('validate');
+
+declareViewThenPost('/admin/gestion-ligues', 'admin.ligues', ACCESS_ADMIN, 'LeagueController')
+    ->name('manage-leagues');
