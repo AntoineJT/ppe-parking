@@ -19,7 +19,7 @@ class CreatePlacesTable extends Migration
             $table->collation = 'utf8mb4_unicode_ci';
 
             $table->integerIncrements('id');
-            $table->char('numero', 10)->unique();
+            $table->char('numero', 5)->unique();
             $table->softDeletes(); // avoid to remove places as long as users will have history
             // $table->timestamps();
         });

@@ -23,7 +23,7 @@ class ParkingSpaceController extends Controller
         $action = Request::input('action');
         if ($action === 'add') {
             $validator = Validator::make(Request::all(), [
-                'numero' => 'required|alpha_num|size:10'
+                'numero' => 'required|alpha_num|size:5'
             ]);
             if ($validator->fails())
                 return FlashMessage::redirectBackWithWarningMessage("Le numéro de place n'est pas valide!");

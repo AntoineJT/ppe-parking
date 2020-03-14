@@ -7,7 +7,7 @@
         <form class="flex-row d-flex w-50 mx-auto" method="POST">
             @csrf
             <input type="hidden" name="action" value="add">
-            <input type="text" minlength="10" maxlength="10" name="numero" class="form-control mr-2"
+            <input type="text" minlength="5" maxlength="5" name="numero" class="form-control mr-2"
                    placeholder="Numéro place">
             <button class="btn btn-primary">Ajouter</button>
         </form>
