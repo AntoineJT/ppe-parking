@@ -18,4 +18,13 @@ class Admin extends Model
     {
         return UserStateEnum::STATE_ENABLED;
     }
+
+    public static function addUser(Utilisateur $user): ?Admin
+    {
+        $admin = new Admin;
+        $admin->id_utilisateur = $user->id;
+        if (!$admin->save())
+            return null;
+        return $admin;
+    }
 }

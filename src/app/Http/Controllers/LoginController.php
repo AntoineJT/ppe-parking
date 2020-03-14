@@ -14,7 +14,7 @@ use App\Enums\AuthEnum;
 
 class LoginController extends Controller
 {
-    public function doLogin(): RedirectResponse
+    public function __invoke(): RedirectResponse
     {
         $rules = [
             'courriel' => 'required',
@@ -37,23 +37,20 @@ class LoginController extends Controller
         return FlashMessage::redirectBackWithErrorMessage('Couple courriel/mot de passe invalide!');
     }
 
-    private static function login($results, array $data, string $type): RedirectResponse
+    private static function login(Utilisateur $user, array $data, string $type): RedirectResponse
     {
-        $user_id = $results->id;
-        $user = Utilisateur::find($user_id);
-        $state = $user->getState();
-
-        if ($results == NULL)
+        if ($user === NULL)
             return self::sendErrorMessageOnAuthenticationFailure(); // Adresse e-mail invalide!
-        if (!Hash::check($data['password'], $results->mdp))
+        if (!Hash::check($data['password'], $user->mdp))
             return self::sendErrorMessageOnAuthenticationFailure(); // Mot de passe invalide!
 
+        $state = $user->getState();
         if ($state === UserStateEnum::STATE_DISABLED)
             return FlashMessage::redirectBackWithInfoMessage("Votre compte est désactivé! Vous ne pouvez pas vous connecter! Contactez l'administrateur s'il s'agit d'une erreur!");
         if ($state === UserStateEnum::STATE_NEWLY_CREATED)
             return FlashMessage::redirectBackWithInfoMessage("Vous devez valider votre adresse de courriel avant de pouvoir vous connecter!");
 
-        Request::session()->put('id', $user_id);
+        Request::session()->put('id', $user->id);
         Request::session()->put('type', $type);
         return FlashMessage::redirectWithSuccessMessage(Redirect::to('/'), 'Vous êtes connecté!');
     }

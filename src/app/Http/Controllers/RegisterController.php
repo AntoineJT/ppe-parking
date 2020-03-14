@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\ResetLink;
 use App\Models\LienReset;
+use App\Models\Ligue;
 use App\Models\Personnel;
 use App\Models\Utilisateur;
 use App\Utils\FlashMessage;
@@ -15,12 +16,13 @@ use Illuminate\Support\Facades\Validator;
 // TODO Vérifier si nom et prénom déjà dans DB!!
 class RegisterController extends Controller
 {
-    public function register(): RedirectResponse
+    public function __invoke(): RedirectResponse
     {
         $validator = Validator::make(Request::all(), [
             'nom' => 'required',
             'prenom' => 'required',
             'courriel' => 'required',
+            'ligue' => 'required',
         ]);
         if ($validator->fails())
             return FlashMessage::redirectBackWithWarningMessage("Le formulaire n'est pas bien renseigné!")
@@ -30,6 +32,7 @@ class RegisterController extends Controller
             'nom' => Request::input('nom'),
             'prenom' => Request::input('prenom'),
             'courriel' => Request::input('courriel'),
+            'ligue' => Request::input('ligue'),
         ];
 
         $personnel = self::registerPersonnel($data);
@@ -52,6 +55,14 @@ class RegisterController extends Controller
         $user = Utilisateur::create($data['nom'], $data['prenom'], $data['courriel']);
         if ($user === null)
             return null;
-        return Personnel::addUser($user);
+
+        $personnel = Personnel::addUser($user, $data['ligue']);
+        if ($personnel === null)
+            return null;
+
+        $succeed = $personnel->setLigue($data['ligue']);
+        if (!$succeed)
+            return null;
+        return $personnel;
     }
 }

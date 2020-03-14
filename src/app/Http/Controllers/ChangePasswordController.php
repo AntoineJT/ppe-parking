@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Validator;
 
 class ChangePasswordController extends Controller
 {
-    public function changePassword(): RedirectResponse
+    public function __invoke(): RedirectResponse
     {
         $validator = Validator::make(Request::all(), [
             'motdepasse' => 'required',

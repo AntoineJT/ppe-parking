@@ -13,13 +13,13 @@ class UtilisateurTableSeeder extends Seeder
      */
     public function run()
     {
+        // create user
         $user = Utilisateur::create('Test', 'Mdp=Moka123', 'test@test.org');
         assert($user !== null);
         $user->mdp = '$2y$10$sEf9WBDag76gFcl6LV723eBrCf/n8mNbWvHCqDIEsdeGSDUbBSoji'; // Moka123
         assert($user->save());
 
-        $admin = new Admin;
-        $admin->id_utilisateur = $user->id;
-        assert($admin->save());
+        // add user to admins
+        assert(Admin::addUser($user) !== null);
     }
 }

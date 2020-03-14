@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Validator;
 
 class ResetLinkController extends Controller
 {
-    public function createResetLink()
+    public function __invoke()
     {
         $validator = Validator::make(Request::all(), [
             'courriel' => 'required'

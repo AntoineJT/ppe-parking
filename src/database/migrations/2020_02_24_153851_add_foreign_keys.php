@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class AddForeignKeys extends Migration
@@ -31,8 +30,8 @@ class AddForeignKeys extends Migration
             $table->foreign('id_personnel')
                 ->references('id')
                 ->on('personnels');
-            $table->foreign('numero_place')
-                ->references('numero')
+            $table->foreign('id_place')
+                ->references('id')
                 ->on('places');
             $table->foreign('type_statut')
                 ->references('id')
@@ -62,7 +61,7 @@ class AddForeignKeys extends Migration
         });
         Schema::table('reservations', function (Blueprint $table) {
             $table->dropForeign(['id_personnel']);
-            $table->dropForeign(['numero_place']);
+            $table->dropForeign(['id_place']);
             $table->dropForeign(['type_statut']);
         });
         Schema::table('lien_reset', function (Blueprint $table) {

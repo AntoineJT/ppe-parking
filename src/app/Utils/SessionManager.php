@@ -7,7 +7,7 @@ namespace App\Utils;
 use App\Enums\AuthEnum;
 use Illuminate\Support\Facades\Session;
 
-class SessionManager
+trait SessionManager
 {
     private static function sessionEquals(string $key, $value): bool
     {

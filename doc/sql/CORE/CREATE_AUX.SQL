@@ -1,7 +1,7 @@
 -- things not at the conceptual level
 CREATE TABLE LIEN_RESET(
    lien CHAR(20) NOT NULL
-   , id_utilisateur INT NOT NULL
+   , id_utilisateur INT UNSIGNED NOT NULL
    , PRIMARY KEY(lien)
 ) ENGINE=InnoDB;
 
