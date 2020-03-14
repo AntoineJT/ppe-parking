@@ -12,7 +12,7 @@
 
         <h2>Supprimer une ligue existante</h2>
         @foreach(App\Models\Ligue::all() as $ligue)
-            <form>
+            <form class="mb-2">
                 <input type="hidden" name="action" value="delete">
                 <input type="hidden" name="id" value="{{ $ligue->id }}">
                 <div class="card w-50 mx-auto">
