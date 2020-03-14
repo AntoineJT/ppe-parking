@@ -6,7 +6,7 @@ namespace App\Utils;
 
 use Exception;
 
-class Generator
+trait Generator
 {
     // seems stupid, maybe it is!
     public static function generateGarbagePassword(): string

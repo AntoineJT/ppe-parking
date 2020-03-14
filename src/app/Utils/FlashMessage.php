@@ -6,29 +6,29 @@ namespace App\Utils;
 
 use Illuminate\Http\RedirectResponse;
 
-class FlashMessage
+trait FlashMessage
 {
     public static function redirectWithMessage(RedirectResponse $to, string $type, string $message): RedirectResponse
     {
         return $to->with($type, $message);
     }
 
-    public static function redirectWithSuccessMessage(RedirectResponse $to, string $message)
+    public static function redirectWithSuccessMessage(RedirectResponse $to, string $message): RedirectResponse
     {
         return self::redirectWithMessage($to, 'success', $message);
     }
 
-    public static function redirectWithErrorMessage(RedirectResponse $to, string $message)
+    public static function redirectWithErrorMessage(RedirectResponse $to, string $message): RedirectResponse
     {
         return self::redirectWithMessage($to, 'error', $message);
     }
 
-    public static function redirectWithWarningMessage(RedirectResponse $to, string $message)
+    public static function redirectWithWarningMessage(RedirectResponse $to, string $message): RedirectResponse
     {
         return self::redirectWithMessage($to, 'warning', $message);
     }
 
-    public static function redirectWithInfoMessage(RedirectResponse $to, string $message)
+    public static function redirectWithInfoMessage(RedirectResponse $to, string $message): RedirectResponse
     {
         return self::redirectWithMessage($to, 'info', $message);
     }

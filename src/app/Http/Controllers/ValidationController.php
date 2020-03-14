@@ -29,7 +29,6 @@ class ValidationController extends Controller
 
         if (!$success)
             return FlashMessage::redirectBackWithErrorMessage("La validation de l'utilisateur a échoué!");
-
         return FlashMessage::redirectWithSuccessMessage(Redirect::to('/admin/valider'), "L'utilisateur a bien été validé!");
     }
 }

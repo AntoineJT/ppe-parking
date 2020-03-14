@@ -14,7 +14,6 @@ class Personnel extends Model
      */
     public $timestamps = false;
 
-    // TODO Make use of that
     public static function addUser(Utilisateur $utilisateur): ?Personnel
     {
         $personnel = new Personnel;
