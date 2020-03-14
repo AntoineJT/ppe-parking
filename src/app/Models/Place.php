@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Exception;
 
 class Place extends Model
 {
@@ -15,19 +14,11 @@ class Place extends Model
     public $incrementing = false;
 
     /**
-     * The "type" of the auto-incrementing ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'string';
-
-    /**
      * Indicates if the model should be timestamped.
      *
      * @var bool
      */
     public $timestamps = false;
-
 
     public static function deleteSpace(int $space_id): bool
     {
