@@ -19,27 +19,36 @@ class LeagueController extends Controller
             return FlashMessage::redirectBackWithWarningMessage("Le formulaire n'est pas bien renseigné!")
                 ->withInput(Request::all());
 
-        $action = Request::input('action');
-        if ($action === 'add') {
-            $name = Request::input('nom');
-            if ($name === null)
-                return FlashMessage::redirectBackWithWarningMessage("Aucun nom de ligue n'a été renseigné!");
-
-            $fails = Ligue::createLeague($name) === null;
-            if ($fails)
-                return FlashMessage::redirectBackWithErrorMessage('Impossible de créer la ligue!');
-            return FlashMessage::redirectBackWithSuccessMessage('La ligue a correctement été créée!');
-        } else
-            if ($action === 'delete') {
-                $id = Request::input('id');
-                if ($id === null)
-                    return FlashMessage::redirectBackWithWarningMessage('Impossible de déterminer quelle ligue supprimer!');
-                $succeed = Ligue::deleteLeague($id);
-                if (!$succeed)
-                    return FlashMessage::redirectBackWithErrorMessage('Impossible de supprimer la ligue!');
-                return FlashMessage::redirectBackWithSuccessMessage('La ligue a bien été supprimée!');
-            }
-
+        switch (Request::input('action')) {
+            case 'add':
+                return self::add();
+            case 'delete':
+                return self::delete();
+        }
         return FlashMessage::redirectBackWithErrorMessage("Données transmises invalides!");
+    }
+
+    private static function add()
+    {
+        $name = Request::input('nom');
+        if ($name === null)
+            return FlashMessage::redirectBackWithWarningMessage("Aucun nom de ligue n'a été renseigné!");
+
+        $fails = Ligue::createLeague($name) === null;
+        if ($fails)
+            return FlashMessage::redirectBackWithErrorMessage('Impossible de créer la ligue!');
+        return FlashMessage::redirectBackWithSuccessMessage('La ligue a correctement été créée!');
+    }
+
+    private static function delete()
+    {
+        $id = Request::input('id');
+        if ($id === null)
+            return FlashMessage::redirectBackWithWarningMessage('Impossible de déterminer quelle ligue supprimer!');
+
+        $succeed = Ligue::deleteLeague($id);
+        if (!$succeed)
+            return FlashMessage::redirectBackWithErrorMessage('Impossible de supprimer la ligue!');
+        return FlashMessage::redirectBackWithSuccessMessage('La ligue a bien été supprimée!');
     }
 }

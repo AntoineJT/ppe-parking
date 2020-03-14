@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Mail\ResetLink;
 use App\Models\LienReset;
-use App\Models\Ligue;
 use App\Models\Personnel;
 use App\Models\Utilisateur;
 use App\Utils\FlashMessage;
