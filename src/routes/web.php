@@ -86,5 +86,5 @@ Route::get('/reinitialiser-mot-de-passe/{link}', function($link) {
 
 // Page validation
 // TODO fix
-declareSubpageByPath('/admin/valider', 'Valider les comptes', ACCESS_ADMIN)->name('validate');
+declareView('/admin/valider', 'admin.valider', ACCESS_ADMIN)->name('validate');
 Route::post('/admin/valider', 'ValidationController');
