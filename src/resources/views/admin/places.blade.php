@@ -1,0 +1,30 @@
+@extends('layouts.app')
+@section('title', 'Gestion places')
+
+@section('content')
+    <div class="mx-auto text-center w-50">
+        <h2>Ajouter une place</h2>
+        <form class="flex-row d-flex w-50 mx-auto" method="POST">
+            @csrf
+            <input type="hidden" name="action" value="add">
+            <input type="text" minlength="10" maxlength="10" name="nom" class="form-control mr-2"
+                   placeholder="Nom ligue">
+            <button class="btn btn-primary">Ajouter</button>
+        </form>
+
+        <h2>Supprimer une ligue existante</h2>
+        @foreach(App\Models\Place::all() as $place)
+            <form class="mb-2" method="POST">
+                @csrf
+                <input type="hidden" name="action" value="delete">
+                <input type="hidden" name="id" value="{{ $ligue->id }}">
+                <div class="card w-50 mx-auto">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $ligue->numero }}</h5>
+                        <button class="btn btn-danger"><i class="fas fa-trash-alt mr-2"></i>Supprimer</button>
+                    </div>
+                </div>
+            </form>
+        @endforeach
+    </div>
+@endsection
