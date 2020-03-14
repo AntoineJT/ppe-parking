@@ -21,27 +21,6 @@ const ACCESS_PUBLIC = 0;
 const ACCESS_SEMIPUBLIC = 1;
 const ACCESS_ADMIN = 2;
 
-// TODO Remove that stuff
-function embedInMainView(string $content, string $title, int $access_level) : string
-{
-    return view('main', [
-        'title' => $title,
-        'content' => $content,
-        'access' => $access_level
-    ]);
-}
-
-function declareSubpageByPath(string $path, string $title, int $access_level) {
-    return declareSubpage($path, $path, $title, $access_level);
-}
-
-function declareSubpage(string $name, string $path, string $title, int $access_level) {
-    return Route::get($name, function() use($title, $path, $access_level) {
-        $content = view("pages/$path");
-        return embedInMainView($content, $title, $access_level);
-    });
-}
-
 function declareView(string $url, string $path, int $access_level)
 {
     return Route::view($url, $path, [
@@ -85,6 +64,6 @@ Route::get('/reinitialiser-mot-de-passe/{link}', function($link) {
 });
 
 // Page validation
-// TODO fix
-declareView('/admin/valider', 'admin.valider', ACCESS_ADMIN)->name('validate');
+declareView('/admin/valider', 'admin.valider', ACCESS_ADMIN)
+    ->name('validate');
 Route::post('/admin/valider', 'ValidationController');
