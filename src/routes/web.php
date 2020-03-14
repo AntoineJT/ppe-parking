@@ -71,10 +71,10 @@ Route::get('/deconnexion', function() {
 })->name('logout');
 
 // Inscription
-/*
-declareSubpageByPath('/inscription', "S'enregistrer", ACCESS_PUBLIC)->name('register');
+Route::view('/inscription', 'inscription', [
+    'access' => ACCESS_PUBLIC
+])->name('register');
 Route::post('/inscription', 'RegisterController');
-*/
 
 // Mot de passe oublié
 /*
