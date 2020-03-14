@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('layouts.app')
 @section('title', 'Réinitialisation du mot de passe')
 
 @section('content')

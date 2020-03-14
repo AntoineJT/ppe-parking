@@ -78,15 +78,12 @@ declareView('/inscription', 'inscription', ACCESS_PUBLIC)
 Route::post('/inscription', 'RegisterController');
 
 // Mot de passe oublié
-Route::view('/reinitialiser-mot-de-passe', 'reset', [
-    'access' => ACCESS_PUBLIC,
-    'lien' => ''
-])->name('reset-password');
+declareView('/reinitialiser-mot-de-passe', 'reset', ACCESS_PUBLIC)
+    ->name('reset-password');
 Route::post('/reinitialiser-mot-de-passe', 'ResetLinkController');
 Route::redirect('/reset', '/reinitialiser-mot-de-passe');
 
 // Changer mdp avec lien
-// TODO fix
 Route::get('/reinitialiser-mot-de-passe/{link}', function($link) {
     Session::put('link', $link);
     return Redirect::to('/changer-mot-de-passe');

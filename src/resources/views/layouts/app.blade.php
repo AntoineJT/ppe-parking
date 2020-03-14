@@ -3,6 +3,8 @@
 <head>
     <title>PPE Parking - @yield('title')</title>
     <meta charset="utf8">
+
+    <!-- Favicon -->
     <link rel="icon" href="{{ asset('images/favicon.ico')}}"/>
 
     <!-- Style -->
@@ -10,6 +12,7 @@
           integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link href="{{ asset('/css/vendor/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('/css/main.css') }}" rel="stylesheet" type="text/css">
+    @stack('styles')
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Sigmar+One&display=swap" rel="stylesheet">
