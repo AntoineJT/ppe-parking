@@ -52,7 +52,9 @@ Route::post('/changer-mot-de-passe', 'ChangePasswordController');
 
 // Connexion
 Route::redirect('/', '/connexion')->name('home');
-declareSubpageByPath('/connexion', 'Connexion', ACCESS_PUBLIC)->name('login');
+Route::view('/connexion', 'pages.connexion', [
+    'access' => ACCESS_PUBLIC
+])->name('login');
 Route::post('/connexion', 'LoginController');
 
 // Déconnexion
