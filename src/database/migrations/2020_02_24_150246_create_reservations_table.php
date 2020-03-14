@@ -18,15 +18,15 @@ class CreateReservationsTable extends Migration
             // $table->charset = 'utf8';
             $table->collation = 'utf8mb4_unicode_ci';
 
-            $table->integerIncrements('id');
+            $table->id();
             // $table->timestamps();
             $table->date('date_demande');
             $table->date('date_debut');
             $table->date('date_fin');
-            $table->integer('id_personnel')->unsigned();
-            $table->tinyInteger('type_statut')->unsigned();
-            $table->string('numero_place', 10);
-            $table->bigInteger('rang')->unsigned()->nullable()->unique();
+            $table->unsignedInteger('id_personnel');
+            $table->unsignedTinyInteger('type_statut');
+            $table->unsignedInteger('id_place');
+            $table->unsignedBigInteger('rang')->nullable()->unique();
         });
     }
 

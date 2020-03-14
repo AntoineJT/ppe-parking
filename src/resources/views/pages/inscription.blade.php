@@ -9,13 +9,13 @@
                 Votre compte sera désactivé jusqu'à ce que l'administrateur l'approuve !</i>
         </p>
         <div class="form-group mt-4">
-            <input class="form-control" name="nom" type="text" placeholder="Nom" class="form-control" required>
+            <input class="form-control" name="nom" type="text" placeholder="Nom" required>
         </div>
         <div class="form-group">
-            <input class="form-control" name="prenom" type="text" placeholder="Prénom" class="form-control" required>
+            <input class="form-control" name="prenom" type="text" placeholder="Prénom" required>
         </div>
         <div class="form-group">
-            <input class="form-control" name="courriel" type="email" placeholder="Adresse e-mail" class="form-control"
+            <input class="form-control" name="courriel" type="email" placeholder="Adresse e-mail"
                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
         </div>
         <select name="ligue" class="form-control">

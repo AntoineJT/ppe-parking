@@ -19,7 +19,7 @@ class CreateAdminsTable extends Migration
             $table->collation = 'utf8mb4_unicode_ci';
 
             $table->integerIncrements('id');
-            $table->integer('id_utilisateur')->unsigned();
+            $table->unsignedInteger('id_utilisateur');
             // $table->timestamps();
         });
     }

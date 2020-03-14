@@ -19,9 +19,9 @@ class CreatePersonnelsTable extends Migration
             $table->collation = 'utf8mb4_unicode_ci';
 
             $table->integerIncrements('id');
-            $table->integer('id_utilisateur')->unsigned();
-            $table->tinyInteger('statut')->unsigned();
-            $table->integer('id_ligue')->unsigned()->nullable();
+            $table->unsignedInteger('id_utilisateur');
+            $table->unsignedTinyInteger('statut');
+            $table->unsignedSmallInteger('id_ligue')->nullable();
         });
     }
 

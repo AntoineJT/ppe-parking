@@ -20,6 +20,7 @@ class CreatePlacesTable extends Migration
 
             $table->integerIncrements('id');
             $table->char('numero', 10)->unique();
+            $table->softDeletes(); // avoid to remove places as long as users will have history
             // $table->timestamps();
         });
     }
