@@ -112,6 +112,8 @@ a:hover{
 .dropdown {
   position: relative;
   display: inline-block;
+
+    padding: 0.5rem 1rem;
 }
 
 .dropdown-content {
