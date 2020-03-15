@@ -28,10 +28,10 @@ function declareView(string $url, string $path, int $access_level)
     ]);
 }
 
-function declareViewThenPost(string $url, string $path, int $access_level, string $action)
+function declareViewThenPost(string $uri, string $path, int $access_level, string $action)
 {
-    $route = declareView($url, $path, $access_level);
-    Route::post($route->uri(), $action);
+    $route = declareView($uri, $path, $access_level);
+    Route::post($uri, $action);
     return $route;
 }
 
