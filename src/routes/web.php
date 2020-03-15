@@ -29,20 +29,17 @@ function declareView(string $url, string $path, int $access_level)
     ]);
 }
 
-function declareViewThenPost(string $uri, string $path, int $access_level, string $action)
-{
-    $route = declareView($uri, $path, $access_level);
-    Route::post($uri, $action);
-    return $route;
-}
-
 // Changer mot de passe
-declareViewThenPost('/changer-mot-de-passe', 'changer-mdp', ACCESS_PUBLIC, 'ChangePasswordController')
-    ->name('change-password');
+Route::prefix('/changer-mot-de-passe')->name('change-password')->group(function () {
+    declareView('/', 'changer-mdp', ACCESS_PUBLIC);
+    Route::post('/', 'ChangePasswordController');
+});
 
 // Connexion
-declareViewThenPost('/connexion', 'connexion', ACCESS_PUBLIC, 'LoginController')
-    ->name('login');
+Route::prefix('/connexion')->name('login')->group(function () {
+    declareView('/', 'connexion', ACCESS_PUBLIC);
+    Route::post('/', 'LoginController');
+});
 Route::redirect('/', '/connexion')->name('home');
 
 // Déconnexion
@@ -52,12 +49,16 @@ Route::get('/deconnexion', function () {
 })->name('logout');
 
 // Inscription
-declareViewThenPost('/inscription', 'inscription', ACCESS_PUBLIC, 'RegisterController')
-    ->name('register');
+Route::prefix('/inscription')->name('register')->group(function () {
+    declareView('/', 'inscription', ACCESS_PUBLIC);
+    Route::post('/', 'RegisterController');
+});
 
 // Mot de passe oublié
-declareViewThenPost('/reinitialiser-mot-de-passe', 'reset', ACCESS_PUBLIC, 'ResetLinkController')
-    ->name('reset-password');
+Route::prefix('/reinitialiser-mot-de-passe')->name('reset-password')->group(function () {
+    declareView('/', 'reset', ACCESS_PUBLIC);
+    Route::post('/', 'ResetLinkController');
+});
 Route::redirect('/reset', '/reinitialiser-mot-de-passe');
 
 // Changer mdp avec lien
@@ -73,14 +74,22 @@ Route::get('/reinitialiser-mot-de-passe/{link}', function ($link) {
     return $to->with('info', "Vous allez changer le mot de passe de l'utilisateur " . $user->getFullName());
 })->name('reset-link');
 
-// Gestion ligues
-declareViewThenPost('/admin/gestion-ligues', 'admin.ligues', ACCESS_ADMIN, 'LeagueController')
-    ->name('manage-leagues');
+Route::prefix('/admin')->group(function () {
+    // Gestion ligues
+    Route::prefix('/gestion-ligues')->name('manage-leagues')->group(function () {
+        declareView('/', 'admin.ligues', ACCESS_ADMIN);
+        Route::post('/', 'LeagueController');
+    });
 
-// Gestion places
-declareViewThenPost('/admin/gestion-places', 'admin.places', ACCESS_ADMIN, 'ParkingSpaceController')
-    ->name('manage-parking-spaces');
+    // Gestion places
+    Route::prefix('/gestion-places')->name('manage-parking-spaces')->group(function () {
+        declareView('/', 'admin.places', ACCESS_ADMIN);
+        Route::post('/', 'ParkingSpaceController');
+    });
 
-// Gestion utilisateurs
-declareViewThenPost('/admin/gestion-utilisateurs', 'admin.utilisateurs', ACCESS_ADMIN, 'UserController')
-    ->name('manage-users');
+    // Gestion utilisateurs
+    Route::prefix('/gestion-utilisateurs')->name('manage-users')->group(function () {
+        declareView('/', 'admin.utilisateurs', ACCESS_ADMIN);
+        Route::post('/', 'UserController');
+    });
+});
