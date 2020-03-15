@@ -69,8 +69,14 @@ Route::get('/reinitialiser-mot-de-passe/{link}', function ($link) {
 declareViewThenPost('/admin/valider', 'admin.valider', ACCESS_ADMIN, 'ValidationController')
     ->name('validate');
 
+// Gestion ligues
 declareViewThenPost('/admin/gestion-ligues', 'admin.ligues', ACCESS_ADMIN, 'LeagueController')
     ->name('manage-leagues');
 
+// Gestion places
 declareViewThenPost('/admin/gestion-places', 'admin.places', ACCESS_ADMIN, 'ParkingSpaceController')
     ->name('manage-parking-spaces');
+
+// Gestion utilisateurs
+declareView('/admin/gestion-utilisateurs', 'admin.utilisateurs', ACCESS_ADMIN)
+    ->name('manage-users');
