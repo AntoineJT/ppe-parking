@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Enums\UserStateEnum;
+use App\Models\LienReset;
 use App\Models\Personnel;
+use App\Models\Utilisateur;
 use App\Utils\FlashMessage;
 use App\Utils\SessionManager;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -23,7 +26,8 @@ class UserController extends Controller
                 Rule::in([
                     'validate',
                     'modify',
-                    'change-password'
+                    'change-password',
+                    'delete'
                 ])
             ]
         ]);
@@ -38,7 +42,9 @@ class UserController extends Controller
             case 'validate':
                 return self::validateIt($user_id);
             // case 'modify':
-            // case 'change-password':
+            case 'change-password':
+                return self::changePassword($user_id);
+            // case 'delete':
         }
         return FlashMessage::redirectBackWithErrorMessage('Opération impossible!');
     }
@@ -50,5 +56,20 @@ class UserController extends Controller
         if (!$success)
             return FlashMessage::redirectBackWithErrorMessage("La validation de l'utilisateur a échoué!");
         return FlashMessage::redirectBackWithSuccessMessage("L'utilisateur a bien été validé!");
+    }
+
+    private static function changePassword(int $user_id): RedirectResponse
+    {
+        $user = Utilisateur::find($user_id);
+        if ($user === null)
+            return FlashMessage::redirectBackWithErrorMessage("L'utilisateur n'existe pas!");
+
+        $reset_link = LienReset::create($user);
+        if ($reset_link === null)
+            return FlashMessage::redirectBackWithErrorMessage("Le lien de réinitialisation du mot de passe n'a pu être créé!");
+
+        return Redirect::to(route('reset-link', [
+            'link' => $reset_link->lien
+        ]));
     }
 }

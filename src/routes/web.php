@@ -11,6 +11,8 @@
 |
 */
 
+use App\Models\LienReset;
+use App\Models\Utilisateur;
 use App\Utils\FlashMessage;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
@@ -62,8 +64,15 @@ Route::redirect('/reset', '/reinitialiser-mot-de-passe');
 // Changer mdp avec lien
 Route::get('/reinitialiser-mot-de-passe/{link}', function ($link) {
     Session::put('link', $link);
-    return Redirect::to('/changer-mot-de-passe');
-});
+    $to = Redirect::to(route('change-password'));
+
+    $reset_link = LienReset::find($link);
+    if ($reset_link === null)
+        return $to;
+
+    $user = $reset_link->getUser();
+    return $to->with('info', "Vous allez changer le mot de passe de l'utilisateur " . $user->getFullName());
+})->name('reset-link');
 
 // Gestion ligues
 declareViewThenPost('/admin/gestion-ligues', 'admin.ligues', ACCESS_ADMIN, 'LeagueController')
