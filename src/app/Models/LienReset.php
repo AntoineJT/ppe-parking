@@ -64,4 +64,9 @@ class LienReset extends Model
             return false;
         }
     }
+
+    public function getUser(): ?Utilisateur
+    {
+        return Utilisateur::find($this->id_utilisateur);
+    }
 }

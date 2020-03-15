@@ -72,4 +72,9 @@ class Utilisateur extends Model
     {
         return Utilisateur::firstWhere('mail', $email);
     }
+
+    public function getFullName(): string
+    {
+        return mb_strtoupper($this->nom) . ' ' . $this->prenom;
+    }
 }
