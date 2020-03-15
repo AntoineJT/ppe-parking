@@ -6,7 +6,7 @@
         @php($disabled = $user->isAdmin() ? 'disabled' : null)
         <div class="card w-50 mx-auto text-center">
             <div class="card-body">
-                <h5 class="card-title">{{ mb_strtoupper($user->nom) }} {{ $user->prenom }}</h5>
+                <h5 class="card-title">{{ $user->getFullName() }}</h5>
                 <div class="d-flex flex-row justify-content-center">
                     @if($user->getState() === \App\Enums\UserStateEnum::STATE_DISABLED)
                         <form method="POST">
