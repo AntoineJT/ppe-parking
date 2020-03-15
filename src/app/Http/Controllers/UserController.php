@@ -29,22 +29,22 @@ class UserController extends Controller
         ]);
         if ($validator->fails())
             return FlashMessage::redirectBackWithWarningMessage("Le formulaire n'a pas été renseigné correctement!");
+        if (!SessionManager::isAdmin())
+            return FlashMessage::redirectBackWithErrorMessage("Vous n'êtes pas administrateur! Action impossible!");
+
+        $user_id = Request::input('id');
 
         switch (Request::input('action')) {
             case 'validate':
-                return self::validateIt();
+                return self::validateIt($user_id);
             // case 'modify':
             // case 'change-password':
         }
         return FlashMessage::redirectBackWithErrorMessage('Opération impossible!');
     }
 
-    private static function validateIt(): RedirectResponse
+    private static function validateIt(int $user_id): RedirectResponse
     {
-        if (!SessionManager::isAdmin())
-            return FlashMessage::redirectBackWithErrorMessage("Vous n'êtes pas administrateur! Action impossible!");
-
-        $user_id = Request::input('id');
         $success = Personnel::find_($user_id)->setState(UserStateEnum::STATE_ENABLED);
 
         if (!$success)

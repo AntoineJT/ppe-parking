@@ -3,7 +3,7 @@
 
 @section('content')
     @foreach(\App\Models\Utilisateur::all() as $user)
-        @php($disabled = $user->isAdmin() ? 'disabled' : null)
+        @php($disabled = $user->isAdmin() ? 'disabled' : '')
         <div class="card w-50 mx-auto text-center">
             <div class="card-body">
                 <h5 class="card-title">{{ $user->getFullName() }}</h5>
@@ -16,18 +16,26 @@
                             <button class="ml-2 btn btn-success"><i class="fas fa-check mr-2"></i>Valider!</button>
                         </form>
                     @endif
+                    @if ($disabled !== null) {{-- if user has been validated --}}
                     <form method="POST" class="ml-2">
                         @csrf
                         <input type="hidden" name="id" value="{{ $user->id }}">
                         <input type="hidden" name="action" value="modify">
-                        <button class="btn btn-primary" {{ $disabled ?? '' }}><i class="fas fa-user-edit mr-2"></i>Modifier</button>
+                        <button class="btn btn-primary" {{ $disabled }}><i class="fas fa-user-edit mr-2"></i>Modifier</button>
                         {{-- Ajouter du js pour afficher un form permettant de modifier le profil --}}
                     </form>
                     <form method="POST" class="ml-2">
                         @csrf
                         <input type="hidden" name="id" value="{{ $user->id }}">
                         <input type="hidden" name="action" value="change-password">
-                        <button class="btn btn-dark" {{ $disabled ?? '' }}><i class="fas fa-unlock mr-2"></i>Changer de mot de passe</button>
+                        <button class="btn btn-dark" {{ $disabled }}><i class="fas fa-unlock mr-2"></i>Changer de mot de passe</button>
+                    </form>
+                    @endif
+                    <form method="POST" class="ml-2">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $user->id }}">
+                        <input type="hidden" name="action" value="delete">
+                        <button class="btn btn-danger" {{ $disabled }}><i class="fas fa-trash mr-2"></i>Supprimer</button>
                     </form>
                 </div>
             </div>
