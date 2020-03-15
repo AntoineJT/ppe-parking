@@ -50,7 +50,8 @@ class UserController extends Controller
         switch (Request::input('action')) {
             case 'validate':
                 return self::validateIt($user_id);
-            // case 'modify':
+            case 'modify':
+                return self::modify($user);
             case 'change-password':
                 return self::changePassword($user);
             case 'disable':
@@ -95,5 +96,10 @@ class UserController extends Controller
         if (!$succeed)
             return FlashMessage::redirectBackWithErrorMessage("Impossible de désactiver ce compte!");
         return FlashMessage::redirectBackWithSuccessMessage('Le compte a été correctement désactivé!');
+    }
+
+    private static function modify(Utilisateur $user): RedirectResponse
+    {
+        return FlashMessage::redirectBackWithInfoMessage("Cette fonctionnalité n'est pas encore implémentée!");
     }
 }
