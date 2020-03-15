@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Enums\UserStateEnum;
 use App\Models\LienReset;
+use App\Models\Ligue;
 use App\Models\Personnel;
 use App\Models\Utilisateur;
+use App\Utils\AssertionManager;
 use App\Utils\FlashMessage;
 use App\Utils\SessionManager;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
@@ -100,6 +103,36 @@ class UserController extends Controller
 
     private static function modify(Utilisateur $user): RedirectResponse
     {
-        return FlashMessage::redirectBackWithInfoMessage("Cette fonctionnalité n'est pas encore implémentée!");
+        $validator = Validator::make(Request::all(), [
+            'nom' => 'required',
+            'prenom' => 'required',
+            'courriel' => 'required',
+            'ligue' => 'required'
+        ]);
+        if ($validator->fails())
+            return FlashMessage::redirectBackWithWarningMessage("Le formulaire n'a pas été renseigné correctement!");
+
+        $succeed = false;
+        DB::transaction(function() use ($user, &$succeed) {
+            AssertionManager::setAssertException(true);
+
+            $personnel = $user->toPersonnel();
+            $ligue_id = Request::input('ligue');
+            assert(Ligue::exists($ligue_id));
+            $personnel->id_ligue = $ligue_id;
+            assert($personnel->save());
+
+            $user->nom = Request::input('nom');
+            $user->prenom = Request::input('prenom');
+            $user->mail = Request::input('courriel');
+            assert($user->save());
+
+            AssertionManager::rollbackAssertException();
+            $succeed = true;
+        });
+        if (!$succeed)
+            return FlashMessage::redirectBackWithErrorMessage("Impossible d'effectuer les modifications!");
+
+        return FlashMessage::redirectBackWithSuccessMessage("Les données du compte ont bien été mises à jour!");
     }
 }

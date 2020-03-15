@@ -31,4 +31,9 @@ class Ligue extends Model
             return false;
         }
     }
+
+    public static function exists(int $league_id): bool
+    {
+        return Ligue::find($league_id) !== null;
+    }
 }
