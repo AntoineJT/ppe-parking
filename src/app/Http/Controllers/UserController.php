@@ -26,6 +26,7 @@ class UserController extends Controller
                     'validate',
                     'modify',
                     'change-password',
+                    'disable',
                     'delete'
                 ])
             ]
@@ -42,14 +43,20 @@ class UserController extends Controller
         if ($user->isAdmin())
             return FlashMessage::redirectBackWithErrorMessage('Cet utilisateur est administrateur et ne peut donc pas être géré!');
 
+        $personnel = $user->toPersonnel();
+        if ($personnel === null)
+            return FlashMessage::redirectBackWithErrorMessage("L'utilisateur n'est pas un membre du personnel!");
+
         switch (Request::input('action')) {
             case 'validate':
                 return self::validateIt($user_id);
             // case 'modify':
             case 'change-password':
                 return self::changePassword($user);
+            case 'disable':
+                return self::disable($personnel);
             case 'delete':
-                return self::delete($user);
+                return self::delete($personnel);
         }
         return FlashMessage::redirectBackWithErrorMessage('Opération impossible!');
     }
@@ -74,14 +81,19 @@ class UserController extends Controller
         ]));
     }
 
-    private static function delete(Utilisateur $user): RedirectResponse
+    private static function delete(Personnel $personnel): RedirectResponse
     {
-        $personnel = $user->toPersonnel();
-        if ($personnel === null)
-            return FlashMessage::redirectBackWithErrorMessage("L'utilisateur n'est pas un membre du personnel!");
         if (!$personnel->deleteUser())
             return FlashMessage::redirectBackWithErrorMessage("Impossible de supprimer l'utilisateur!");
         // TODO Envoyer un mail à l'utilisateur dont le compte s'est fait supprimer?
         return FlashMessage::redirectBackWithSuccessMessage("L'utilisateur a bien été supprimé!");
+    }
+
+    private static function disable(Personnel $personnel): RedirectResponse
+    {
+        $succeed = $personnel->setState(UserStateEnum::STATE_DISABLED);
+        if (!$succeed)
+            return FlashMessage::redirectBackWithErrorMessage("Impossible de désactiver ce compte!");
+        return FlashMessage::redirectBackWithSuccessMessage('Le compte a été correctement désactivé!');
     }
 }

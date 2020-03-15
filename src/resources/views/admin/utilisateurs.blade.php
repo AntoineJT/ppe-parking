@@ -4,20 +4,23 @@
 @section('content')
     @foreach(\App\Models\Utilisateur::all() as $user)
         @php($input_disabled = $user->isAdmin() ? 'disabled' : '')
-        @php($state_disabled = $user->getState() === \App\Enums\UserStateEnum::STATE_DISABLED)
+        @php($state = $user->getState())
 
         <div class="card w-50 mx-auto text-center">
             <div class="card-body">
                 <h5 class="card-title">{{ $user->getFullName() }}</h5>
+                @if($state === \App\Enums\UserStateEnum::STATE_NEWLY_CREATED)
+                    <p class="font-italic">Cet utilisateur n'a pas encore validé son adresse de courriel!</p>
+                @endif
                 <div class="d-flex flex-row justify-content-center">
-                    @if($state_disabled)
+                    @if($state === \App\Enums\UserStateEnum::STATE_DISABLED)
                         <form method="POST">
                             @csrf
                             <input type="hidden" name="id" value="{{ $user->id }}">
                             <input type="hidden" name="action" value="validate">
                             <button class="ml-2 btn btn-success"><i class="fas fa-check mr-2"></i>Valider!</button>
                         </form>
-                    @else
+                    @elseif($state === \App\Enums\UserStateEnum::STATE_ENABLED)
                         <form method="POST" class="ml-2">
                             @csrf
                             <input type="hidden" name="id" value="{{ $user->id }}">
