@@ -11,7 +11,6 @@ use App\Utils\SessionManager;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -37,14 +36,20 @@ class UserController extends Controller
             return FlashMessage::redirectBackWithErrorMessage("Vous n'êtes pas administrateur! Action impossible!");
 
         $user_id = Request::input('id');
+        $user = Utilisateur::find($user_id);
+        if ($user === null)
+            return FlashMessage::redirectBackWithErrorMessage("L'utilisateur n'existe pas!");
+        if ($user->isAdmin())
+            return FlashMessage::redirectBackWithErrorMessage('Cet utilisateur est administrateur et ne peut donc pas être géré!');
 
         switch (Request::input('action')) {
             case 'validate':
                 return self::validateIt($user_id);
             // case 'modify':
             case 'change-password':
-                return self::changePassword($user_id);
-            // case 'delete':
+                return self::changePassword($user);
+            case 'delete':
+                return self::delete($user);
         }
         return FlashMessage::redirectBackWithErrorMessage('Opération impossible!');
     }
@@ -58,12 +63,8 @@ class UserController extends Controller
         return FlashMessage::redirectBackWithSuccessMessage("L'utilisateur a bien été validé!");
     }
 
-    private static function changePassword(int $user_id): RedirectResponse
+    private static function changePassword(Utilisateur $user): RedirectResponse
     {
-        $user = Utilisateur::find($user_id);
-        if ($user === null)
-            return FlashMessage::redirectBackWithErrorMessage("L'utilisateur n'existe pas!");
-
         $reset_link = LienReset::create($user);
         if ($reset_link === null)
             return FlashMessage::redirectBackWithErrorMessage("Le lien de réinitialisation du mot de passe n'a pu être créé!");
@@ -71,5 +72,16 @@ class UserController extends Controller
         return Redirect::to(route('reset-link', [
             'link' => $reset_link->lien
         ]));
+    }
+
+    private static function delete(Utilisateur $user): RedirectResponse
+    {
+        $personnel = $user->toPersonnel();
+        if ($personnel === null)
+            return FlashMessage::redirectBackWithErrorMessage("L'utilisateur n'est pas un membre du personnel!");
+        if (!$personnel->deleteUser())
+            return FlashMessage::redirectBackWithErrorMessage("Impossible de supprimer l'utilisateur!");
+        // TODO Envoyer un mail à l'utilisateur dont le compte s'est fait supprimer?
+        return FlashMessage::redirectBackWithSuccessMessage("L'utilisateur a bien été supprimé!");
     }
 }
