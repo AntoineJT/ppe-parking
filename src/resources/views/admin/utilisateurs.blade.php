@@ -24,7 +24,6 @@
                             <input type="hidden" name="action" value="modify">
                             <button class="btn btn-primary" {{ $input_disabled }}><i class="fas fa-user-edit mr-2"></i>Modifier
                             </button>
-                            {{-- Ajouter du js pour afficher un form permettant de modifier le profil --}}
                         </form>
                         <form method="POST" class="ml-2">
                             @csrf
@@ -38,14 +37,16 @@
                             @csrf
                             <input type="hidden" name="id" value="{{ $user->id }}">
                             <input type="hidden" name="action" value="disable">
-                            <button class="btn btn-danger" {{ $input_disabled }}><i class="fas fa-ban mr-2"></i>Désactiver</button>
+                            <button class="btn btn-danger" {{ $input_disabled }}><i class="fas fa-ban mr-2"></i>Désactiver
+                            </button>
                         </form>
                     @endif
                     <form method="POST" class="ml-2">
                         @csrf
                         <input type="hidden" name="id" value="{{ $user->id }}">
                         <input type="hidden" name="action" value="delete">
-                        <button class="btn btn-danger" {{ $input_disabled }}><i class="fas fa-user-slash mr-2"></i>Supprimer</button>
+                        <button class="btn btn-danger" {{ $input_disabled }}><i class="fas fa-user-slash mr-2"></i>Supprimer
+                        </button>
                     </form>
                 </div>
             </div>
