@@ -10,17 +10,37 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
-class ValidationController extends Controller
+class UserController extends Controller
 {
     public function __invoke(): RedirectResponse
     {
         $validator = Validator::make(Request::all(), [
-            'id' => 'required'
+            'id' => 'required',
+            'action' => [
+                'required',
+                Rule::in([
+                    'validate',
+                    'modify',
+                    'change-password'
+                ])
+            ]
         ]);
         if ($validator->fails())
-            return FlashMessage::redirectWithErrorMessage(Redirect::to('/admin/valider'), "L'identifiant de l'utilisateur n'a pas été fourni!");
+            return FlashMessage::redirectBackWithWarningMessage("Le formulaire n'a pas été renseigné correctement!");
 
+        switch (Request::input('action')) {
+            case 'validate':
+                return self::validateIt();
+            // case 'modify':
+            // case 'change-password':
+        }
+        return FlashMessage::redirectBackWithErrorMessage('Opération impossible!');
+    }
+
+    private static function validateIt(): RedirectResponse
+    {
         if (!SessionManager::isAdmin())
             return FlashMessage::redirectBackWithErrorMessage("Vous n'êtes pas administrateur! Action impossible!");
 
@@ -29,6 +49,6 @@ class ValidationController extends Controller
 
         if (!$success)
             return FlashMessage::redirectBackWithErrorMessage("La validation de l'utilisateur a échoué!");
-        return FlashMessage::redirectWithSuccessMessage(Redirect::to('/admin/valider'), "L'utilisateur a bien été validé!");
+        return FlashMessage::redirectBackWithSuccessMessage("L'utilisateur a bien été validé!");
     }
 }

@@ -65,10 +65,6 @@ Route::get('/reinitialiser-mot-de-passe/{link}', function ($link) {
     return Redirect::to('/changer-mot-de-passe');
 });
 
-// Page validation
-declareViewThenPost('/admin/valider', 'admin.valider', ACCESS_ADMIN, 'ValidationController')
-    ->name('validate');
-
 // Gestion ligues
 declareViewThenPost('/admin/gestion-ligues', 'admin.ligues', ACCESS_ADMIN, 'LeagueController')
     ->name('manage-leagues');
@@ -78,5 +74,5 @@ declareViewThenPost('/admin/gestion-places', 'admin.places', ACCESS_ADMIN, 'Park
     ->name('manage-parking-spaces');
 
 // Gestion utilisateurs
-declareView('/admin/gestion-utilisateurs', 'admin.utilisateurs', ACCESS_ADMIN)
+declareViewThenPost('/admin/gestion-utilisateurs', 'admin.utilisateurs', ACCESS_ADMIN, 'UserController')
     ->name('manage-users');

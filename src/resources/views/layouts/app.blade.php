@@ -40,7 +40,6 @@
                 @include('includes.nav.shared-end')
             @elseif (SessionManager::isAdmin())
                 <a class="nav-link nav-item" href="{{ route('home') }}"><i class="fas fa-home mr-2"></i>Accueil</a>
-                <a class="nav-link nav-item" href="{{ route('validate') }}"><i class="fas fa-check-circle mr-2"></i>Valider</a>
                 <div class="dropdown">
                     <span><i class="fas fa-list mr-2"></i>Gestion</span>
                     <div class="dropdown-content">
