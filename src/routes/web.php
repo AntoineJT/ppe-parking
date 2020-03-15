@@ -12,7 +12,6 @@
 */
 
 use App\Models\LienReset;
-use App\Models\Utilisateur;
 use App\Utils\FlashMessage;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
