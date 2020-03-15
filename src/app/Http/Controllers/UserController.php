@@ -49,7 +49,7 @@ class UserController extends Controller
 
         switch (Request::input('action')) {
             case 'validate':
-                return self::validateIt($user_id);
+                return self::validateIt($personnel);
             case 'modify':
                 return self::modify($user);
             case 'change-password':
@@ -62,9 +62,9 @@ class UserController extends Controller
         return FlashMessage::redirectBackWithErrorMessage('Opération impossible!');
     }
 
-    private static function validateIt(int $user_id): RedirectResponse
+    private static function validateIt(Personnel $personnel): RedirectResponse
     {
-        $success = Personnel::find_($user_id)->setState(UserStateEnum::STATE_ENABLED);
+        $success = $personnel->setState(UserStateEnum::STATE_ENABLED);
 
         if (!$success)
             return FlashMessage::redirectBackWithErrorMessage("La validation de l'utilisateur a échoué!");
