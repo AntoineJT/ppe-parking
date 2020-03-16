@@ -65,17 +65,18 @@ class Personnel extends Model
             return false;
 
         $succeed = false;
-        DB::transaction(function() use ($user, &$succeed) {
-            AssertionManager::setAssertException(true); // make assert throws AssertException
+        AssertionManager::setAssertException(true); // make assert throws AssertException
 
+        DB::transaction(function() use ($user, &$succeed) {
             foreach(LienReset::where('id_utilisateur', $user->id)->get() as $link)
                 assert($link->delete());
             assert($this->delete());
             assert($user->delete());
 
             $succeed = true;
-            AssertionManager::rollbackAssertException(); // avoid side-effects
         });
+
+        AssertionManager::rollbackAssertException(); // avoid side-effects
         return $succeed;
     }
 }

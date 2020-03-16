@@ -113,9 +113,9 @@ class UserController extends Controller
             return FlashMessage::redirectBackWithWarningMessage("Le formulaire n'a pas été renseigné correctement!");
 
         $succeed = false;
-        DB::transaction(function() use ($user, &$succeed) {
-            AssertionManager::setAssertException(true);
+        AssertionManager::setAssertException(true); // make assert throws AssertException
 
+        DB::transaction(function() use ($user, &$succeed) {
             $personnel = $user->toPersonnel();
             $ligue_id = Request::input('ligue');
             assert(Ligue::exists($ligue_id));
@@ -127,9 +127,10 @@ class UserController extends Controller
             $user->mail = Request::input('courriel');
             assert($user->save());
 
-            AssertionManager::rollbackAssertException();
             $succeed = true;
         });
+
+        AssertionManager::rollbackAssertException(); // avoid side-effects
         if (!$succeed)
             return FlashMessage::redirectBackWithErrorMessage("Impossible d'effectuer les modifications!");
 
