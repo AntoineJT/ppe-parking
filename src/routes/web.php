@@ -11,6 +11,7 @@
 |
 */
 
+use App\Models\LienReset;
 use App\Utils\FlashMessage;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
@@ -29,16 +30,17 @@ function declareView(string $url, string $path, int $access_level)
 }
 
 // Changer mot de passe
-declareView('/changer-mot-de-passe', 'changer-mdp', ACCESS_PUBLIC)
-    ->name('change-password');
-Route::post('/changer-mot-de-passe', 'ChangePasswordController');
+Route::prefix('/changer-mot-de-passe')->name('change-password')->group(function () {
+    declareView('/', 'changer-mdp', ACCESS_PUBLIC);
+    Route::post('/', 'ChangePasswordController');
+});
 
 // Connexion
+Route::prefix('/connexion')->name('login')->group(function () {
+    declareView('/', 'connexion', ACCESS_PUBLIC);
+    Route::post('/', 'LoginController');
+});
 Route::redirect('/', '/connexion')->name('home');
-declareView('/connexion', 'connexion', ACCESS_PUBLIC)
-    ->name('login');
-Route::post('/connexion', 'LoginController');
-
 
 // Déconnexion
 Route::get('/deconnexion', function () {
@@ -47,27 +49,47 @@ Route::get('/deconnexion', function () {
 })->name('logout');
 
 // Inscription
-declareView('/inscription', 'inscription', ACCESS_PUBLIC)
-    ->name('register');
-Route::post('/inscription', 'RegisterController');
+Route::prefix('/inscription')->name('register')->group(function () {
+    declareView('/', 'inscription', ACCESS_PUBLIC);
+    Route::post('/', 'RegisterController');
+});
 
 // Mot de passe oublié
-declareView('/reinitialiser-mot-de-passe', 'reset', ACCESS_PUBLIC)
-    ->name('reset-password');
-Route::post('/reinitialiser-mot-de-passe', 'ResetLinkController');
+Route::prefix('/reinitialiser-mot-de-passe')->name('reset-password')->group(function () {
+    declareView('/', 'reset', ACCESS_PUBLIC);
+    Route::post('/', 'ResetLinkController');
+});
 Route::redirect('/reset', '/reinitialiser-mot-de-passe');
 
 // Changer mdp avec lien
-Route::get('/reinitialiser-mot-de-passe/{link}', function($link) {
+Route::get('/reinitialiser-mot-de-passe/{link}', function ($link) {
     Session::put('link', $link);
-    return Redirect::to('/changer-mot-de-passe');
+    $to = Redirect::to(route('change-password'));
+
+    $reset_link = LienReset::find($link);
+    if ($reset_link === null)
+        return $to;
+
+    $user = $reset_link->getUser();
+    return $to->with('info', "Vous allez changer le mot de passe de l'utilisateur " . $user->getFullName());
+})->name('reset-link');
+
+Route::prefix('/admin')->group(function () {
+    // Gestion ligues
+    Route::prefix('/gestion-ligues')->name('manage-leagues')->group(function () {
+        declareView('/', 'admin.ligues', ACCESS_ADMIN);
+        Route::post('/', 'LeagueController');
+    });
+
+    // Gestion places
+    Route::prefix('/gestion-places')->name('manage-parking-spaces')->group(function () {
+        declareView('/', 'admin.places', ACCESS_ADMIN);
+        Route::post('/', 'ParkingSpaceController');
+    });
+
+    // Gestion utilisateurs
+    Route::prefix('/gestion-utilisateurs')->name('manage-users')->group(function () {
+        declareView('/', 'admin.utilisateurs', ACCESS_ADMIN);
+        Route::post('/', 'UserController');
+    });
 });
-
-// Page validation
-declareView('/admin/valider', 'admin.valider', ACCESS_ADMIN)
-    ->name('validate');
-Route::post('/admin/valider', 'ValidationController');
-
-// Retourner les vues pour travailler dessus
-declareView('/home', 'home', ACCESS_PUBLIC)
-    ->name('home');

@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Enums\UserStateEnum;
+use App\Utils\AssertionManager;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Personnel extends Model
 {
@@ -54,5 +56,27 @@ class Personnel extends Model
     public static function find_(int $user_id): ?Personnel
     {
         return Personnel::firstWhere('id_utilisateur', $user_id);
+    }
+
+    public function deleteUser(): bool
+    {
+        $user = Utilisateur::find($this->id_utilisateur);
+        if ($user === null)
+            return false;
+
+        $succeed = false;
+        AssertionManager::setAssertException(true); // make assert throws AssertException
+
+        DB::transaction(function() use ($user, &$succeed) {
+            foreach(LienReset::where('id_utilisateur', $user->id)->get() as $link)
+                assert($link->delete());
+            assert($this->delete());
+            assert($user->delete());
+
+            $succeed = true;
+        });
+
+        AssertionManager::rollbackAssertException(); // avoid side-effects
+        return $succeed;
     }
 }
