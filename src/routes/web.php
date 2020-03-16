@@ -67,3 +67,7 @@ Route::get('/reinitialiser-mot-de-passe/{link}', function($link) {
 declareView('/admin/valider', 'admin.valider', ACCESS_ADMIN)
     ->name('validate');
 Route::post('/admin/valider', 'ValidationController');
+
+// Retourner les vues pour travailler dessus
+declareView('/home', 'home', ACCESS_PUBLIC)
+    ->name('home');
