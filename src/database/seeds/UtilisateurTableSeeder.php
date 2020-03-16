@@ -3,6 +3,7 @@
 use App\Models\Admin;
 use App\Models\Utilisateur;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class UtilisateurTableSeeder extends Seeder
 {
@@ -13,13 +14,26 @@ class UtilisateurTableSeeder extends Seeder
      */
     public function run()
     {
-        // create user
-        $user = Utilisateur::create('Test', 'Mdp=Moka123', 'test@test.org');
-        assert($user !== null);
-        $user->mdp = '$2y$10$sEf9WBDag76gFcl6LV723eBrCf/n8mNbWvHCqDIEsdeGSDUbBSoji'; // Moka123
-        assert($user->save());
+        self::createUser('Test', 'Mdp=Moka123', 'test@test.org', '$2y$10$sEf9WBDag76gFcl6LV723eBrCf/n8mNbWvHCqDIEsdeGSDUbBSoji');
+        self::addToAdmin(DB::table('utilisateurs')->max('id'));
+    }
 
-        // add user to admins
-        assert(Admin::addUser($user) !== null);
+    private static function createUser(string $last_name, string $first_name, string $mail, string $password): void
+    {
+        $succeed = DB::table('utilisateurs')->insert([
+            'nom' => $last_name,
+            'prenom' => $first_name,
+            'mail' => $mail,
+            'mdp' => $password
+        ]);
+        assert($succeed);
+    }
+
+    private static function addToAdmin(int $user_id): void
+    {
+        $succeed = DB::table('admins')->insert([
+            'id_utilisateur' => $user_id
+        ]);
+        assert($succeed);
     }
 }
