@@ -11,3 +11,15 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Enums\AuthEnum;
+
+class PlaceController extends Controller
+{
+    public function show()
+    {
+        $places = Place::get();
+
+        return view('home', compact('places'));
+    }
+
+    }
+}
