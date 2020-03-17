@@ -29,39 +29,56 @@ function declareView(string $url, string $path, int $access_level)
     ]);
 }
 
-// Changer mot de passe
+Route::redirect('/', '/connexion')->name('home');
+
+Route::prefix('/admin')->group(function () {
+    Route::prefix('/configuration')->name('config')->group(function() {
+        Route::get('/', 'ConfigurationController@show');
+        Route::post('/', 'ConfigurationController');
+    });
+    
+    Route::prefix('/gestion-ligues')->name('manage-leagues')->group(function () {
+        declareView('/', 'admin.ligues', ACCESS_ADMIN);
+        Route::post('/', 'LeagueController');
+    });
+
+    Route::prefix('/gestion-places')->name('manage-parking-spaces')->group(function () {
+        declareView('/', 'admin.places', ACCESS_ADMIN);
+        Route::post('/', 'ParkingSpaceController');
+    });
+
+    Route::prefix('/gestion-utilisateurs')->name('manage-users')->group(function () {
+        declareView('/', 'admin.utilisateurs', ACCESS_ADMIN);
+        Route::post('/', 'UserController');
+    });
+});
+
 Route::prefix('/changer-mot-de-passe')->name('change-password')->group(function () {
     declareView('/', 'changer-mdp', ACCESS_PUBLIC);
     Route::post('/', 'ChangePasswordController');
 });
 
-// Connexion
 Route::prefix('/connexion')->name('login')->group(function () {
     declareView('/', 'connexion', ACCESS_PUBLIC);
     Route::post('/', 'LoginController');
 });
-Route::redirect('/', '/connexion')->name('home');
 
-// Déconnexion
 Route::get('/deconnexion', function () {
     Request::session()->flush();
     return FlashMessage::redirectWithInfoMessage(Redirect::to('/'), 'Vous vous êtes déconnecté!');
 })->name('logout');
 
-// Inscription
 Route::prefix('/inscription')->name('register')->group(function () {
     declareView('/', 'inscription', ACCESS_PUBLIC);
     Route::post('/', 'RegisterController');
 });
 
-// Mot de passe oublié
 Route::prefix('/reinitialiser-mot-de-passe')->name('reset-password')->group(function () {
     declareView('/', 'reset', ACCESS_PUBLIC);
     Route::post('/', 'ResetLinkController');
 });
 Route::redirect('/reset', '/reinitialiser-mot-de-passe');
 
-// Changer mdp avec lien
 Route::get('/reinitialiser-mot-de-passe/{link}', function ($link) {
     Session::put('link', $link);
     $to = Redirect::to(route('change-password'));
@@ -73,31 +90,6 @@ Route::get('/reinitialiser-mot-de-passe/{link}', function ($link) {
     $user = $reset_link->getUser();
     return $to->with('info', "Vous allez changer le mot de passe de l'utilisateur " . $user->getFullName());
 })->name('reset-link');
-
-Route::prefix('/admin')->group(function () {
-    // Gestion ligues
-    Route::prefix('/gestion-ligues')->name('manage-leagues')->group(function () {
-        declareView('/', 'admin.ligues', ACCESS_ADMIN);
-        Route::post('/', 'LeagueController');
-    });
-
-    // Gestion places
-    Route::prefix('/gestion-places')->name('manage-parking-spaces')->group(function () {
-        declareView('/', 'admin.places', ACCESS_ADMIN);
-        Route::post('/', 'ParkingSpaceController');
-    });
-
-    // Gestion utilisateurs
-    Route::prefix('/gestion-utilisateurs')->name('manage-users')->group(function () {
-        declareView('/', 'admin.utilisateurs', ACCESS_ADMIN);
-        Route::post('/', 'UserController');
-    });
-
-    Route::prefix('/configuration')->name('config')->group(function() {
-        Route::get('/', 'ConfigurationController@show');
-        Route::post('/', 'ConfigurationController');
-    });
-});
 
 Route::prefix('/reservation')->name('reserve')->group(function () {
     declareView('/', 'reservation', ACCESS_SEMIPUBLIC);
