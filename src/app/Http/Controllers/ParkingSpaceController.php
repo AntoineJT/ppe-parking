@@ -19,8 +19,7 @@ class ParkingSpaceController extends Controller
             return FlashMessage::redirectBackWithWarningMessage("Le formulaire n'est pas bien renseigné!")
                 ->withInput(Request::all());
 
-        $action = Request::input('action');
-        switch ($action) {
+        switch (Request::input('action')) {
             case 'add':
                 return self::add();
             case 'delete':
@@ -41,7 +40,7 @@ class ParkingSpaceController extends Controller
         if ($label === null)
             return FlashMessage::redirectBackWithWarningMessage("Aucun numéro de place n'a été renseigné!");
 
-        $fails = Place::createSpace($label) === null;
+        $fails = Place::createSpace(mb_strtoupper($label)) === null;
         if ($fails)
             return FlashMessage::redirectBackWithErrorMessage('Impossible de créer la place!');
         return FlashMessage::redirectBackWithSuccessMessage('La place a été créée correctement!');
