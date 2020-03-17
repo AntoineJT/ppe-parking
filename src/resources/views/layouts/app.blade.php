@@ -54,7 +54,7 @@
         </nav>
         @if (SessionManager::isLogged())
             <div class="text-center mb-2">
-                <span>Vous êtes connecté en tant que {{ SessionManager::getFullTypeName() }}</span>
+                <span>Vous êtes connecté en tant que <span class="font-weight-light">{{ \App\Models\Utilisateur::find(session('id'))->getFullName() }}</span> (<span class="font-italic">{{ SessionManager::getFullTypeName() }}</span>)</span>
             </div>
         @endif
     </div>
