@@ -17,6 +17,7 @@ class CreatePersonnelsTable extends Migration
             $table->integerIncrements('id');
             $table->unsignedInteger('id_utilisateur');
             $table->unsignedTinyInteger('statut');
+            $table->unsignedInteger('rang')->nullable()->unique();
             $table->unsignedSmallInteger('id_ligue')->nullable();
         });
     }

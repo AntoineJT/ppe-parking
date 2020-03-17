@@ -22,7 +22,6 @@ class CreateReservationsTable extends Migration
             $table->unsignedInteger('id_personnel');
             $table->unsignedTinyInteger('type_statut');
             $table->unsignedInteger('id_place');
-            $table->unsignedBigInteger('rang')->nullable()->unique();
         });
     }
 
