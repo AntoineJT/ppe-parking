@@ -13,6 +13,7 @@
 
 use App\Models\LienReset;
 use App\Utils\FlashMessage;
+use App\Utils\SessionManager;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,14 +30,24 @@ function declareView(string $url, string $path, int $access_level)
     ]);
 }
 
-Route::redirect('/', '/connexion')->name('home');
+Route::get('/', function () {
+    if (SessionManager::isAdmin())
+        return Redirect::to(route('home.admin'));
+    /*
+        if (SessionManager::isPersonnel())
+            return Redirect::to(route('home.personnel'))
+    */
+    return Redirect::to(route('login'));
+})->name('home');
 
 Route::prefix('/admin')->group(function () {
+    declareView('/', 'admin.index', ACCESS_ADMIN)->name('home.admin');
+    
     Route::prefix('/configuration')->name('config')->group(function() {
         Route::get('/', 'ConfigurationController@show');
         Route::post('/', 'ConfigurationController');
     });
-    
+
     Route::prefix('/gestion-ligues')->name('manage-leagues')->group(function () {
         declareView('/', 'admin.ligues', ACCESS_ADMIN);
         Route::post('/', 'LeagueController');
