@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreatePersonnelsTable extends Migration
@@ -20,6 +21,8 @@ class CreatePersonnelsTable extends Migration
             $table->unsignedInteger('rang')->nullable()->unique();
             $table->unsignedSmallInteger('id_ligue')->nullable();
         });
+
+        DB::statement('ALTER TABLE personnels ADD CONSTRAINT chk_statut CHECK(statut BETWEEN 0 AND 3)');
     }
 
     /**

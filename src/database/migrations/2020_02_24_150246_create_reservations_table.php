@@ -17,8 +17,7 @@ class CreateReservationsTable extends Migration
             $table->id();
             // $table->timestamps();
             $table->date('date_demande');
-            $table->date('date_debut');
-            $table->date('date_fin');
+            $table->date('date_expiration');
             $table->unsignedInteger('id_personnel');
             $table->unsignedTinyInteger('type_statut');
             $table->unsignedInteger('id_place');
