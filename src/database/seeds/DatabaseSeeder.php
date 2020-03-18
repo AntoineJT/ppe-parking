@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
 
         if (env('APP_DEBUG')) {
             $this->call(UtilisateurTableSeeder::class);
+            $this->call(PlaceTableSeeder::class);
         }
     }
 }
