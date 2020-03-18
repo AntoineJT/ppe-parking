@@ -22,7 +22,7 @@ class CreatePersonnelsTable extends Migration
             $table->unsignedSmallInteger('id_ligue')->nullable();
         });
 
-        DB::statement('ALTER TABLE personnels ADD CONSTRAINT chk_statut CHECK(statut BETWEEN 0 AND 3)');
+        DB::statement('ALTER TABLE personnels ADD CONSTRAINT chk_statut CHECK(statut BETWEEN 0 AND 2)');
     }
 
     /**
