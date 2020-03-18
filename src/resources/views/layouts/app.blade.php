@@ -61,7 +61,7 @@
 </header>
 <div class="ml-5 mr-5 mb-2">
     <main>
-        <div>
+        <div class="w-75 mx-auto">
             @include('includes.flash-message')
         </div>
         {{-- TODO Rework le système d'accès? Passer par un middleware? --}}
