@@ -20,7 +20,7 @@ class CreateReservationsTable extends Migration
             $table->date('date_expiration');
             $table->unsignedInteger('id_personnel');
             $table->unsignedTinyInteger('type_statut');
-            $table->unsignedInteger('id_place');
+            $table->unsignedInteger('id_place')->nullable();
         });
     }
 
