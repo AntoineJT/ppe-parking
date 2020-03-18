@@ -37,6 +37,7 @@
                 <a class="nav-link nav-item" href="{{ route('login') }}"><i class="fas fa-sign-in-alt mr-2"></i>Connexion</a>
             @elseif (SessionManager::isPersonnel())
                 <a class="nav-link nav-item" href="{{ route('home') }}"><i class="fas fa-home mr-2"></i>Accueil</a>
+                <a class="nav-link nav-item" href="{{ route('reserve') }}"><i class="fas fa-parking mr-2"></i>Réserver</a>
                 @include('includes.nav.shared-end')
             @elseif (SessionManager::isAdmin())
                 <a class="nav-link nav-item" href="{{ route('home') }}"><i class="fas fa-home mr-2"></i>Accueil</a>
