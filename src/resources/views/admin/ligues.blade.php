@@ -7,7 +7,7 @@
         <form class="flex-row d-flex w-50 mx-auto" method="POST">
             @csrf
             <input type="hidden" name="action" value="add">
-            <input type="text" name="nom" class="form-control mr-2" placeholder="Nom ligue">
+            <input type="text" name="nom" class="form-control mr-2" placeholder="Nom ligue" required>
             <button class="btn btn-primary">Ajouter</button>
         </form>
 
