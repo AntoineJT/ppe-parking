@@ -51,8 +51,8 @@ CREATE TABLE PERSONNELS
 CREATE TABLE RESERVATIONS
 (
    id INT UNSIGNED AUTO_INCREMENT
-   , date_demande DATE NOT NULL
-   , date_expiration DATE NOT NULL
+   , date_demande DATETIME NOT NULL
+   , date_expiration DATETIME NOT NULL
    , id_personnel INT UNSIGNED NOT NULL
    , type_statut TINYINT UNSIGNED NOT NULL
    , id_place INT UNSIGNED
