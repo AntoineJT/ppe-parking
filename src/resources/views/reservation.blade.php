@@ -52,7 +52,7 @@
                     </div>
                 @endforeach
             @else
-
+                <span class="font-italic">Vous n'avez aucune réservation antérieure</span>
             @endif
         </div>
     </div>
