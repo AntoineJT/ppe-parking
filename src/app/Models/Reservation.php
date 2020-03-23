@@ -59,4 +59,10 @@ class Reservation extends Model
             return null;
         return Place::find($this->id_place);
     }
+
+    public static function getActiveReservations(Personnel $personnel)
+    {
+        return Reservation::where('type_statut', ReservationStateEnum::ACTIVE)
+            ->where('id_personnel', '=', $personnel->id);
+    }
 }

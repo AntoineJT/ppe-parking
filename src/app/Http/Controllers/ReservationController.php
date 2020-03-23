@@ -30,11 +30,8 @@ class ReservationController extends Controller
         $available_places = Place::where('disponible', true)->get();
         if ($available_places->isEmpty())
             return FlashMessage::redirectBackWithInfoMessage("Désolé, aucune place n'est disponible actuellement!");
-        
-        $has_active_res = Reservation::where('type_statut', ReservationStateEnum::ACTIVE)
-            ->where('id_personnel', '=', $personnel->id)
-            ->exists();
-        if ($has_active_res)
+
+        if (Reservation::getActiveReservations($personnel)->exists())
             return FlashMessage::redirectBackWithWarningMessage("Vous ne pouvez pas réserver une nouvelle place : vous avez déjà une réservation en cours!");
 
         try {
