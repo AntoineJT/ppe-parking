@@ -14,10 +14,6 @@ class CreateStatutsTable extends Migration
     public function up()
     {
         Schema::create('statuts', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
-            // $table->charset = 'utf8';
-            $table->collation = 'utf8mb4_unicode_ci';
-
             $table->unsignedTinyInteger('id')->primary();
             // $table->timestamps();
             $table->string('nom', 10)->unique();

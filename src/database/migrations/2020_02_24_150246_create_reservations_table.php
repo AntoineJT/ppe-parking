@@ -14,10 +14,6 @@ class CreateReservationsTable extends Migration
     public function up()
     {
         Schema::create('reservations', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
-            // $table->charset = 'utf8';
-            $table->collation = 'utf8mb4_unicode_ci';
-
             $table->id();
             // $table->timestamps();
             $table->date('date_demande');

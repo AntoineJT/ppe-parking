@@ -14,10 +14,6 @@ class CreateLiguesTable extends Migration
     public function up()
     {
         Schema::create('ligues', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
-            // $table->charset = 'utf8';
-            $table->collation = 'utf8mb4_unicode_ci';
-
             $table->smallIncrements('id');
             // $table->timestamps();
             $table->string('nom', 50)->unique();

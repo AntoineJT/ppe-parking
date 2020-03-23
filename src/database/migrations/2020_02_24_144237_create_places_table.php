@@ -14,10 +14,6 @@ class CreatePlacesTable extends Migration
     public function up()
     {
         Schema::create('places', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
-            // $table->charset = 'utf8';
-            $table->collation = 'utf8mb4_unicode_ci';
-
             $table->integerIncrements('id');
             $table->char('numero', 5)->unique();
             $table->softDeletes(); // avoid to remove places as long as users will have history
