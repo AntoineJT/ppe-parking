@@ -92,6 +92,10 @@ Route::prefix('/admin')->group(function () {
         declareView('/', 'admin.utilisateurs', ACCESS_ADMIN);
         Route::post('/', 'UserController');
     });
+
+    Route::prefix('/configuration')->name('config')->group(function() {
+        declareView('/', 'admin.configuration', ACCESS_ADMIN);
+    });
 });
 
 Route::prefix('/reservation')->name('reserve')->group(function () {
