@@ -10,6 +10,7 @@ use App\Utils\FlashMessage;
 use App\Utils\SessionManager;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class ReservationController extends Controller
@@ -23,9 +24,12 @@ class ReservationController extends Controller
         if ($personnel === null)
             return FlashMessage::redirectBackWithErrorMessage("Cet utilisateur n'existe pas!");
 
+        assert(DB::unprepared('CALL FAST_REFRESH_AVAILABILITIES'));
+
+        // FIXME Semble ne pas fonctionner avec MariaDB sur Linux
         $available_places = Place::where('disponible', true)->get();
         if ($available_places->isEmpty())
-            return FlashMessage::redirectBackWithInfoMessage("Désolé, aucune place n'a été renseigné par l'administrateur!");
+            return FlashMessage::redirectBackWithInfoMessage("Désolé, aucune place n'est disponible actuellement!");
 
         try {
             $reservation = Reservation::create($personnel, $available_places);
