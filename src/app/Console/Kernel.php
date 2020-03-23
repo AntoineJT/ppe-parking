@@ -28,11 +28,11 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
 
         $schedule->call(function(){
-            DB::unprepared('CALL FULL_REFRESH_AVAILABILITIES');
+            assert(DB::unprepared('CALL FULL_REFRESH_AVAILABILITIES'));
         })->daily();
 
         $schedule->call(function() {
-            DB::unprepared('CALL FAST_REFRESH_AVAILABILITIES');
+            assert(DB::unprepared('CALL FAST_REFRESH_AVAILABILITIES'));
         })->everyMinute();
     }
 
