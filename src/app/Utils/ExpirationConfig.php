@@ -8,7 +8,9 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use League\Flysystem\FileNotFoundException;
 
-trait ExpirationConfig {
+// TODO Peut être utiliser https://github.com/yosymfony/Toml
+trait ExpirationConfig
+{
     private static $filename = 'expiration.txt';
 
     // can this be null?
@@ -21,6 +23,9 @@ trait ExpirationConfig {
     public static function getExpirationDate(Carbon $date): Carbon
     {
         $content = Storage::get(self::$filename);
+        // TODO it would be better to throw another exception
+        if ($content === null || !is_int($content))
+            throw new \Illuminate\Contracts\Filesystem\FileNotFoundException;
         $date->addRealMinutes(intval($content));
         return $date;
     }
