@@ -1,4 +1,8 @@
 -- things not at the conceptual level
+ALTER TABLE PLACES
+    ADD COLUMN disponible TINYINT(1) NOT NULL
+;
+
 CREATE TABLE LIEN_RESET(
    lien CHAR(20) NOT NULL
    , id_utilisateur INT UNSIGNED NOT NULL
