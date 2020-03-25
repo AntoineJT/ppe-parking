@@ -93,6 +93,6 @@ Route::get('/reinitialiser-mot-de-passe/{link}', 'ResetLinkController@withLink')
 
 // Réservations
 Route::prefix('/reservation')->group(function () {
-    declareView('/', 'reservation', ACCESS_SEMIPUBLIC)->name('reserve');
+    Route::get('/', 'ReservationController@show')->name('reserve');
     Route::post('/', 'ReservationController');
 });

@@ -2,16 +2,6 @@
 @section('title', 'Réserver une place')
 
 @section('content')
-    @php
-        use App\Models\Personnel;
-        use App\Models\Reservation;
-
-        $personnel = Personnel::find_(session('id'));
-        $reservation = Reservation::getActiveReservations($personnel);
-        $already_has_one = $reservation->exists();
-        $reservation = !$already_has_one ?: $reservation->first();
-        $place = \App\Models\Place::find($reservation->id_place);
-    @endphp
     <div class="card mb-2 mt-2 w-50 mx-auto text-center">
         <div class="card-body d-flex flex-column">
             <span class="card-title h3">Réservation active</span>
@@ -35,13 +25,6 @@
     <div class="card mb-2 mt-2 w-50 mx-auto text-center">
         <div class="card-body d-flex flex-column">
             <span class="card-title h3">Vos réservations antérieures</span>
-            @php
-                $old_reservations = Reservation::where('id_personnel', $personnel->id)
-                    ->where('type_statut', '!=', \App\Enums\ReservationStateEnum::ACTIVE)
-                    ->where('type_statut', '!=', \App\Enums\ReservationStateEnum::WAITING);
-                $old_exists = $old_reservations->exists();
-                $old_reservations = $old_reservations->get();
-            @endphp
             @if ($old_exists)
                 @foreach($old_reservations as $old_reservation)
                     <div class="card mb-2 mt-2 w-50 mx-auto text-center">

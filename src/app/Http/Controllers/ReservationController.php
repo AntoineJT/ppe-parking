@@ -8,13 +8,36 @@ use App\Models\Place;
 use App\Models\Reservation;
 use App\Utils\FlashMessage;
 use App\Utils\SessionManager;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class ReservationController extends Controller
 {
+    public function show(): string
+    {
+        $personnel = Personnel::find_(session('id'));
+        $reservation = Reservation::getActiveReservations($personnel);
+        $already_has_one = $reservation->exists();
+        $reservation = !$already_has_one ?: $reservation->first();
+        $place = Place::find($reservation->id_place);
+
+        $old_reservations = Reservation::where('id_personnel', $personnel->id)
+            ->where('type_statut', '!=', ReservationStateEnum::ACTIVE)
+            ->where('type_statut', '!=', ReservationStateEnum::WAITING);
+        $old_exists = $old_reservations->exists();
+        $old_reservations = $old_reservations->get();
+
+        return view('reservation', [
+            'access' => ACCESS_SEMIPUBLIC,
+            'already_has_one' => $already_has_one,
+            'reservation' => $reservation,
+            'place' => $place,
+            'old_exists' => $old_exists,
+            'old_reservations' => $old_reservations
+        ]);
+    }
+
     public function __invoke(): RedirectResponse
     {
         if (SessionManager::isAdmin())
