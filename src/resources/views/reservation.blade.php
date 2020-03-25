@@ -8,9 +8,9 @@
             @if ($reservation !== null)
                 <div class="card mb-2 mt-2 w-50 mx-auto text-center">
                     <div class="card-body d-flex flex-column">
-                        <span class="card-title h4">{{ $place !== null ? 'Place '.$place->numero : 'En attente' }}</span>
-                        <span>Date de la demande : {{ $reservation->date_demande }}</span>
-                        <span>Date d'expiration : {{ $reservation->date_expiration }}</span>
+                        <span class="card-title h4">{{ $reservation['place'] !== null ? 'Place '.$reservation['place'] : 'En attente' }}</span>
+                        <span>Date de la demande : {{ $reservation['date_demande'] }}</span>
+                        <span>Date d'expiration : {{ $reservation['date_expiration'] }}</span>
                     </div>
                 </div>
             @else
@@ -25,14 +25,14 @@
     <div class="card mb-2 mt-2 w-50 mx-auto text-center">
         <div class="card-body d-flex flex-column">
             <span class="card-title h3">Vos réservations antérieures</span>
-            @if (!$old_reservations->isEmpty())
+            @if (!empty($old_reservations))
                 @foreach($old_reservations as $old_reservation)
                     <div class="card mb-2 mt-2 w-50 mx-auto text-center">
                         <div class="card-body d-flex flex-column">
-                            <span class="card-title h4">Place {{ \App\Models\Place::find($old_reservation->id_place)->numero }}</span>
-                            <span>Statut : {{ \App\Models\Statut::find($old_reservation->type_statut)->nom }}</span>
-                            <span>Date de la demande : {{ $old_reservation->date_demande }}</span>
-                            <span>Date d'expiration : {{ $old_reservation->date_expiration }}</span>
+                            <span class="card-title h4">Place {{ $old_reservation['place'] }}</span>
+                            <span>Statut : {{ $old_reservation['nom_statut'] }}</span>
+                            <span>Date de la demande : {{ $old_reservation['date_demande'] }}</span>
+                            <span>Date d'expiration : {{ $old_reservation['date_expiration'] }}</span>
                         </div>
                     </div>
                 @endforeach

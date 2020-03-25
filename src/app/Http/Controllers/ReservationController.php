@@ -6,6 +6,7 @@ use App\Enums\ReservationStateEnum;
 use App\Models\Personnel;
 use App\Models\Place;
 use App\Models\Reservation;
+use App\Models\Statut;
 use App\Utils\FlashMessage;
 use App\Utils\SessionManager;
 use Illuminate\Http\RedirectResponse;
@@ -18,16 +19,31 @@ class ReservationController extends Controller
     {
         $personnel = Personnel::find_(session('id'));
         $reservations = Reservation::getActiveReservations($personnel);
-        $place = Place::find($reservations->first()->id_place);
-        $old_reservations = Reservation::where('id_personnel', $personnel->id)
+        $reservation = $reservations->exists() ? $reservations->first() : null;
+        $raw_old_reservations = Reservation::where('id_personnel', $personnel->id)
             ->where('type_statut', '!=', ReservationStateEnum::ACTIVE)
-            ->where('type_statut', '!=', ReservationStateEnum::WAITING);
+            ->where('type_statut', '!=', ReservationStateEnum::WAITING)
+            ->get();
+        $place = Place::find($reservation->id_place);
+
+        $old_reservations = [];
+        foreach ($raw_old_reservations as $raw_old_reservation) {
+            $old_reservations[] = [
+                'place' => Place::find($raw_old_reservation->id_place)->numero,
+                'nom_statut' => Statut::find($raw_old_reservation->type_statut)->nom,
+                'date_demande' => $raw_old_reservation->date_demande,
+                'date_expiration' => $raw_old_reservation->date_expiration
+            ];
+        }
 
         return view('reservation', [
             'access' => ACCESS_SEMIPUBLIC,
-            'reservation' => $reservations->exists() ? $reservations->first() : null,
-            'place' => $place,
-            'old_reservations' => $old_reservations->get()
+            'reservation' => [
+                'place' => ($place !== null) ? $place->numero : null,
+                'date_demande' => $reservation->date_demande,
+                'date_expiration' => $reservation->date_expiration
+            ],
+            'old_reservations' => $old_reservations
         ]);
     }
 
