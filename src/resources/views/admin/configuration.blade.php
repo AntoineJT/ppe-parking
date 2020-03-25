@@ -30,7 +30,7 @@
         <div class="card w-50 mx-auto">
             <div class="card-body">
                 <h5 class="card-title">Actions</h5>
-                <form>
+                <form method="POST">
                     @csrf
                     <input type="hidden" name="action" value="full-refresh">
                     <button class="btn btn-success"><i class="fas fa-sync-alt mr-2"></i>Recalculer la disponibilité des places</button>

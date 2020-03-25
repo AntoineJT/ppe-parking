@@ -95,6 +95,7 @@ Route::prefix('/admin')->group(function () {
 
     Route::prefix('/configuration')->name('config')->group(function() {
         declareView('/', 'admin.configuration', ACCESS_ADMIN);
+        Route::post('/', 'ConfigurationController');
     });
 });
 
