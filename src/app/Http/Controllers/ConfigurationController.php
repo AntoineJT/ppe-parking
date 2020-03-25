@@ -7,7 +7,6 @@ use App\Utils\FlashMessage;
 use App\Utils\SessionManager;
 use App\Utils\TimeManager;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
@@ -15,6 +14,17 @@ use Illuminate\Validation\Rule;
 
 class ConfigurationController extends Controller
 {
+    public function show(): string
+    {
+        // TODO Récupérer les valeurs stockées au lieu de mettre des 0
+        return view('admin.configuration', [
+            'access' => ACCESS_ADMIN,
+            'days' => 0,
+            'hours' => 0,
+            'minutes' => 0
+        ]);
+    }
+
     public function __invoke(): RedirectResponse
     {
         $validator = Validator::make(Request::all(), [
