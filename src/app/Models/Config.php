@@ -1,8 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class Config extends Model
 {
@@ -42,4 +43,21 @@ class Config extends Model
     public $timestamps = false;
 
     public const EXPIRATION_TIME = 'expiration.time';
+
+    private static function expiration()
+    {
+        return Config::find(self::EXPIRATION_TIME);
+    }
+
+    public static function getExpirationTime(): Carbon
+    {
+        return Carbon::createFromTimestamp(self::expiration()->value*60, '+00');
+    }
+
+    public static function setExpirationTime(int $new_duration): bool
+    {
+        $expiration = self::expiration();
+        $expiration->value = $new_duration;
+        return $expiration->save();
+    }
 }
