@@ -54,6 +54,11 @@ class Config extends Model
         return Carbon::createFromTimestamp(self::expiration()->value*60, '+00');
     }
 
+    public static function getRawExpirationTime(): int
+    {
+        return self::expiration()->value;
+    }
+
     public static function setExpirationTime(int $new_duration): bool
     {
         $expiration = self::expiration();

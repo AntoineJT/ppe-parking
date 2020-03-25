@@ -35,9 +35,7 @@ class Reservation extends Model
 
             $reservation = new Reservation;
             $reservation->date_demande = Carbon::now()->toDateTimeString();
-            //$reservation->date_expiration = ExpirationConfig::getExpirationDate(Carbon::now());
-            // TODO Remove debug thing
-            $reservation->date_expiration = Carbon::now()->addMinutes()->toDateTimeString();
+            $reservation->date_expiration = Carbon::now()->addRealMinutes(Config::getRawExpirationTime());
             $reservation->id_personnel = $personnel->id;
             $reservation->type_statut = $in_queue ? ReservationStateEnum::WAITING : ReservationStateEnum::ACTIVE;
             $reservation->id_place = $place->id;
