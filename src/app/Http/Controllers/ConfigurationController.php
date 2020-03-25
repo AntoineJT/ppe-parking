@@ -16,12 +16,14 @@ class ConfigurationController extends Controller
 {
     public function show(): string
     {
-        // TODO Récupérer les valeurs stockées au lieu de mettre des 0
+        $duration = Config::getExpirationTime();
+
         return view('admin.configuration', [
             'access' => ACCESS_ADMIN,
-            'days' => 0,
-            'hours' => 0,
-            'minutes' => 0
+            // On le récupère comme ça car carbon gère les mois, etc.
+            'days' => floor($duration->timestamp /60 /60 /24),
+            'hours' => $duration->hour,
+            'minutes' => $duration->minute
         ]);
     }
 
