@@ -5,7 +5,7 @@
     <div class="card mb-2 mt-2 w-50 mx-auto text-center">
         <div class="card-body d-flex flex-column">
             <span class="card-title h3">Réservation active</span>
-            @if ($already_has_one)
+            @if ($reservation !== null)
                 <div class="card mb-2 mt-2 w-50 mx-auto text-center">
                     <div class="card-body d-flex flex-column">
                         <span class="card-title h4">{{ $place !== null ? 'Place '.$place->numero : 'En attente' }}</span>
@@ -25,7 +25,7 @@
     <div class="card mb-2 mt-2 w-50 mx-auto text-center">
         <div class="card-body d-flex flex-column">
             <span class="card-title h3">Vos réservations antérieures</span>
-            @if ($old_exists)
+            @if (!$old_reservations->isEmpty())
                 @foreach($old_reservations as $old_reservation)
                     <div class="card mb-2 mt-2 w-50 mx-auto text-center">
                         <div class="card-body d-flex flex-column">

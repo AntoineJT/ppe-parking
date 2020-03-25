@@ -18,20 +18,15 @@ class ReservationController extends Controller
     {
         $personnel = Personnel::find_(session('id'));
         $reservations = Reservation::getActiveReservations($personnel);
-        $already_has_one = $reservations->exists();
         $place = Place::find($reservations->first()->id_place);
-
         $old_reservations = Reservation::where('id_personnel', $personnel->id)
             ->where('type_statut', '!=', ReservationStateEnum::ACTIVE)
             ->where('type_statut', '!=', ReservationStateEnum::WAITING);
-        $old_exists = $old_reservations->exists();
 
         return view('reservation', [
             'access' => ACCESS_SEMIPUBLIC,
-            'already_has_one' => $already_has_one,
-            'reservation' => !$already_has_one ?: $reservations->first(),
+            'reservation' => $reservations->exists() ? $reservations->first() : null,
             'place' => $place,
-            'old_exists' => $old_exists,
             'old_reservations' => $old_reservations->get()
         ]);
     }
