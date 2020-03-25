@@ -16,6 +16,7 @@ class CreatePlacesTable extends Migration
         Schema::create('places', function (Blueprint $table) {
             $table->integerIncrements('id');
             $table->char('numero', 5)->unique();
+            $table->boolean('disponible');
             $table->softDeletes(); // avoid to remove places as long as users will have history
             // $table->timestamps();
         });

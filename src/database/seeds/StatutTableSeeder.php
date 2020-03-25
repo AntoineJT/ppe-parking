@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Statut;
+use App\Enums\ReservationStateEnum;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,10 +13,11 @@ class StatutTableSeeder extends Seeder
      */
     public function run()
     {
-        self::createStatut(0, 'Inconnu');
-        self::createStatut(1, 'Expiré');
-        self::createStatut(2, 'En attente');
-        self::createStatut(3, 'Refusé');
+        self::createStatut(ReservationStateEnum::UNKNOWN, 'Inconnu');
+        self::createStatut(ReservationStateEnum::EXPIRED, 'Expiré');
+        self::createStatut(ReservationStateEnum::WAITING, 'En attente');
+        self::createStatut(ReservationStateEnum::REFUSED, 'Refusé');
+        self::createStatut(ReservationStateEnum::ACTIVE, 'Actif');
     }
 
     private static function createStatut(int $type, string $nom): void

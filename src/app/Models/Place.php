@@ -32,6 +32,8 @@ class Place extends Model
     {
         $space = new Place;
         $space->numero = $label;
+        $space->disponible = true;
+
         if (!$space->save())
             return null;
         return $space;

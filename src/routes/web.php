@@ -92,4 +92,14 @@ Route::prefix('/admin')->group(function () {
         declareView('/', 'admin.utilisateurs', ACCESS_ADMIN);
         Route::post('/', 'UserController');
     });
+
+    Route::prefix('/configuration')->name('config')->group(function() {
+        Route::get('/', 'ConfigurationController@show');
+        Route::post('/', 'ConfigurationController');
+    });
+});
+
+Route::prefix('/reservation')->name('reserve')->group(function () {
+    declareView('/', 'reservation', ACCESS_SEMIPUBLIC);
+    Route::post('/', 'ReservationController');
 });

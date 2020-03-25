@@ -37,12 +37,14 @@
                 <a class="nav-link nav-item" href="{{ route('login') }}"><i class="fas fa-sign-in-alt mr-2"></i>Connexion</a>
             @elseif (SessionManager::isPersonnel())
                 <a class="nav-link nav-item" href="{{ route('home') }}"><i class="fas fa-home mr-2"></i>Accueil</a>
+                <a class="nav-link nav-item" href="{{ route('reserve') }}"><i class="fas fa-parking mr-2"></i>Réserver</a>
                 @include('includes.nav.shared-end')
             @elseif (SessionManager::isAdmin())
                 <a class="nav-link nav-item" href="{{ route('home') }}"><i class="fas fa-home mr-2"></i>Accueil</a>
                 <div class="dropdown">
                     <span><i class="fas fa-list mr-2"></i>Gestion</span>
                     <div class="dropdown-content">
+                        <a class="nav-link nav-item" href="{{ route('config') }}"><i class="fas fa-cogs mr-2"></i>Paramètres</a>
                         <a class="nav-link nav-item" href="{{ route('manage-leagues') }}"><i class="fas fa-list mr-2"></i>Gestion des ligues</a>
                         <a class="nav-link nav-item" href="{{ route('manage-parking-spaces') }}"><i class="fas fa-parking mr-2"></i>Gestion des places</a>
                         <a class="nav-link nav-item" href="{{ route('manage-users') }}"><i class="fas fa-user mr-2"></i>Gestion des utilisateurs</a>
