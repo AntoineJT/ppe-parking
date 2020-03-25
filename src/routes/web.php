@@ -29,6 +29,36 @@ function declareView(string $url, string $path, int $access_level)
     ]);
 }
 
+// Accueil
+Route::redirect('/', '/connexion')->name('home');
+
+// Section admin
+Route::prefix('/admin')->group(function () {
+    // Paramètres généraux
+    Route::prefix('/configuration')->name('config')->group(function() {
+        Route::get('/', 'ConfigurationController@show');
+        Route::post('/', 'ConfigurationController');
+    });
+
+    // Gestion ligues
+    Route::prefix('/gestion-ligues')->name('manage-leagues')->group(function () {
+        declareView('/', 'admin.ligues', ACCESS_ADMIN);
+        Route::post('/', 'LeagueController');
+    });
+
+    // Gestion places
+    Route::prefix('/gestion-places')->name('manage-parking-spaces')->group(function () {
+        declareView('/', 'admin.places', ACCESS_ADMIN);
+        Route::post('/', 'ParkingSpaceController');
+    });
+
+    // Gestion utilisateurs
+    Route::prefix('/gestion-utilisateurs')->name('manage-users')->group(function () {
+        declareView('/', 'admin.utilisateurs', ACCESS_ADMIN);
+        Route::post('/', 'UserController');
+    });
+});
+
 // Changer mot de passe
 Route::prefix('/changer-mot-de-passe')->name('change-password')->group(function () {
     declareView('/', 'changer-mdp', ACCESS_PUBLIC);
@@ -40,7 +70,6 @@ Route::prefix('/connexion')->name('login')->group(function () {
     declareView('/', 'connexion', ACCESS_PUBLIC);
     Route::post('/', 'LoginController');
 });
-Route::redirect('/', '/connexion')->name('home');
 
 // Déconnexion
 Route::get('/deconnexion', function () {
@@ -74,31 +103,7 @@ Route::get('/reinitialiser-mot-de-passe/{link}', function ($link) {
     return $to->with('info', "Vous allez changer le mot de passe de l'utilisateur " . $user->getFullName());
 })->name('reset-link');
 
-Route::prefix('/admin')->group(function () {
-    // Gestion ligues
-    Route::prefix('/gestion-ligues')->name('manage-leagues')->group(function () {
-        declareView('/', 'admin.ligues', ACCESS_ADMIN);
-        Route::post('/', 'LeagueController');
-    });
-
-    // Gestion places
-    Route::prefix('/gestion-places')->name('manage-parking-spaces')->group(function () {
-        declareView('/', 'admin.places', ACCESS_ADMIN);
-        Route::post('/', 'ParkingSpaceController');
-    });
-
-    // Gestion utilisateurs
-    Route::prefix('/gestion-utilisateurs')->name('manage-users')->group(function () {
-        declareView('/', 'admin.utilisateurs', ACCESS_ADMIN);
-        Route::post('/', 'UserController');
-    });
-
-    Route::prefix('/configuration')->name('config')->group(function() {
-        Route::get('/', 'ConfigurationController@show');
-        Route::post('/', 'ConfigurationController');
-    });
-});
-
+// Réservations
 Route::prefix('/reservation')->name('reserve')->group(function () {
     declareView('/', 'reservation', ACCESS_SEMIPUBLIC);
     Route::post('/', 'ReservationController');
