@@ -23,7 +23,7 @@
                         <label for="minutes" class="input-group-prepend input-group-text w-50">Minutes</label>
                         <input type="number" name="minutes" value="0" min="0" max="59" class="form-control mr-2" required>
                     </div>
-                    <button class="btn btn-primary flex-column mt-2">Enregistrer</button>
+                    <button class="btn btn-primary flex-column mt-2"><i class="fas fa-save mr-2"></i>Enregistrer</button>
                 </form>
             </div>
         </div>
