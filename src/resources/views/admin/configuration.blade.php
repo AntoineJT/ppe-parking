@@ -13,7 +13,7 @@
                     <input type="hidden" name="action" value="expiration">
                     <div class="input-group">
                         <label for="jours" class="input-group-prepend input-group-text w-50">Jours</label>
-                        <input type="number" name="jours" value="0" min="0" max="59" class="form-control mr-2" required>
+                        <input type="number" name="jours" value="0" min="0" class="form-control mr-2" required>
                     </div>
                     <div class="input-group">
                         <label for="heures" class="input-group-prepend input-group-text w-50">Heures</label>
