@@ -14,3 +14,9 @@ ALTER TABLE LIEN_RESET ADD
     FOREIGN KEY(id_utilisateur)
     REFERENCES UTILISATEURS(id)
 ;
+
+CREATE TABLE CONFIG(
+    `key` VARCHAR(30)
+    , value TEXT NULL
+    , PRIMARY KEY (`key`)
+) ENGINE = MyISAM;
