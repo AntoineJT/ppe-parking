@@ -11,10 +11,24 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class ResetLinkController extends Controller
 {
+    public function withLink(string $link): RedirectResponse
+    {
+        Session::put('link', $link);
+        $to = Redirect::to(route('change-password'));
+
+        $reset_link = LienReset::find($link);
+        if ($reset_link === null)
+            return $to;
+
+        $user = $reset_link->getUser();
+        return $to->with('info', "Vous allez changer le mot de passe de l'utilisateur " . $user->getFullName());
+    }
+
     public function __invoke()
     {
         $validator = Validator::make(Request::all(), [

@@ -11,12 +11,10 @@
 |
 */
 
-use App\Models\LienReset;
 use App\Utils\FlashMessage;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Session;
 
 const ACCESS_PUBLIC = 0;
 const ACCESS_SEMIPUBLIC = 1;
@@ -91,17 +89,7 @@ Route::prefix('/reinitialiser-mot-de-passe')->group(function () {
 Route::redirect('/reset', '/reinitialiser-mot-de-passe');
 
 // Changer mdp avec lien
-Route::get('/reinitialiser-mot-de-passe/{link}', function ($link) {
-    Session::put('link', $link);
-    $to = Redirect::to(route('change-password'));
-
-    $reset_link = LienReset::find($link);
-    if ($reset_link === null)
-        return $to;
-
-    $user = $reset_link->getUser();
-    return $to->with('info', "Vous allez changer le mot de passe de l'utilisateur " . $user->getFullName());
-})->name('reset-link');
+Route::get('/reinitialiser-mot-de-passe/{link}', 'ResetLinkController@withLink')->name('reset-link');
 
 // Réservations
 Route::prefix('/reservation')->group(function () {
