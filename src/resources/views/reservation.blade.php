@@ -10,6 +10,7 @@
         $reserv = Reservation::getActiveReservations($personnel);
         $already_has_one = $reserv->exists();
         $reserv = !$already_has_one ?: $reserv->first();
+        $place = \App\Models\Place::find($reserv->id_place);
     @endphp
     <div class="card mb-2 mt-2 w-50 mx-auto text-center">
         <div class="card-body d-flex flex-column">
@@ -17,7 +18,7 @@
             @if ($already_has_one)
                 <div class="card mb-2 mt-2 w-50 mx-auto text-center">
                     <div class="card-body d-flex flex-column">
-                        <span class="card-title h4">Place {{ \App\Models\Place::find($reserv->id_place)->numero }}</span>
+                        <span class="card-title h4">{{ $place !== null ? 'Place '.$place->numero : 'En attente' }}</span>
                         <span>Date de la demande : {{ $reserv->date_demande }}</span>
                         <span>Date d'expiration : {{ $reserv->date_expiration }}</span>
                     </div>
@@ -36,7 +37,8 @@
             <span class="card-title h3">Vos réservations antérieures</span>
             @php
                 $old_reservations = Reservation::where('id_personnel', $personnel->id)
-                    ->where('type_statut', '!=', \App\Enums\ReservationStateEnum::ACTIVE);
+                    ->where('type_statut', '!=', \App\Enums\ReservationStateEnum::ACTIVE)
+                    ->where('type_statut', '!=', \App\Enums\ReservationStateEnum::WAITING);
                 $old_exists = $old_reservations->exists();
                 $old_reservations = $old_reservations->get();
             @endphp
