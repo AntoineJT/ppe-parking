@@ -8,7 +8,7 @@
             @if ($reservation !== null)
                 <div class="card mb-2 mt-2 w-50 mx-auto text-center">
                     <div class="card-body d-flex flex-column">
-                        <span class="card-title h4">{{ $reservation['place'] !== null ? 'Place '.$reservation['place'] : 'En attente' }}</span>
+                        <span class="card-title h4">{{ $reservation['place'] }}</span>
                         <span>Date de la demande : {{ $reservation['date_demande'] }}</span>
                         <span>Date d'expiration : {{ $reservation['date_expiration'] }}</span>
                     </div>
