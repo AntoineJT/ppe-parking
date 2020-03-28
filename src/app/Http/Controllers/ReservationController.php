@@ -6,15 +6,47 @@ use App\Enums\ReservationStateEnum;
 use App\Models\Personnel;
 use App\Models\Place;
 use App\Models\Reservation;
+use App\Models\Statut;
 use App\Utils\FlashMessage;
 use App\Utils\SessionManager;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class ReservationController extends Controller
 {
+    public function show(): string
+    {
+        $personnel = Personnel::find_(session('id'));
+        $reservations = Reservation::getActiveReservations($personnel);
+        $reservation = $reservations->exists() ? $reservations->first() : null;
+        $raw_old_reservations = Reservation::where('id_personnel', $personnel->id)
+            ->where('type_statut', '!=', ReservationStateEnum::ACTIVE)
+            ->where('type_statut', '!=', ReservationStateEnum::WAITING)
+            ->get();
+
+        $old_reservations = [];
+        foreach ($raw_old_reservations as $raw_old_reservation) {
+            $old_reservations[] = [
+                'place' => Place::find($raw_old_reservation->id_place)->numero,
+                'nom_statut' => Statut::find($raw_old_reservation->type_statut)->nom,
+                'date_demande' => $raw_old_reservation->date_demande,
+                'date_expiration' => $raw_old_reservation->date_expiration
+            ];
+        }
+
+        $place = Place::find($reservation->id_place);
+        return view('reservation', [
+            'access' => ACCESS_SEMIPUBLIC,
+            'reservation' => [
+                'place' => ($place !== null) ? "Place $place->numero" : 'En attente',
+                'date_demande' => $reservation->date_demande,
+                'date_expiration' => $reservation->date_expiration
+            ],
+            'old_reservations' => $old_reservations
+        ]);
+    }
+
     public function __invoke(): RedirectResponse
     {
         if (SessionManager::isAdmin())
