@@ -29,7 +29,7 @@
                 @foreach($old_reservations as $old_reservation)
                     <div class="card mb-2 mt-2 w-50 mx-auto text-center">
                         <div class="card-body d-flex flex-column">
-                            <span class="card-title h4">Place {{ $old_reservation['place'] }}</span>
+                            <span class="card-title h4">{{ $old_reservation['place'] }}</span>
                             <span>Statut : {{ $old_reservation['nom_statut'] }}</span>
                             <span>Date de la demande : {{ $old_reservation['date_demande'] }}</span>
                             <span>Date d'expiration : {{ $old_reservation['date_expiration'] }}</span>

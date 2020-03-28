@@ -34,6 +34,8 @@ class Kernel extends ConsoleKernel
         $schedule->call(function() {
             assert(DB::unprepared('CALL FAST_REFRESH_AVAILABILITIES'));
         })->everyMinute();
+
+        // TODO Faire un scheduler qui attribue des places à des réservations en attente
     }
 
     /**

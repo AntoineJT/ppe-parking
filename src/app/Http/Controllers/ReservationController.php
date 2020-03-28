@@ -27,22 +27,27 @@ class ReservationController extends Controller
 
         $old_reservations = [];
         foreach ($raw_old_reservations as $raw_old_reservation) {
+            $place = Place::find($raw_old_reservation->id_place);
             $old_reservations[] = [
-                'place' => Place::find($raw_old_reservation->id_place)->numero,
+                'place' => ($place !== null) ? "Place $place->numero" : 'Refusée',
                 'nom_statut' => Statut::find($raw_old_reservation->type_statut)->nom,
                 'date_demande' => $raw_old_reservation->date_demande,
                 'date_expiration' => $raw_old_reservation->date_expiration
             ];
         }
 
-        $place = Place::find($reservation->id_place);
-        return view('reservation', [
-            'access' => ACCESS_SEMIPUBLIC,
-            'reservation' => [
+        $r = null;
+        if ($reservation !== null) {
+            $place = Place::find($reservation->id_place);
+            $r = [
                 'place' => ($place !== null) ? "Place $place->numero" : 'En attente',
                 'date_demande' => $reservation->date_demande,
                 'date_expiration' => $reservation->date_expiration
-            ],
+            ];
+        }
+        return view('reservation', [
+            'access' => ACCESS_SEMIPUBLIC,
+            'reservation' => $r,
             'old_reservations' => $old_reservations
         ]);
     }
