@@ -34,11 +34,7 @@ class ReservationController extends Controller
         if (Reservation::getActiveReservations($personnel)->exists())
             return FlashMessage::redirectBackWithWarningMessage("Vous ne pouvez pas réserver une nouvelle place : vous avez déjà une réservation en cours!");
 
-        try {
-            $reservation = Reservation::create($personnel, $available_places);
-        } catch (FileNotFoundException $e) {
-            return FlashMessage::redirectBackWithErrorMessage("Désolé, aucune durée d'expiration n'a été renseignée par l'administrateur!");
-        }
+        $reservation = Reservation::create($personnel, $available_places);
         if ($reservation === null)
             return FlashMessage::redirectBackWithErrorMessage('Impossible de créer une réservation!');
 

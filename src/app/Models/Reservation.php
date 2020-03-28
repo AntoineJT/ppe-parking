@@ -23,7 +23,6 @@ class Reservation extends Model
      * @param Personnel $personnel
      * @param Collection $available_places
      * @return Reservation|null
-     * @throws FileNotFoundException
      */
     public static function create(Personnel $personnel, Collection $available_places): ?Reservation
     {
