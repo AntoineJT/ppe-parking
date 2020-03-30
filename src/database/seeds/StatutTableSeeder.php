@@ -1,7 +1,8 @@
 <?php
 
-use App\Models\Statut;
+use App\Enums\ReservationStateEnum;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class StatutTableSeeder extends Seeder
 {
@@ -12,19 +13,19 @@ class StatutTableSeeder extends Seeder
      */
     public function run()
     {
-        self::createStatut(0, 'Inconnu');
-        self::createStatut(1, 'Expiré');
-        self::createStatut(2, 'En attente');
-        self::createStatut(3, 'Refusé');
+        self::createStatut(ReservationStateEnum::UNKNOWN, 'Inconnu');
+        self::createStatut(ReservationStateEnum::EXPIRED, 'Expiré');
+        self::createStatut(ReservationStateEnum::WAITING, 'En attente');
+        self::createStatut(ReservationStateEnum::REFUSED, 'Refusé');
+        self::createStatut(ReservationStateEnum::ACTIVE, 'Actif');
     }
 
     private static function createStatut(int $type, string $nom): void
     {
-        $statut = new Statut;
-
-        $statut->id = $type;
-        $statut->nom = $nom;
-
-        assert($statut->save(), "Echec de l'insertion de : '$type, $nom'");
+        $succeed = DB::table('statuts')->insert([
+            'id' => $type,
+            'nom' => $nom
+        ]);
+        assert($succeed, "Echec de l'insertion de : '$type, $nom'");
     }
 }

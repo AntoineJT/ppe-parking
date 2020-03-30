@@ -62,7 +62,7 @@ class UserController extends Controller
             case 'delete':
                 return self::delete($personnel);
         }
-        return FlashMessage::redirectBackWithErrorMessage('Opération impossible!');
+        return FlashMessage::notYetImplemented();
     }
 
     private static function validateIt(Personnel $personnel): RedirectResponse

@@ -4,11 +4,12 @@
 @section('content')
     <div class="mx-auto text-center w-50">
         <h2>Ajouter une place</h2>
+        <span class="font-italic">Le nom de la place sera mis en majuscules automatiquement!</span>
         <form class="flex-row d-flex w-50 mx-auto" method="POST">
             @csrf
             <input type="hidden" name="action" value="add">
             <input type="text" minlength="5" maxlength="5" name="numero" class="form-control mr-2"
-                   placeholder="Numéro place">
+                   placeholder="Numéro place" required>
             <button class="btn btn-primary">Ajouter</button>
         </form>
 

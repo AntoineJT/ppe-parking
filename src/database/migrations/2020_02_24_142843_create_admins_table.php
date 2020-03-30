@@ -14,10 +14,6 @@ class CreateAdminsTable extends Migration
     public function up()
     {
         Schema::create('admins', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
-            // $table->charset = 'utf8';
-            $table->collation = 'utf8mb4_unicode_ci';
-
             $table->integerIncrements('id');
             $table->unsignedInteger('id_utilisateur');
             // $table->timestamps();

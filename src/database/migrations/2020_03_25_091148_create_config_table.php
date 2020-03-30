@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStatutsTable extends Migration
+class CreateConfigTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateStatutsTable extends Migration
      */
     public function up()
     {
-        Schema::create('statuts', function (Blueprint $table) {
-            $table->unsignedTinyInteger('id')->primary();
-            // $table->timestamps();
-            $table->string('nom', 10)->unique();
+        // TODO Si MySQL ou MariaDB, mettre en MyISAM (mini opti pas très utile)
+        Schema::create('config', function (Blueprint $table) {
+            $table->string('key', 30)->primary();
+            $table->text('value');
         });
     }
 
@@ -27,6 +27,6 @@ class CreateStatutsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('statuts');
+        Schema::dropIfExists('config');
     }
 }

@@ -57,4 +57,9 @@ trait FlashMessage
     {
         return self::redirectBackWithMessage('info', $message);
     }
+
+    public static function notYetImplemented(): RedirectResponse
+    {
+        return self::redirectBackWithInfoMessage("Cette fonctionnalité n'est pas encore implémentée!");
+    }
 }

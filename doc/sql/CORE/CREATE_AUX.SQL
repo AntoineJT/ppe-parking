@@ -1,4 +1,8 @@
 -- things not at the conceptual level
+ALTER TABLE PLACES
+    ADD COLUMN disponible TINYINT(1) NOT NULL
+;
+
 CREATE TABLE LIEN_RESET(
    lien CHAR(20) NOT NULL
    , id_utilisateur INT UNSIGNED NOT NULL
@@ -10,3 +14,9 @@ ALTER TABLE LIEN_RESET ADD
     FOREIGN KEY(id_utilisateur)
     REFERENCES UTILISATEURS(id)
 ;
+
+CREATE TABLE CONFIG(
+    `key` VARCHAR(30)
+    , value TEXT NULL
+    , PRIMARY KEY (`key`)
+) ENGINE = MyISAM;

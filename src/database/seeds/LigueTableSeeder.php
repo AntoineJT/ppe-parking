@@ -2,6 +2,7 @@
 
 use App\Models\Ligue;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class LigueTableSeeder extends Seeder
 {
@@ -22,8 +23,9 @@ class LigueTableSeeder extends Seeder
     }
 
     private static function createLigue(string $name): void {
-        $ligue = new Ligue;
-        $ligue->nom = $name;
-        assert($ligue->save());
+        $succeed = DB::table('ligues')->insert([
+            'nom' => $name
+        ]);
+        assert($succeed);
     }
 }
